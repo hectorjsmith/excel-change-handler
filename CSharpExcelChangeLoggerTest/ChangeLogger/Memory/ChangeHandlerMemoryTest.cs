@@ -62,14 +62,32 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             SimpleMockRange range1 = new SimpleMockRange("addr");
             range1.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
             SimpleMockRange range2 = new SimpleMockRange("addr");
-            range1.RangeData = new string[2, 2] { { "1", "2" }, { "3", "4" } };
+            range2.RangeData = new string[2, 2] { { "1", "2" }, { "3", "4" } };
 
             memory.SetMemory(sheet, range1);
             IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range2);
 
             Assert.AreEqual(true, comparison.LocationMatches, "Location should match because the saved range has the same address");
             Assert.AreEqual(false, comparison.LocationMatchesAndDataMatches,
-                "Should return true because the range address matches and the data has been changed");
+                "Should return false because the range address matches and the data has been changed");
+        }
+
+        [Test]
+        public void Given_SheetAndRangeSavedToMemory_When_ComparedToTheSameAddressWithTheSameData_Then_ShouldReportNoDataChanged()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory();
+            IWorksheet sheet = new SimpleMockSheet();
+            SimpleMockRange range1 = new SimpleMockRange("addr");
+            range1.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
+            SimpleMockRange range2 = new SimpleMockRange("addr");
+            range2.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
+
+            memory.SetMemory(sheet, range1);
+            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range2);
+
+            Assert.AreEqual(true, comparison.LocationMatches, "Location should match because the saved range has the same address");
+            Assert.AreEqual(true, comparison.LocationMatchesAndDataMatches,
+                "Should return true because both the range address and range data match");
         }
     }
 }

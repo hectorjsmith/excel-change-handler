@@ -20,7 +20,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
         public void AfterChange(IWorksheet sheet, IRange range)
         {
             IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
-            if (memoryComparison.LocationMatchesAndDataMatches)
+            if (!memoryComparison.LocationMatchesAndDataMatches)
             {
                 _highlighter.HighlightRange(sheet, range);
             }
