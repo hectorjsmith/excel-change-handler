@@ -3,12 +3,12 @@
     class MemoryComparison : IMemoryComparison
     {
         public bool LocationMatches { get; }
-        public bool LocationMatchesAndDataChanged { get; }
+        public bool LocationMatchesAndDataMatches { get; }
 
-        public MemoryComparison(bool locationMatches, bool locationMatchesAndDataChanged)
+        public MemoryComparison(bool locationMatches, bool locationMatchesAndDataMatches)
         {
             LocationMatches = locationMatches;
-            LocationMatchesAndDataChanged = locationMatchesAndDataChanged;
+            LocationMatchesAndDataMatches = locationMatchesAndDataMatches;
         }
     }
 }

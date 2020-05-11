@@ -5,14 +5,51 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 {
     class ChangeHandlerMemory : IChangeHandlerMemory
     {
-        public IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range)
-        {
-            throw new NotImplementedException();
-        }
+        private string SheetName { get; set; } = "";
+        private string RangeAddress { get; set; } = "";
+        private string[,] RangeData { get; set; } = new string[0, 0];
 
         public void SetMemory(IWorksheet sheet, IRange range)
         {
-            throw new NotImplementedException();
+            SheetName = sheet.Name;
+            RangeAddress = range.Address;
+            RangeData = range.RangeData;
         }
+
+        public IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range)
+        {
+            bool sheetNameMatches = string.Equals(SheetName, sheet.Name, StringComparison.OrdinalIgnoreCase);
+            bool rangeAddressMatches = string.Equals(RangeAddress, range.Address, StringComparison.OrdinalIgnoreCase);
+
+            bool dataMatches = false;
+            bool locationMatches = sheetNameMatches && rangeAddressMatches;
+            if (locationMatches)
+            {
+                dataMatches = CheckDataMatches(range);
+            }
+            return new MemoryComparison(locationMatches, locationMatches && dataMatches);
+        }
+
+        private bool CheckDataMatches(IRange range)
+        {
+            if (RangeData.GetLength(0) != range.RowCount || RangeData.GetLength(1) != range.ColumnCount)
+            {
+                return false;
+            }
+
+            string[,] newRangeData = range.RangeData;
+            for (int row = 0; row < RangeData.GetLength(0); row++)
+            {
+                for (int col = 0; col < RangeData.GetLength(1); col++)
+                {
+                    if (!string.Equals(RangeData[row, col], newRangeData[row, col], StringComparison.Ordinal))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
     }
 }
