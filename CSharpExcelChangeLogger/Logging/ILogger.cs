@@ -6,5 +6,6 @@ namespace CSharpExcelChangeLogger.Logging
 {
     public interface ILogger
     {
+        void Info(string message);
     }
 }

@@ -1,4 +1,4 @@
-﻿using CSharpExcelChangeLogger.Base;
+﻿using CSharpExcelChangeLogger.ChangeLogger;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
 using System;
@@ -9,6 +9,8 @@ namespace CSharpExcelChangeLogger.Api
 {
     public interface IChangeLoggerApi
     {
+        IConfiguration Configuration { get; }
+
         void SetLogger(ILogger? logger);
 
         void BeforeChange(IWorksheet sheet, IRange range);
@@ -20,6 +22,8 @@ namespace CSharpExcelChangeLogger.Api
     {
         private static IChangeLoggerApi? _instance;
         public static IChangeLoggerApi Instance = _instance ?? (_instance = new ChangeLoggerApi());
+
+        public IConfiguration Configuration => StaticChangeLoggerManager.Configuration;
 
         private ChangeLoggerApi()
         {
@@ -37,7 +41,7 @@ namespace CSharpExcelChangeLogger.Api
 
         public void AfterChange(IWorksheet sheet, IRange range)
         {
-            throw new NotImplementedException();
+            StaticChangeLoggerManager.AfterChange(sheet, range);
         }
     }
 }
