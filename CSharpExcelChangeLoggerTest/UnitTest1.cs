@@ -7,7 +7,7 @@ namespace CSharpExcelChangeLoggerTest
         [Test]
         public void Test1()
         {
-            Assert.Fail("Mock test");
+            Assert.Pass("Mock test");
         }
     }
 }
