@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.ChangeLogger.Base
 {
-    class ChangeHandlerBase : IChangeHandler
+    class ActiveChangeHandler : IChangeHandler
     {
         private readonly IChangeHighlighter _highlighter = new ActiveChangeHighlighter();
 
