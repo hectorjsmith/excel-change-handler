@@ -12,7 +12,7 @@ namespace CSharpExcelChangeLoggerTest.Mock
 
         public string[,] RangeData { get; set; } = new string[0, 0];
 
-        public int FillColour { get; private set; }
+        public int FillColour { get; private set; } = 0;
 
         public void FillRange(int rgbColour)
         {

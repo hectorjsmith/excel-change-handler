@@ -18,8 +18,8 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 
         public IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range)
         {
-            bool sheetNameMatches = string.Equals(SheetName, sheet.Name, StringComparison.OrdinalIgnoreCase);
-            bool rangeAddressMatches = string.Equals(RangeAddress, range.Address, StringComparison.OrdinalIgnoreCase);
+            bool sheetNameMatches = string.Equals(SheetName, sheet.Name, StringComparison.Ordinal);
+            bool rangeAddressMatches = string.Equals(RangeAddress, range.Address, StringComparison.Ordinal);
 
             bool dataMatches = false;
             bool locationMatches = sheetNameMatches && rangeAddressMatches;

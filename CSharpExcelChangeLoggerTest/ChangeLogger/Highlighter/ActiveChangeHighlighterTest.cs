@@ -11,7 +11,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
     class ActiveChangeHighlighterTest
     {
         [Test]
-        public void GivenActiveChangeLoggerWhenAfterChangeHookCalledThenRangeIsHighlighted()
+        public void Given_ActiveChangeLogger_When_AfterChangeHookCalled_Then_RangeIsHighlighted()
         {
             int testColour = 111;
             IChangeLoggerApi api = ChangeLoggerApi.Instance;
