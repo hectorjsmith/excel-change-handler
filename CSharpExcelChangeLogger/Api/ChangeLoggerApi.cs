@@ -36,7 +36,7 @@ namespace CSharpExcelChangeLogger.Api
 
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
-            throw new NotImplementedException();
+            StaticChangeLoggerManager.BeforeChange(sheet, range);
         }
 
         public void AfterChange(IWorksheet sheet, IRange range)
