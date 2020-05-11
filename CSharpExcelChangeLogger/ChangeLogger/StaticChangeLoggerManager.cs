@@ -1,5 +1,5 @@
 ﻿using CSharpExcelChangeLogger.Api;
-using CSharpExcelChangeLogger.ChangeLogger.Base;
+using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
