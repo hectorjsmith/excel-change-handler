@@ -6,5 +6,8 @@ namespace CSharpExcelChangeLogger.Logging
 {
     class InactiveLogger : ILogger
     {
+        public void Info(string message)
+        {
+        }
     }
 }
