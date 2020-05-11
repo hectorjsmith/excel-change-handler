@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
     <WarningsAsErrors>CS8600;CS8602;CS8603;CS8618</WarningsAsErrors>
