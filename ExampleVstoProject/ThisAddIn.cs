@@ -20,11 +20,6 @@ namespace ExampleVstoProject
             ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = 16776960;
         }
 
-        private void ThisAddIn_NewWorkbook(Excel.Workbook Wb)
-        {
-            throw new NotImplementedException();
-        }
-
         private void Application_WorkbookOpen(Excel.Workbook workbook)
         {
             workbook.SheetSelectionChange += Workbook_SheetSelectionChange;
