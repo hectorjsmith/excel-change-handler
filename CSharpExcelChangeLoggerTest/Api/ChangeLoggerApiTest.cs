@@ -10,7 +10,7 @@ namespace CSharpExcelChangeLoggerTest.Api
     class ChangeLoggerApiTest
     {
         [Test]
-        public void GivenApiWhenAfterChangeHookCalledThenRangeIsHighlighted()
+        public void Given_Api_When_AfterChangeHookCalled_Then_RangeIsHighlighted()
         {
             int testColour = 33;
             IChangeLoggerApi api = ChangeLoggerApi.Instance;
@@ -22,7 +22,7 @@ namespace CSharpExcelChangeLoggerTest.Api
 
             api.AfterChange(sheet, range);
 
-            Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour");
+            Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour when no memory set");
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿using CSharpExcelChangeLogger.Api;
-using CSharpExcelChangeLogger.ChangeLogger.Base;
+using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
@@ -11,7 +11,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger
 {
     internal static class StaticChangeLoggerManager
     {
-        private static readonly IChangeHandler _changeHandler = new ActiveChangeHighlighter();
+        private static readonly IChangeHandler _changeHandler = new ActiveChangeHandler();
 
         private static readonly ILogger _inactiveLogger = new InactiveLogger();
         private static ILogger? _injectedLogger;

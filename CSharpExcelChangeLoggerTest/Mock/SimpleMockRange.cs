@@ -6,13 +6,13 @@ namespace CSharpExcelChangeLoggerTest.Mock
     {
         public string Address { get; set; }
 
-        public int RowCount { get; set; }
+        public int RowCount => RangeData.GetLength(0);
 
-        public int ColumnCount { get; set; }
+        public int ColumnCount => RangeData.GetLength(1);
 
         public string[,] RangeData { get; set; } = new string[0, 0];
 
-        public int FillColour { get; private set; }
+        public int FillColour { get; private set; } = 0;
 
         public void FillRange(int rgbColour)
         {

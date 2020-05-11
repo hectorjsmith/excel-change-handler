@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Base
+namespace CSharpExcelChangeLogger.ChangeLogger.Handler
 {
     internal interface IChangeHandler
     {
