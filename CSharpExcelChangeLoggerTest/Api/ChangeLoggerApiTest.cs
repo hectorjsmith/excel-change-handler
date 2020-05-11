@@ -10,7 +10,7 @@ namespace CSharpExcelChangeLoggerTest.Api
     class ChangeLoggerApiTest
     {
         [Test]
-        public void Given_Api_When_AfterChangeHookCalled_Then_RangeIsHighlighted()
+        public void Given_Api_When_BeforeAndAfterChangeHookCalledWithDataChange_Then_RangeIsHighlighted()
         {
             int testColour = 33;
             IChangeLoggerApi api = ChangeLoggerApi.Instance;
@@ -18,11 +18,15 @@ namespace CSharpExcelChangeLoggerTest.Api
             api.SetLogger(new TestLogger());
 
             SimpleMockSheet sheet = new SimpleMockSheet();
-            SimpleMockRange range = new SimpleMockRange();
+            SimpleMockRange rangeBefore = new SimpleMockRange();
+            rangeBefore.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
+            api.BeforeChange(sheet, rangeBefore);
 
-            api.AfterChange(sheet, range);
+            SimpleMockRange rangeAfter = new SimpleMockRange();
+            rangeAfter.RangeData = new string[2, 2] { { "1", "2" }, { "3", "4" } };
+            api.AfterChange(sheet, rangeAfter);
 
-            Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour when no memory set");
+            Assert.AreEqual(testColour, rangeAfter.FillColour, "Range should be filled with correct colour when no memory set");
         }
 
     }

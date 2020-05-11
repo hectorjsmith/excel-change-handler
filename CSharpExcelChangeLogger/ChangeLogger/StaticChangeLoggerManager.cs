@@ -28,6 +28,11 @@ namespace CSharpExcelChangeLogger.ChangeLogger
             _injectedLogger = logger;
         }
 
+        public static void BeforeChange(IWorksheet sheet, IRange range)
+        {
+            _changeHandler.BeforeChange(sheet, range);
+        }
+
         public static void AfterChange(IWorksheet sheet, IRange range)
         {
             _changeHandler.AfterChange(sheet, range);
