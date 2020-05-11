@@ -29,17 +29,20 @@ namespace ExampleVstoProject.Wrapper
         {
             if (range.Cells.Count == 0)
             {
-                return Array.CreateInstance(typeof(Object), 0, 0);
+                // Create empty array if range is empty
+                return Array.CreateInstance(typeof(object), 0, 0);
             }
             if (range.Cells.Count == 1)
             {
-                //Creating a 1-based array to fit with Excel's 1-based indexing
+                // If the range has a single cell it will return one value, not an array.
+                // Wrapping this into a 2-dimensional 1-based array with a single entry.
                 Array retArray = OneBasedSingletonArray2D();
                 retArray.SetValue(dataProducer.Invoke(), 1, 1);
                 return retArray;
             }
             else
             {
+                // Return the range data as an Array. If a range has > 1 cell it returns a 2-dimensional array of data.
                 return (Array)dataProducer.Invoke();
             }
         }
@@ -48,18 +51,20 @@ namespace ExampleVstoProject.Wrapper
         {
             string[,] retArray = new string[values.GetLength(0), values.GetLength(1)];
 
-            // loop through the 2-D System.Array and populate the 1-D String Array
-            for (int row = 1; row <= values.GetLength(0); row++)
+            // Loop through the 1-based System.Array and populate the 0-based string array
+            for (int oneBasedRow = 1; oneBasedRow <= values.GetLength(0); oneBasedRow++)
             {
-                for (int col = 1; col <= values.GetLength(1); col++)
+                int zeroBasedRow = oneBasedRow - 1;
+                for (int oneBasedCol = 1; oneBasedCol <= values.GetLength(1); oneBasedCol++)
                 {
-                    if (values.GetValue(row, col) == null)
+                    int zeroBasedCol = oneBasedCol - 1;
+                    if (values.GetValue(oneBasedRow, oneBasedCol) == null)
                     {
-                        retArray[row - 1, col - 1] = "";
+                        retArray[zeroBasedRow, zeroBasedCol] = "";
                     }
                     else
                     {
-                        retArray[row - 1, col - 1] = values.GetValue(row, col).ToString();
+                        retArray[zeroBasedRow, zeroBasedCol] = values.GetValue(oneBasedRow, oneBasedCol).ToString();
                     }
                 }
             }
@@ -69,7 +74,7 @@ namespace ExampleVstoProject.Wrapper
 
         private Array OneBasedSingletonArray2D()
         {
-            return Array.CreateInstance(typeof(Object), new int[] { 1, 1 }, new int[] { 1, 1 });
+            return Array.CreateInstance(typeof(object), new int[] { 1, 1 }, new int[] { 1, 1 });
         }
     }
 }

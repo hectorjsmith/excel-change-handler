@@ -26,20 +26,20 @@ namespace ExampleVstoProject
             workbook.SheetChange += Workbook_SheetChange;
         }
 
-        private void Workbook_SheetChange(object sheet, Excel.Range range)
-        {
-            Excel.Worksheet worksheet = (Excel.Worksheet) sheet;
-            IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
-            IRange wrappedRange = new ExcelRangeWrapper(range);
-            ChangeLoggerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
-        }
-
         private void Workbook_SheetSelectionChange(object sheet, Excel.Range range)
         {
             Excel.Worksheet worksheet = (Excel.Worksheet)sheet;
             IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
             IRange wrappedRange = new ExcelRangeWrapper(range);
             ChangeLoggerApi.Instance.BeforeChange(wrappedSheet, wrappedRange);
+        }
+
+        private void Workbook_SheetChange(object sheet, Excel.Range range)
+        {
+            Excel.Worksheet worksheet = (Excel.Worksheet) sheet;
+            IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
+            IRange wrappedRange = new ExcelRangeWrapper(range);
+            ChangeLoggerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
