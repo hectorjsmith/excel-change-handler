@@ -4,7 +4,7 @@ namespace CSharpExcelChangeLoggerTest.Mock
 {
     class SimpleMockRange : IRange
     {
-        public string Address { get; set; } = "";
+        public string Address { get; set; }
 
         public int RowCount { get; set; }
 
@@ -17,6 +17,11 @@ namespace CSharpExcelChangeLoggerTest.Mock
         public void FillRange(int rgbColour)
         {
             FillColour = rgbColour;
+        }
+
+        public SimpleMockRange(string rangeAddress = "mock:address")
+        {
+            Address = rangeAddress;
         }
     }
 }

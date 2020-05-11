@@ -15,6 +15,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
         {
             int testColour = 111;
             ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = testColour;
+            ChangeLoggerApi.Instance.SetLogger(new TestLogger());
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
@@ -29,6 +30,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
         {
             int testColour = 111;
             ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = testColour;
+            ChangeLoggerApi.Instance.SetLogger(new TestLogger());
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
