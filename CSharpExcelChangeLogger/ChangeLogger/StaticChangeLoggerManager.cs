@@ -1,4 +1,6 @@
 ﻿using CSharpExcelChangeLogger.Api;
+using CSharpExcelChangeLogger.ChangeLogger.Base;
+using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
 using System;
@@ -9,10 +11,12 @@ namespace CSharpExcelChangeLogger.ChangeLogger
 {
     internal static class StaticChangeLoggerManager
     {
+        private static readonly IChangeHandler _changeHandler = new ActiveChangeHighlighter();
+
         private static readonly ILogger _inactiveLogger = new InactiveLogger();
         private static ILogger? _injectedLogger;
 
-        public static ILogger Logger
+        public static ILogger Log
         {
             get { return _injectedLogger ?? _inactiveLogger; }
         }
@@ -26,8 +30,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger
 
         public static void AfterChange(IWorksheet sheet, IRange range)
         {
-            Logger.Info(string.Format("Highlighting range '{0}' on sheet '{1}'", range.Address, sheet.Name));
-            range.FillRange(Configuration.CellHighlightRgbColour);
+            _changeHandler.AfterChange(sheet, range);
         }
     }
 }

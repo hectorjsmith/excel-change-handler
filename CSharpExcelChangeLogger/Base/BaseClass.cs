@@ -8,6 +8,6 @@ namespace CSharpExcelChangeLogger.Base
 {
     class BaseClass
     {
-        protected ILogger Log => StaticChangeLoggerManager.Logger;
+        protected ILogger Log => StaticChangeLoggerManager.Log;
     }
 }
