@@ -1,9 +1,10 @@
-﻿using CSharpExcelChangeLogger.Excel;
+﻿using CSharpExcelChangeLogger.Base;
+using CSharpExcelChangeLogger.Excel;
 using System;
 
 namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 {
-    class ChangeHandlerMemory : IChangeHandlerMemory
+    class ChangeHandlerMemory : BaseClass, IChangeHandlerMemory
     {
         private const int DefaultMaxRangeSizeForStoringData = 15000;
 
@@ -19,9 +20,9 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
             RangeAddress = range.Address;
 
             int cellCount = range.RowCount * range.ColumnCount;
-            if (cellCount < MaxRangeSizeForStoringData)
+            if (cellCount <= MaxRangeSizeForStoringData)
             {
-                RangeData = range.RangeData;
+                StoreRangeDataInMemory(sheet, range);
             }
         }
 
@@ -37,6 +38,18 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
                 dataMatches = CheckDataMatches(range);
             }
             return new MemoryComparison(locationMatches, locationMatches && dataMatches);
+        }
+
+        private void StoreRangeDataInMemory(IWorksheet sheet, IRange range)
+        {
+            try
+            {
+                RangeData = range.RangeData;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(string.Format("Error reading range data into memory. Sheet: {0} ; Range: {1}", sheet.Name, RangeAddress), ex);
+            }
         }
 
         private bool CheckDataMatches(IRange range)

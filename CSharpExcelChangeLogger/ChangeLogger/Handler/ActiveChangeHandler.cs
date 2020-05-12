@@ -24,10 +24,6 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
             {
                 _highlighter.HighlightRange(sheet, range);
             }
-            if (!memoryComparison.LocationMatches)
-            {
-                _memory.SetMemory(sheet, range);
-            }
         }
     }
 }
