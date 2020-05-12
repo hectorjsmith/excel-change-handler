@@ -13,8 +13,8 @@ namespace CSharpExcelChangeLoggerTest.Mock
 
         public bool LocationMatchesAndDataMatches => LocationMatches && DataMatches;
 
-        public string[,]? SavedData { get; set; }
+        public string[,]? DataBeforeChange { get; set; }
 
-        public string[,]? NewData { get; set; }
+        public string[,]? DataAfterChange { get; set; }
     }
 }

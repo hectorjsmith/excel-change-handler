@@ -8,19 +8,6 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.Api
 {
-    public interface IChangeLoggerApi
-    {
-        IConfiguration Configuration { get; }
-
-        void SetLogger(ILogger? logger);
-
-        void BeforeChange(IWorksheet sheet, IRange range);
-
-        void AfterChange(IWorksheet sheet, IRange range);
-
-        void SetCustomHighlighter(IChangeHighlighter? highlighter);
-    }
-
     public class ChangeLoggerApi : IChangeLoggerApi
     {
         private static IChangeLoggerApi? _instance;

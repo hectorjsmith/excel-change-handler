@@ -8,16 +8,16 @@
 
         public bool LocationMatchesAndDataMatches => LocationMatches && DataMatches;
 
-        public string[,]? SavedData { get; }
+        public string[,]? DataBeforeChange { get; }
 
-        public string[,]? NewData { get; }
+        public string[,]? DataAfterChange { get; }
 
-        public MemoryComparison(bool locationMatches, bool dataMatches, string[,]? savedData, string[,]? newData)
+        public MemoryComparison(bool locationMatches, bool dataMatches, string[,]? dataBeforeChange, string[,]? dataAfterChange)
         {
             LocationMatches = locationMatches;
             DataMatches = dataMatches;
-            SavedData = savedData;
-            NewData = newData;
+            DataBeforeChange = dataBeforeChange;
+            DataAfterChange = dataAfterChange;
         }
     }
 }
