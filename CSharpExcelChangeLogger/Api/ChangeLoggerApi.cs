@@ -1,4 +1,5 @@
 ﻿using CSharpExcelChangeLogger.ChangeLogger;
+using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
 using System;
@@ -16,6 +17,8 @@ namespace CSharpExcelChangeLogger.Api
         void BeforeChange(IWorksheet sheet, IRange range);
 
         void AfterChange(IWorksheet sheet, IRange range);
+
+        void SetCustomHighlighter(IChangeHighlighter? highlighter);
     }
 
     public class ChangeLoggerApi : IChangeLoggerApi
@@ -32,6 +35,11 @@ namespace CSharpExcelChangeLogger.Api
         public void SetLogger(ILogger? logger)
         {
             StaticChangeLoggerManager.SetInjectedLogger(logger);
+        }
+
+        public void SetCustomHighlighter(IChangeHighlighter? highlighter)
+        {
+            StaticChangeLoggerManager.SetInjectedHighlighter(highlighter);
         }
 
         public void BeforeChange(IWorksheet sheet, IRange range)

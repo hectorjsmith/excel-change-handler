@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.ChangeLogger.Highlighter
 {
-    internal interface IChangeHighlighter
+    public interface IChangeHighlighter
     {
         void HighlightRange(IWorksheet sheet, IRange range);
     }
