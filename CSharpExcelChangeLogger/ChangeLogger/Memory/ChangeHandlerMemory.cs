@@ -5,9 +5,13 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 {
     class ChangeHandlerMemory : IChangeHandlerMemory
     {
+        private const int DefaultMaxRangeSizeForStoringData = 15000;
+
         private string SheetName { get; set; } = "";
         private string RangeAddress { get; set; } = "";
         private string[,] RangeData { get; set; } = new string[0, 0];
+
+        public int MaxRangeSizeForStoringData { get; set; } = DefaultMaxRangeSizeForStoringData;
 
         public void SetMemory(IWorksheet sheet, IRange range)
         {
@@ -15,7 +19,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
             RangeAddress = range.Address;
 
             int cellCount = range.RowCount * range.ColumnCount;
-            if (cellCount < 100)
+            if (cellCount < MaxRangeSizeForStoringData)
             {
                 RangeData = range.RangeData;
             }
