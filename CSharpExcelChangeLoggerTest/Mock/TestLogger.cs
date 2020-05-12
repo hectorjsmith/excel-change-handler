@@ -11,5 +11,11 @@ namespace CSharpExcelChangeLoggerTest.Mock
         {
             Console.WriteLine(message);
         }
+
+        public void Error(string message, Exception ex)
+        {
+            Console.WriteLine(message);
+            Console.WriteLine(ex);
+        }
     }
 }

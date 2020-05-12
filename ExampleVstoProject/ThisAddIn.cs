@@ -8,6 +8,7 @@ using Office = Microsoft.Office.Core;
 using CSharpExcelChangeLogger.Api;
 using CSharpExcelChangeLogger.Excel;
 using ExampleVstoProject.Wrapper;
+using System.Windows.Forms;
 
 namespace ExampleVstoProject
 {
@@ -15,18 +16,30 @@ namespace ExampleVstoProject
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            Globals.ThisAddIn.Application.WorkbookOpen += Application_WorkbookOpen;
-            ((Excel.AppEvents_Event)Globals.ThisAddIn.Application).NewWorkbook += Application_WorkbookOpen;
+            Excel.Application application = Globals.ThisAddIn.Application;
+            // Use the Application level events instead of the workbook events - workbook events often get disabled for no apparent reason
+            application.SheetSelectionChange += Application_SheetSelectionChange;
+            application.SheetChange += Application_SheetChange;
+
             ChangeLoggerApi.Instance.Configuration.CellHighlightColour = 16776960;
         }
 
-        private void Application_WorkbookOpen(Excel.Workbook workbook)
+        private void Application_SheetChange(object sheet, Excel.Range range)
         {
-            workbook.SheetSelectionChange += Workbook_SheetSelectionChange;
-            workbook.SheetChange += Workbook_SheetChange;
+            try
+            {
+                Excel.Worksheet worksheet = (Excel.Worksheet)sheet;
+                IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
+                IRange wrappedRange = new ExcelRangeWrapper(range);
+                ChangeLoggerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void Workbook_SheetSelectionChange(object sheet, Excel.Range range)
+        private void Application_SheetSelectionChange(object sheet, Excel.Range range)
         {
             try
             {
@@ -37,22 +50,7 @@ namespace ExampleVstoProject
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-            }
-        }
-
-        private void Workbook_SheetChange(object sheet, Excel.Range range)
-        {
-            try
-            {
-                Excel.Worksheet worksheet = (Excel.Worksheet) sheet;
-                IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
-                IRange wrappedRange = new ExcelRangeWrapper(range);
-                ChangeLoggerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
+                MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
