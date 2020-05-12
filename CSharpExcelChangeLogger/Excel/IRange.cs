@@ -11,6 +11,6 @@ namespace CSharpExcelChangeLogger.Excel
         int ColumnCount { get; }
         string[,] RangeData { get; }
 
-        void FillRange(int rgbColour);
+        void FillRange(int colour);
     }
 }

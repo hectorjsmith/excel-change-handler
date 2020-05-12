@@ -17,7 +17,7 @@ namespace ExampleVstoProject
         {
             Globals.ThisAddIn.Application.WorkbookOpen += Application_WorkbookOpen;
             ((Excel.AppEvents_Event)Globals.ThisAddIn.Application).NewWorkbook += Application_WorkbookOpen;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = 16776960;
+            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = 16776960;
         }
 
         private void Application_WorkbookOpen(Excel.Workbook workbook)

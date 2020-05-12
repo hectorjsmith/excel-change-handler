@@ -14,7 +14,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = testColour;
+            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -29,7 +29,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithNoDataChange_Then_RangeNotHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = testColour;
+            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -48,7 +48,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDataChanges_Then_RangeHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = testColour;
+            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -67,7 +67,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDifferentRange_Then_RangeHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightRgbColour = testColour;
+            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();

@@ -15,7 +15,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
         {
             int testColour = 111;
             IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.Configuration.CellHighlightRgbColour = testColour;
+            api.Configuration.CellHighlightColour = testColour;
             api.SetLogger(new TestLogger());
 
             SimpleMockSheet sheet = new SimpleMockSheet();

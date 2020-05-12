@@ -14,9 +14,9 @@ namespace CSharpExcelChangeLoggerTest.Mock
 
         public int FillColour { get; private set; } = 0;
 
-        public void FillRange(int rgbColour)
+        public void FillRange(int colour)
         {
-            FillColour = rgbColour;
+            FillColour = colour;
         }
 
         public SimpleMockRange(string rangeAddress = "mock:address")
