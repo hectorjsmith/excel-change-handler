@@ -7,6 +7,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
     internal interface IMemoryComparison
     {
         bool LocationMatches { get; }
+        bool DataMatches { get; }
         bool LocationMatchesAndDataMatches { get; }
     }
 }

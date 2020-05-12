@@ -38,16 +38,9 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 
         public IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range)
         {
-            bool sheetNameMatches = string.Equals(SheetName, sheet.Name, StringComparison.Ordinal);
-            bool rangeAddressMatches = string.Equals(RangeAddress, range.Address, StringComparison.Ordinal);
-
-            bool dataMatches = false;
-            bool locationMatches = sheetNameMatches && rangeAddressMatches;
-            if (locationMatches)
-            {
-                dataMatches = CheckDataMatches(range);
-            }
-            return new MemoryComparison(locationMatches, locationMatches && dataMatches);
+            bool locationMatches = CheckLocationMatches(sheet, range);
+            bool dataMatches = locationMatches && CheckDataMatches(range);
+            return new MemoryComparison(locationMatches, dataMatches);
         }
 
         private void StoreRangeDataInMemory(IWorksheet sheet, IRange range)
@@ -60,6 +53,12 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
             {
                 Log.Error(string.Format("Error reading range data into memory. Sheet: {0} ; Range: {1}", sheet.Name, RangeAddress), ex);
             }
+        }
+
+        private bool CheckLocationMatches(IWorksheet sheet, IRange range)
+        {
+            return string.Equals(SheetName, sheet.Name, StringComparison.Ordinal)
+                && string.Equals(RangeAddress, range.Address, StringComparison.Ordinal);
         }
 
         private bool CheckDataMatches(IRange range)
