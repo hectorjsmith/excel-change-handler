@@ -89,5 +89,24 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             Assert.AreEqual(true, comparison.LocationMatchesAndDataMatches,
                 "Should return true because both the range address and range data match");
         }
+
+        [Test]
+        public void Given_SheetAndRangeLargerThanMaxSizeSavedToMemory_When_ComparedToTheSameAddressWithTheSameData_Then_ShouldReportDataChanged()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory();
+            // Set the max range size to 1 so that a range with more than 1 cell does not get its data loaded into memory
+            memory.MaxRangeSizeForStoringData = 1;
+
+            IWorksheet sheet = new SimpleMockSheet();
+            SimpleMockRange range = new SimpleMockRange("addr");
+            range.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
+
+            memory.SetMemory(sheet, range);
+            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range);
+
+            Assert.AreEqual(true, comparison.LocationMatches, "Location should match because the saved range has the same address");
+            Assert.AreEqual(false, comparison.LocationMatchesAndDataMatches,
+                "Should return false because the range data was not loaded into memory and as such is always treated as different");
+        }
     }
 }

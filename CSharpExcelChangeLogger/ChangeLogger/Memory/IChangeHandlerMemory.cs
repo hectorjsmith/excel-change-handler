@@ -6,6 +6,8 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 {
     internal interface IChangeHandlerMemory
     {
+        int MaxRangeSizeForStoringData { get; set; }
+
         void SetMemory(IWorksheet sheet, IRange range);
 
         IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range);
