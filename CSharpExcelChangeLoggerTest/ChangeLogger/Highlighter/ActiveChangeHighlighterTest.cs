@@ -1,5 +1,6 @@
 ﻿using CSharpExcelChangeLogger.Api;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
+using CSharpExcelChangeLogger.ChangeLogger.Memory;
 using CSharpExcelChangeLoggerTest.Mock;
 using NUnit.Framework;
 using System;
@@ -22,7 +23,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
             SimpleMockRange range = new SimpleMockRange();
 
             IChangeHighlighter highlighter = new ActiveChangeHighlighter();
-            highlighter.HighlightRange(sheet, range);
+            highlighter.HighlightRange(new SimpleMockMemoryComparison(), sheet, range);
 
             Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour");
         }

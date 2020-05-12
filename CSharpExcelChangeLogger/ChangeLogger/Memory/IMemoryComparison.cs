@@ -9,5 +9,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         bool LocationMatches { get; }
         bool DataMatches { get; }
         bool LocationMatchesAndDataMatches { get; }
+        string[,]? SavedData { get; }
+        string[,]? NewData { get; }
     }
 }
