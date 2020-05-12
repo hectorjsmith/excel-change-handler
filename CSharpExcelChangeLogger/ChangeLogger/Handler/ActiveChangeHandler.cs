@@ -22,7 +22,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
             IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
             if (!memoryComparison.LocationMatchesAndDataMatches)
             {
-                Highlighter.HighlightRange(sheet, range);
+                Highlighter.HighlightRange(memoryComparison, sheet, range);
             }
         }
     }

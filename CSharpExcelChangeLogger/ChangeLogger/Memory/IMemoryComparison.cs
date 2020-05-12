@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 {
-    internal interface IMemoryComparison
+    public interface IMemoryComparison
     {
         bool LocationMatches { get; }
         bool DataMatches { get; }
