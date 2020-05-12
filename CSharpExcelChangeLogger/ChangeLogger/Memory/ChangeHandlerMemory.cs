@@ -13,7 +13,12 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         {
             SheetName = sheet.Name;
             RangeAddress = range.Address;
-            RangeData = range.RangeData;
+
+            int cellCount = range.RowCount * range.ColumnCount;
+            if (cellCount < 100)
+            {
+                RangeData = range.RangeData;
+            }
         }
 
         public IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range)
