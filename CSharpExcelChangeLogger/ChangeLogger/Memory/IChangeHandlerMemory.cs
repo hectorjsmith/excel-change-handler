@@ -7,6 +7,11 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
     internal interface IChangeHandlerMemory
     {
         int MaxRangeSizeForStoringData { get; set; }
+        string? SheetName { get; }
+        string? RangeAddress { get; }
+        string[,]? RangeData { get; }
+
+        void UnsetMemory();
 
         void SetMemory(IWorksheet sheet, IRange range);
 

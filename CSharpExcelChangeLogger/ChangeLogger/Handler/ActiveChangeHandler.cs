@@ -10,7 +10,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
     class ActiveChangeHandler : IChangeHandler
     {
         private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
-        private readonly IChangeHighlighter _highlighter = new ActiveChangeHighlighter();
+        private IChangeHighlighter Highlighter => StaticChangeLoggerManager.ChangeHighlighter;
 
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
@@ -22,7 +22,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
             IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
             if (!memoryComparison.LocationMatchesAndDataMatches)
             {
-                _highlighter.HighlightRange(sheet, range);
+                Highlighter.HighlightRange(memoryComparison, sheet, range);
             }
         }
     }

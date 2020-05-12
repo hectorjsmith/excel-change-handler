@@ -8,11 +8,17 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
     {
         private const int DefaultMaxRangeSizeForStoringData = 15000;
 
-        private string SheetName { get; set; } = "";
-        private string RangeAddress { get; set; } = "";
-        private string[,] RangeData { get; set; } = new string[0, 0];
-
         public int MaxRangeSizeForStoringData { get; set; } = DefaultMaxRangeSizeForStoringData;
+        public string? SheetName { get; private set; }
+        public string? RangeAddress { get; private set; }
+        public string[,]? RangeData { get; private set; }
+
+        public void UnsetMemory()
+        {
+            SheetName = null;
+            RangeAddress = null;
+            RangeData = null;
+        }
 
         public void SetMemory(IWorksheet sheet, IRange range)
         {
@@ -22,49 +28,65 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
             int cellCount = range.RowCount * range.ColumnCount;
             if (cellCount <= MaxRangeSizeForStoringData)
             {
-                StoreRangeDataInMemory(sheet, range);
+                RangeData = TryReadRangeData(sheet, range);
+            }
+            else
+            {
+                RangeData = null;
             }
         }
 
         public IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range)
         {
-            bool sheetNameMatches = string.Equals(SheetName, sheet.Name, StringComparison.Ordinal);
-            bool rangeAddressMatches = string.Equals(RangeAddress, range.Address, StringComparison.Ordinal);
-
             bool dataMatches = false;
-            bool locationMatches = sheetNameMatches && rangeAddressMatches;
-            if (locationMatches)
+            string[,]? newRangeData = null;
+
+            bool locationMatches = CheckLocationMatches(sheet, range);
+            if (locationMatches && RangeData != null && CheckRangeSizeMatchesData(RangeData, range))
             {
-                dataMatches = CheckDataMatches(range);
+                newRangeData = TryReadRangeData(sheet, range);
+                dataMatches = newRangeData != null && CompareDataArrays(RangeData, newRangeData);
             }
-            return new MemoryComparison(locationMatches, locationMatches && dataMatches);
+
+            return new MemoryComparison(locationMatches, dataMatches, RangeData, newRangeData);
         }
 
-        private void StoreRangeDataInMemory(IWorksheet sheet, IRange range)
+        private string[,]? TryReadRangeData(IWorksheet sheet, IRange range)
         {
             try
             {
-                RangeData = range.RangeData;
+                return range.RangeData;
             }
             catch (Exception ex)
             {
                 Log.Error(string.Format("Error reading range data into memory. Sheet: {0} ; Range: {1}", sheet.Name, RangeAddress), ex);
+                return null;
             }
         }
 
-        private bool CheckDataMatches(IRange range)
+        private bool CheckLocationMatches(IWorksheet sheet, IRange range)
         {
-            if (RangeData.GetLength(0) != range.RowCount || RangeData.GetLength(1) != range.ColumnCount)
+            return string.Equals(SheetName, sheet.Name, StringComparison.Ordinal)
+                && string.Equals(RangeAddress, range.Address, StringComparison.Ordinal);
+        }
+
+        private bool CheckRangeSizeMatchesData(string[,] data, IRange range)
+        {
+            return data.GetLength(0) == range.RowCount && data.GetLength(1) == range.ColumnCount;
+        }
+
+        private bool CompareDataArrays(string[,] data1, string[,] data2)
+        {
+            if (data1.GetLength(0) != data2.GetLength(0) || data1.GetLength(1) != data2.GetLength(1))
             {
                 return false;
             }
 
-            string[,] newRangeData = range.RangeData;
-            for (int row = 0; row < RangeData.GetLength(0); row++)
+            for (int row = 0; row < data1.GetLength(0); row++)
             {
-                for (int col = 0; col < RangeData.GetLength(1); col++)
+                for (int col = 0; col < data1.GetLength(1); col++)
                 {
-                    if (!string.Equals(RangeData[row, col], newRangeData[row, col], StringComparison.Ordinal))
+                    if (!string.Equals(data1[row, col], data2[row, col], StringComparison.Ordinal))
                     {
                         return false;
                     }

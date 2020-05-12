@@ -16,16 +16,22 @@ namespace CSharpExcelChangeLogger.ChangeLogger
         private static readonly ILogger _inactiveLogger = new InactiveLogger();
         private static ILogger? _injectedLogger;
 
-        public static ILogger Log
-        {
-            get { return _injectedLogger ?? _inactiveLogger; }
-        }
+        private static readonly IChangeHighlighter _defaultHighlighter = new SimpleChangeHighlighter();
+        private static IChangeHighlighter? _injectedHighlighter;
+
+        public static ILogger Log => _injectedLogger ?? _inactiveLogger;
+        public static IChangeHighlighter ChangeHighlighter => _injectedHighlighter ?? _defaultHighlighter;
 
         public static IConfiguration Configuration { get; } = new Configuration();
 
         public static void SetInjectedLogger(ILogger? logger)
         {
             _injectedLogger = logger;
+        }
+
+        public static void SetInjectedHighlighter(IChangeHighlighter? highlighter)
+        {
+            _injectedHighlighter = highlighter;
         }
 
         public static void BeforeChange(IWorksheet sheet, IRange range)

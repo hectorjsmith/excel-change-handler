@@ -3,12 +3,21 @@
     class MemoryComparison : IMemoryComparison
     {
         public bool LocationMatches { get; }
-        public bool LocationMatchesAndDataMatches { get; }
 
-        public MemoryComparison(bool locationMatches, bool locationMatchesAndDataMatches)
+        public bool DataMatches { get; }
+
+        public bool LocationMatchesAndDataMatches => LocationMatches && DataMatches;
+
+        public string[,]? DataBeforeChange { get; }
+
+        public string[,]? DataAfterChange { get; }
+
+        public MemoryComparison(bool locationMatches, bool dataMatches, string[,]? dataBeforeChange, string[,]? dataAfterChange)
         {
             LocationMatches = locationMatches;
-            LocationMatchesAndDataMatches = locationMatchesAndDataMatches;
+            DataMatches = dataMatches;
+            DataBeforeChange = dataBeforeChange;
+            DataAfterChange = dataAfterChange;
         }
     }
 }
