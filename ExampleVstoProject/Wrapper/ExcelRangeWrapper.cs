@@ -15,9 +15,9 @@ namespace ExampleVstoProject.Wrapper
 
         public string[,] RangeData => ConvertToStringArray2D(GetArray(_range, () => _range.Formula));
 
-        public void FillRange(int rgbColour)
+        public void FillRange(int colour)
         {
-            _range.Interior.Color = rgbColour;
+            _range.Interior.Color = colour;
         }
 
         public ExcelRangeWrapper(Range range)
