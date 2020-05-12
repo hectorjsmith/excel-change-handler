@@ -8,11 +8,17 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
     {
         private const int DefaultMaxRangeSizeForStoringData = 15000;
 
-        private string SheetName { get; set; } = "";
-        private string RangeAddress { get; set; } = "";
-        private string[,] RangeData { get; set; } = new string[0, 0];
-
         public int MaxRangeSizeForStoringData { get; set; } = DefaultMaxRangeSizeForStoringData;
+        public string? SheetName { get; private set; }
+        public string? RangeAddress { get; private set; }
+        public string[,]? RangeData { get; private set; }
+
+        public void UnsetMemory()
+        {
+            SheetName = null;
+            RangeAddress = null;
+            RangeData = null;
+        }
 
         public void SetMemory(IWorksheet sheet, IRange range)
         {
@@ -23,6 +29,10 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
             if (cellCount <= MaxRangeSizeForStoringData)
             {
                 StoreRangeDataInMemory(sheet, range);
+            }
+            else
+            {
+                RangeData = null;
             }
         }
 
@@ -54,7 +64,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 
         private bool CheckDataMatches(IRange range)
         {
-            if (RangeData.GetLength(0) != range.RowCount || RangeData.GetLength(1) != range.ColumnCount)
+            if (RangeData == null || RangeData.GetLength(0) != range.RowCount || RangeData.GetLength(1) != range.ColumnCount)
             {
                 return false;
             }

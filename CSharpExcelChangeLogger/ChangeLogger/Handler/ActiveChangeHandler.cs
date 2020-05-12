@@ -10,7 +10,6 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
     class ActiveChangeHandler : IChangeHandler
     {
         private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
-
         private IChangeHighlighter Highlighter => StaticChangeLoggerManager.ChangeHighlighter;
 
         public void BeforeChange(IWorksheet sheet, IRange range)
