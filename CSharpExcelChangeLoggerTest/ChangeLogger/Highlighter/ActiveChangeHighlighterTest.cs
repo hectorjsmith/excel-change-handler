@@ -22,7 +22,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
 
-            IChangeHighlighter highlighter = new ActiveChangeHighlighter();
+            IChangeHighlighter highlighter = new SimpleChangeHighlighter();
             highlighter.HighlightRange(new SimpleMockMemoryComparison(), sheet, range);
 
             Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour");

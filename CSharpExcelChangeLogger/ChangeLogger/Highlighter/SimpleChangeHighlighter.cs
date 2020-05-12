@@ -7,11 +7,11 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.ChangeLogger.Highlighter
 {
-    internal class ActiveChangeHighlighter : BaseClass, IChangeHighlighter
+    internal class SimpleChangeHighlighter : BaseClass, IChangeHighlighter
     {
         public void HighlightRange(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range)
         {
-            Log.Info(string.Format("Highlighting range '{0}' on sheet '{1}'", range.Address, sheet.Name));
+            Log.Debug(string.Format("Highlighting range '{0}' on sheet '{1}'", range.Address, sheet.Name));
             range.FillRange(StaticChangeLoggerManager.Configuration.CellHighlightColour);
         }
     }

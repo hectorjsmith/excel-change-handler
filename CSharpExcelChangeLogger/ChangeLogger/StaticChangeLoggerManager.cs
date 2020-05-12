@@ -16,7 +16,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger
         private static readonly ILogger _inactiveLogger = new InactiveLogger();
         private static ILogger? _injectedLogger;
 
-        private static readonly IChangeHighlighter _defaultHighlighter = new ActiveChangeHighlighter();
+        private static readonly IChangeHighlighter _defaultHighlighter = new SimpleChangeHighlighter();
         private static IChangeHighlighter? _injectedHighlighter;
 
         public static ILogger Log => _injectedLogger ?? _inactiveLogger;
