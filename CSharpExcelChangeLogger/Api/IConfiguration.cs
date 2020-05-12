@@ -6,11 +6,11 @@ namespace CSharpExcelChangeLogger.Api
 {
     public interface IConfiguration
     {
-        int CellHighlightRgbColour { get; set; }
+        int CellHighlightColour { get; set; }
     }
 
     class Configuration : IConfiguration
     {
-        public int CellHighlightRgbColour { get; set; }
+        public int CellHighlightColour { get; set; }
     }
 }

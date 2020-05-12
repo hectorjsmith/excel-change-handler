@@ -11,7 +11,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Highlighter
         public void HighlightRange(IWorksheet sheet, IRange range)
         {
             Log.Info(string.Format("Highlighting range '{0}' on sheet '{1}'", range.Address, sheet.Name));
-            range.FillRange(StaticChangeLoggerManager.Configuration.CellHighlightRgbColour);
+            range.FillRange(StaticChangeLoggerManager.Configuration.CellHighlightColour);
         }
     }
 }
