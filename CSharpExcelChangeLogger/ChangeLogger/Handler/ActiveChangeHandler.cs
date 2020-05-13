@@ -12,17 +12,25 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
         private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
         private IChangeHighlighter Highlighter => StaticChangeLoggerManager.ChangeHighlighter;
 
+        private bool ChangeHandlingEnabled => StaticChangeLoggerManager.Configuration.HighlighterEnabled;
+
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
-            _memory.SetMemory(sheet, range);
+            if (ChangeHandlingEnabled)
+            {
+                _memory.SetMemory(sheet, range);
+            }
         }
 
         public void AfterChange(IWorksheet sheet, IRange range)
         {
-            IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
-            if (!memoryComparison.LocationMatchesAndDataMatches)
+            if (ChangeHandlingEnabled)
             {
-                Highlighter.HighlightRange(memoryComparison, sheet, range);
+                IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
+                if (!memoryComparison.LocationMatchesAndDataMatches)
+                {
+                    Highlighter.HighlightRange(memoryComparison, sheet, range);
+                }
             }
         }
     }
