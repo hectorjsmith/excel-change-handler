@@ -1,5 +1,6 @@
 ﻿using CSharpExcelChangeLogger.Api;
 using CSharpExcelChangeLogger.ChangeLogger.Handler;
+using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLoggerTest.Mock;
 using NUnit.Framework;
 using System;
@@ -14,10 +15,9 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
         {
             int testColour = 111;
-            IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
-
             IChangeHandler changeHandler = new ActiveChangeHandler();
+            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
 
@@ -30,10 +30,9 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithNoDataChange_Then_RangeNotHighlighted()
         {
             int testColour = 111;
-            IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
-
             IChangeHandler changeHandler = new ActiveChangeHandler();
+            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange();
             range1.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
@@ -50,10 +49,9 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDataChanges_Then_RangeHighlighted()
         {
             int testColour = 111;
-            IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
-
             IChangeHandler changeHandler = new ActiveChangeHandler();
+            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange();
             range1.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
@@ -70,10 +68,9 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDifferentRange_Then_RangeHighlighted()
         {
             int testColour = 111;
-            IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
-
             IChangeHandler changeHandler = new ActiveChangeHandler();
+            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange("1");
             SimpleMockRange range2 = new SimpleMockRange("2");
