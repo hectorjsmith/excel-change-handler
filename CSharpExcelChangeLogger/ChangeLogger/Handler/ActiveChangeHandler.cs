@@ -9,29 +9,32 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Handler
 {
     class ActiveChangeHandler : IChangeHandler
     {
-        private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
-        private IChangeHighlighter Highlighter => StaticChangeLoggerManager.ChangeHighlighter;
+        private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
 
-        private bool ChangeHandlingEnabled => StaticChangeLoggerManager.Configuration.HighlighterEnabled;
+        private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
+        private readonly IChangeHighlighter _defaultHighlighter = new SimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR);
+        private IChangeHighlighter? _injectedHighlighter;
+
+        public IChangeHighlighter ChangeHighlighter => _injectedHighlighter ?? _defaultHighlighter;
+
+        public void SetHighlighter(IChangeHighlighter? highlighter)
+        {
+            _injectedHighlighter = highlighter;
+        }
 
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
-            if (ChangeHandlingEnabled)
-            {
-                _memory.SetMemory(sheet, range);
-            }
+            _memory.SetMemory(sheet, range);
         }
 
         public void AfterChange(IWorksheet sheet, IRange range)
         {
-            if (ChangeHandlingEnabled)
+            IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
+            if (!memoryComparison.LocationMatchesAndDataMatches)
             {
-                IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
-                if (!memoryComparison.LocationMatchesAndDataMatches)
-                {
-                    Highlighter.HighlightRange(memoryComparison, sheet, range);
-                }
+                ChangeHighlighter.HighlightRange(memoryComparison, sheet, range);
             }
         }
+
     }
 }
