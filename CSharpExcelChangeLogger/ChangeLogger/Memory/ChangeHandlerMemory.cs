@@ -112,38 +112,38 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 
         private bool CheckForNewRow(IWorksheet sheet, IRange range)
         {
-            if (SheetRows == null || SheetRows <= sheet.RowCount)
+            if (SheetRows == null || sheet.RowCount <= SheetRows)
             {
                 return false;
             }
-            return range.RowCount == 1 && range.ColumnCount == ExcelMaxColumnCount;
+            return range.ColumnCount == ExcelMaxColumnCount;
         }
 
         private bool CheckForRowDelete(IWorksheet sheet, IRange range)
         {
-            if (SheetRows == null || SheetRows >= sheet.RowCount)
+            if (SheetRows == null || sheet.RowCount >= SheetRows)
             {
                 return false;
             }
-            return range.RowCount == 1 && range.ColumnCount == ExcelMaxColumnCount;
+            return range.ColumnCount == ExcelMaxColumnCount;
         }
 
         private bool CheckForNewColumn(IWorksheet sheet, IRange range)
         {
-            if (SheetColumns == null || SheetColumns <= sheet.ColumnCount)
+            if (SheetColumns == null || sheet.ColumnCount <= SheetColumns)
             {
                 return false;
             }
-            return range.ColumnCount == 1 && range.RowCount == ExcelMaxRowCount;
+            return range.RowCount == ExcelMaxRowCount;
         }
 
         private bool CheckForColumnDelete(IWorksheet sheet, IRange range)
         {
-            if (SheetColumns == null || SheetColumns >= sheet.ColumnCount)
+            if (SheetColumns == null || sheet.ColumnCount >= SheetColumns)
             {
                 return false;
             }
-            return range.ColumnCount == 1 && range.RowCount == ExcelMaxRowCount;
+            return range.RowCount == ExcelMaxRowCount;
         }
 
     }

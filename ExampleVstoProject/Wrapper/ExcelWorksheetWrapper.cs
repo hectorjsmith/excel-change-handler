@@ -10,9 +10,9 @@ namespace ExampleVstoProject.Wrapper
 
         public string Name => _worksheet.Name;
 
-        public int RowCount => _worksheet.Rows.Count;
+        public int RowCount => _worksheet.UsedRange.Rows.Count;
 
-        public int ColumnCount => _worksheet.Columns.Count;
+        public int ColumnCount => _worksheet.UsedRange.Columns.Count;
 
         public ExcelWorksheetWrapper(Worksheet worksheet)
         {
