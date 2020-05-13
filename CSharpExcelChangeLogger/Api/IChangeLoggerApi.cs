@@ -15,5 +15,7 @@ namespace CSharpExcelChangeLogger.Api
         void AfterChange(IWorksheet sheet, IRange range);
 
         void SetCustomHighlighter(IChangeHighlighter? highlighter);
+
+        IChangeHighlighter NewSimpleChangeHighlighter(int highlightColour);
     }
 }

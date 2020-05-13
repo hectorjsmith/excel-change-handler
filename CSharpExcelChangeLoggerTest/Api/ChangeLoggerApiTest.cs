@@ -14,7 +14,7 @@ namespace CSharpExcelChangeLoggerTest.Api
         {
             int testColour = 33;
             IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.Configuration.CellHighlightColour = testColour;
+            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
             api.SetLogger(new TestLogger());
 
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -28,6 +28,5 @@ namespace CSharpExcelChangeLoggerTest.Api
 
             Assert.AreEqual(testColour, rangeAfter.FillColour, "Range should be filled with correct colour when no memory set");
         }
-
     }
 }

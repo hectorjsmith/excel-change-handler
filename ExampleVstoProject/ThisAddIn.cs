@@ -21,7 +21,8 @@ namespace ExampleVstoProject
             application.SheetSelectionChange += Application_SheetSelectionChange;
             application.SheetChange += Application_SheetChange;
 
-            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = 16776960;
+            IChangeLoggerApi api = ChangeLoggerApi.Instance;
+            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(16776960));
         }
 
         private void Application_SheetChange(object sheet, Excel.Range range)

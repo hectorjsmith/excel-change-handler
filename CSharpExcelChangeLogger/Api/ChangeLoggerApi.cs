@@ -1,4 +1,6 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger;
+﻿using CSharpExcelChangeLogger.Base;
+using CSharpExcelChangeLogger.ChangeLogger;
+using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
@@ -13,7 +15,10 @@ namespace CSharpExcelChangeLogger.Api
         private static IChangeLoggerApi? _instance;
         public static IChangeLoggerApi Instance = _instance ?? (_instance = new ChangeLoggerApi());
 
-        public IConfiguration Configuration => StaticChangeLoggerManager.Configuration;
+        private readonly IChangeHandler _changeHandler = new ActiveChangeHandler();
+        
+        public IConfiguration Configuration { get; } = new Configuration();
+        private bool ChangeHandlingEnabled => Configuration.HighlighterEnabled;
 
         private ChangeLoggerApi()
         {
@@ -21,22 +26,33 @@ namespace CSharpExcelChangeLogger.Api
 
         public void SetLogger(ILogger? logger)
         {
-            StaticChangeLoggerManager.SetInjectedLogger(logger);
+            StaticLogManager.SetLogger(logger);
         }
 
         public void SetCustomHighlighter(IChangeHighlighter? highlighter)
         {
-            StaticChangeLoggerManager.SetInjectedHighlighter(highlighter);
+            _changeHandler.SetHighlighter(highlighter);
         }
 
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
-            StaticChangeLoggerManager.BeforeChange(sheet, range);
+            if (ChangeHandlingEnabled)
+            {
+                _changeHandler.BeforeChange(sheet, range);
+            }
         }
 
         public void AfterChange(IWorksheet sheet, IRange range)
         {
-            StaticChangeLoggerManager.AfterChange(sheet, range);
+            if (ChangeHandlingEnabled)
+            {
+                _changeHandler.AfterChange(sheet, range);
+            }
+        }
+
+        public IChangeHighlighter NewSimpleChangeHighlighter(int highlightColour)
+        {
+            return new SimpleChangeHighlighter(highlightColour);
         }
     }
 }
