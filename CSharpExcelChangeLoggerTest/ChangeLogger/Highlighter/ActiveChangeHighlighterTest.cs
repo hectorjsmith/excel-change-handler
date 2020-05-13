@@ -12,17 +12,14 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
     class ActiveChangeHighlighterTest
     {
         [Test]
-        public void Given_ActiveChangeLogger_When_AfterChangeHookCalled_Then_RangeIsHighlighted()
+        public void Given_ActiveChangeHighlighter_When_HighlightRangeMethodCalled_Then_RangeIsHighlighted()
         {
             int testColour = 111;
-            IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.Configuration.CellHighlightColour = testColour;
-            api.SetLogger(new TestLogger());
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
 
-            IChangeHighlighter highlighter = new SimpleChangeHighlighter();
+            IChangeHighlighter highlighter = new SimpleChangeHighlighter(testColour);
             highlighter.HighlightRange(new SimpleMockMemoryComparison(), sheet, range);
 
             Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour");

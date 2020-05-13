@@ -14,7 +14,8 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
+            IChangeLoggerApi api = ChangeLoggerApi.Instance;
+            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -29,7 +30,8 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithNoDataChange_Then_RangeNotHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
+            IChangeLoggerApi api = ChangeLoggerApi.Instance;
+            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -48,7 +50,8 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDataChanges_Then_RangeHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
+            IChangeLoggerApi api = ChangeLoggerApi.Instance;
+            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -67,7 +70,8 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDifferentRange_Then_RangeHighlighted()
         {
             int testColour = 111;
-            ChangeLoggerApi.Instance.Configuration.CellHighlightColour = testColour;
+            IChangeLoggerApi api = ChangeLoggerApi.Instance;
+            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(testColour));
 
             IChangeHandler changeHandler = new ActiveChangeHandler();
             SimpleMockSheet sheet = new SimpleMockSheet();
