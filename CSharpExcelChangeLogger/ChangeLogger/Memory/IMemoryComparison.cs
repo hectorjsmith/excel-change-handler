@@ -20,6 +20,14 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         /// </summary>
         bool DataMatches { get; }
 
+        bool IsNewRow { get; }
+
+        bool IsRowDelete { get; }
+
+        bool IsNewColumn { get; }
+
+        bool IsColumnDelete { get; }
+
         /// <summary>
         /// 'LocationMatches' and 'DataMatches'
         /// </summary>
