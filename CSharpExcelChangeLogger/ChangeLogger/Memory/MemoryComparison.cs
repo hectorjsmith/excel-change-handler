@@ -6,16 +6,31 @@
 
         public bool DataMatches { get; }
 
+        public bool IsNewRow { get; }
+
+        public bool IsRowDelete { get; }
+
+        public bool IsNewColumn { get; }
+
+        public bool IsColumnDelete { get; }
+
         public bool LocationMatchesAndDataMatches => LocationMatches && DataMatches;
 
         public string[,]? DataBeforeChange { get; }
 
         public string[,]? DataAfterChange { get; }
 
-        public MemoryComparison(bool locationMatches, bool dataMatches, string[,]? dataBeforeChange, string[,]? dataAfterChange)
+        public MemoryComparison(
+            bool locationMatches, bool dataMatches, 
+            bool isNewRow, bool isRowDelete, bool isNewColumn, bool isColumnDelete, 
+            string[,]? dataBeforeChange, string[,]? dataAfterChange)
         {
             LocationMatches = locationMatches;
             DataMatches = dataMatches;
+            IsNewRow = isNewRow;
+            IsRowDelete = isRowDelete;
+            IsNewColumn = isNewColumn;
+            IsColumnDelete = isColumnDelete;
             DataBeforeChange = dataBeforeChange;
             DataAfterChange = dataAfterChange;
         }

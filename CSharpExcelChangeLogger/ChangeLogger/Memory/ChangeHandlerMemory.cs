@@ -6,16 +6,22 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 {
     class ChangeHandlerMemory : BaseClass, IChangeHandlerMemory
     {
+        private const int ExcelMaxColumnCount = 16384;
+        private const int ExcelMaxRowCount = 1048576;
         private const int DefaultMaxRangeSizeForStoringData = 15000;
 
         public int MaxRangeSizeForStoringData { get; set; } = DefaultMaxRangeSizeForStoringData;
         public string? SheetName { get; private set; }
+        public int? SheetRows { get; private set; }
+        public int? SheetColumns { get; private set; }
         public string? RangeAddress { get; private set; }
         public string[,]? RangeData { get; private set; }
 
         public void UnsetMemory()
         {
             SheetName = null;
+            SheetRows = null;
+            SheetColumns = null;
             RangeAddress = null;
             RangeData = null;
         }
@@ -23,6 +29,8 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         public void SetMemory(IWorksheet sheet, IRange range)
         {
             SheetName = sheet.Name;
+            SheetRows = sheet.RowCount;
+            SheetColumns = sheet.ColumnCount;
             RangeAddress = range.Address;
 
             int cellCount = range.RowCount * range.ColumnCount;
@@ -48,7 +56,14 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
                 dataMatches = newRangeData != null && CompareDataArrays(RangeData, newRangeData);
             }
 
-            return new MemoryComparison(locationMatches, dataMatches, RangeData, newRangeData);
+            return new MemoryComparison(locationMatches: locationMatches,
+                                        dataMatches: dataMatches,
+                                        isNewRow: CheckForNewRow(sheet, range),
+                                        isRowDelete: CheckForRowDelete(sheet, range),
+                                        isNewColumn: CheckForNewColumn(sheet, range),
+                                        isColumnDelete: CheckForColumnDelete(sheet, range),
+                                        dataBeforeChange: RangeData,
+                                        dataAfterChange: newRangeData);
         }
 
         private string[,]? TryReadRangeData(IWorksheet sheet, IRange range)
@@ -93,6 +108,42 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
                 }
             }
             return true;
+        }
+
+        private bool CheckForNewRow(IWorksheet sheet, IRange range)
+        {
+            if (SheetRows == null || sheet.RowCount <= SheetRows)
+            {
+                return false;
+            }
+            return range.ColumnCount == ExcelMaxColumnCount;
+        }
+
+        private bool CheckForRowDelete(IWorksheet sheet, IRange range)
+        {
+            if (SheetRows == null || sheet.RowCount >= SheetRows)
+            {
+                return false;
+            }
+            return range.ColumnCount == ExcelMaxColumnCount;
+        }
+
+        private bool CheckForNewColumn(IWorksheet sheet, IRange range)
+        {
+            if (SheetColumns == null || sheet.ColumnCount <= SheetColumns)
+            {
+                return false;
+            }
+            return range.RowCount == ExcelMaxRowCount;
+        }
+
+        private bool CheckForColumnDelete(IWorksheet sheet, IRange range)
+        {
+            if (SheetColumns == null || sheet.ColumnCount >= SheetColumns)
+            {
+                return false;
+            }
+            return range.RowCount == ExcelMaxRowCount;
         }
 
     }

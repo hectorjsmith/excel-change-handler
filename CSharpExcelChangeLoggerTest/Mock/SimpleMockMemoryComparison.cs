@@ -16,5 +16,13 @@ namespace CSharpExcelChangeLoggerTest.Mock
         public string[,]? DataBeforeChange { get; set; }
 
         public string[,]? DataAfterChange { get; set; }
+
+        public bool IsNewRow { get; set; }
+
+        public bool IsRowDelete { get; set; }
+
+        public bool IsNewColumn { get; set; }
+
+        public bool IsColumnDelete { get; set; }
     }
 }
