@@ -108,5 +108,53 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             Assert.AreEqual(false, comparison.LocationMatchesAndDataMatches,
                 "Should return false because the range data was not loaded into memory and as such is always treated as different");
         }
+
+        [Test]
+        public void Given_SheetSavedToMemory_When_ComparedToBiggerSheet_Then_ShouldReportRowsAndColumnsAdded()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory();
+
+            SimpleMockSheet sheet1 = new SimpleMockSheet();
+            sheet1.RowCount = 1;
+            sheet1.ColumnCount = 1;
+            SimpleMockSheet sheet2 = new SimpleMockSheet();
+            sheet2.RowCount = 2;
+            sheet2.ColumnCount = 2;
+            SimpleMockRange range = new SimpleMockRange();
+
+            memory.SetMemory(sheet1, range);
+            range.RowCount = 1048576;
+            range.ColumnCount = 16384;
+            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet2, range);
+
+            Assert.AreEqual(true, comparison.IsNewRow, "Should report new row as sheet size grew");
+            Assert.AreEqual(true, comparison.IsNewColumn, "Should report new column as sheet size grew");
+            Assert.AreEqual(false, comparison.IsRowDelete, "Should not report row delete as sheet size grew");
+            Assert.AreEqual(false, comparison.IsColumnDelete, "Should not report column delete as sheet size grew");
+        }
+
+        [Test]
+        public void Given_SheetSavedToMemory_When_ComparedToSmallerSheet_Then_ShouldReportRowsAndColumnsDeleted()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory();
+
+            SimpleMockSheet sheet1 = new SimpleMockSheet();
+            sheet1.RowCount = 2;
+            sheet1.ColumnCount = 2;
+            SimpleMockSheet sheet2 = new SimpleMockSheet();
+            sheet2.RowCount = 1;
+            sheet2.ColumnCount = 1;
+            SimpleMockRange range = new SimpleMockRange();
+
+            memory.SetMemory(sheet1, range);
+            range.RowCount = 1048576;
+            range.ColumnCount = 16384;
+            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet2, range);
+
+            Assert.AreEqual(false, comparison.IsNewRow, "Should not report new row as sheet size shrunk");
+            Assert.AreEqual(false, comparison.IsNewColumn, "Should not report new column as sheet size shrunk");
+            Assert.AreEqual(true, comparison.IsRowDelete, "Should report row delete as sheet size shrunk");
+            Assert.AreEqual(true, comparison.IsColumnDelete, "Should report column delete as sheet size shrunk");
+        }
     }
 }
