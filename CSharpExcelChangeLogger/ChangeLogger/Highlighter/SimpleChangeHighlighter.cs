@@ -18,13 +18,11 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Highlighter
 
         public void HighlightRange(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range)
         {
-            if (memoryComparison.IsColumnDelete || memoryComparison.IsRowDelete)
+            if (!memoryComparison.IsColumnDelete && !memoryComparison.IsRowDelete)
             {
-                return;
+                Log.Debug(string.Format("Highlighting range '{0}' on sheet '{1}'", range.Address, sheet.Name));
+                range.FillRange(_highlightColour);
             }
-
-            Log.Debug(string.Format("Highlighting range '{0}' on sheet '{1}'", range.Address, sheet.Name));
-            range.FillRange(_highlightColour);
         }
     }
 }

@@ -20,12 +20,24 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         /// </summary>
         bool DataMatches { get; }
 
+        /// <summary>
+        /// Returns true if the change logger detected that the latest change was a new row. False otherwise.
+        /// </summary>
         bool IsNewRow { get; }
 
+        /// <summary>
+        /// Returns true if the change logger detected that the latest change was a row deletion. False otherwise.
+        /// </summary>
         bool IsRowDelete { get; }
 
+        /// <summary>
+        /// Returns true if the change logger detected that the latest change was a new column. False otherwise.
+        /// </summary>
         bool IsNewColumn { get; }
 
+        /// <summary>
+        /// Returns true if the change logger detected that the latest change was a column deletion. False otherwise.
+        /// </summary>
         bool IsColumnDelete { get; }
 
         /// <summary>
