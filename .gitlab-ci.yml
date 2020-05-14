@@ -3,6 +3,7 @@ image: microsoft/dotnet:latest
 stages:
     - build
     - test
+    - publish
 
 before_script:
     - apt-get update
@@ -18,3 +19,18 @@ test:
     stage: test
     script:
         - dotnet test CSharpExcelChangeLoggerTest/CSharpExcelChangeLoggerTest.csproj
+
+publish:
+    stage: publish
+    script:
+    - chmod +x BuildTools/*.sh
+    - ./BuildTools/Build.sh
+    artifacts:
+      paths:
+      - CSharpExcelChangeLogger/bin/Release/*.nupkg
+      expire_in: 1 day
+    rules:
+      - if: $CI_MERGE_REQUEST_ID
+        when: never
+      - if: '$CI_COMMIT_TAG != "" || $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "develop"'
+        when: always
