@@ -27,5 +27,5 @@ publish:
     - ./BuildTools/Build.sh
     artifacts:
       paths:
-      - PerformanceRecorder/bin/Release/*.nupkg
+      - CSharpExcelChangeLogger/bin/Release/*.nupkg
       expire_in: 1 day
