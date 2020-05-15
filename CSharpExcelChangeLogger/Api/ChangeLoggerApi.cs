@@ -1,24 +1,23 @@
 ﻿using CSharpExcelChangeLogger.Base;
-using CSharpExcelChangeLogger.ChangeLogger;
 using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
+using CSharpExcelChangeLogger.ChangeLogger.Processor;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSharpExcelChangeLogger.Api
 {
     public class ChangeLoggerApi : IChangeLoggerApi
     {
+        private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
+
         private static IChangeLoggerApi? _instance;
         public static IChangeLoggerApi Instance = _instance ?? (_instance = new ChangeLoggerApi());
 
-        private readonly IChangeHandler _changeHandler = new ActiveChangeHandler();
-        
+        private readonly IChangeProcessor _changeProcessor = new ActiveChangeProcessor();
+
         public IConfiguration Configuration { get; } = new Configuration();
-        private bool ChangeHandlingEnabled => Configuration.HighlighterEnabled;
+        private bool ChangeHandlingEnabled => Configuration.ChangeHandlingEnabled;
 
         private ChangeLoggerApi()
         {
@@ -29,16 +28,26 @@ namespace CSharpExcelChangeLogger.Api
             StaticLogManager.SetLogger(logger);
         }
 
-        public void SetCustomHighlighter(IChangeHighlighter? highlighter)
+        public void ClearAllHandlers()
         {
-            _changeHandler.SetHighlighter(highlighter);
+            _changeProcessor.ClearAllHandlers();
+        }
+
+        public void AddDefaultHandlers()
+        {
+            AddCustomHandler(NewSimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR));
+        }
+
+        public void AddCustomHandler(IChangeHandler handler)
+        {
+            _changeProcessor.AddHandler(handler);
         }
 
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
             if (ChangeHandlingEnabled)
             {
-                _changeHandler.BeforeChange(sheet, range);
+                _changeProcessor.BeforeChange(sheet, range);
             }
         }
 
@@ -46,11 +55,11 @@ namespace CSharpExcelChangeLogger.Api
         {
             if (ChangeHandlingEnabled)
             {
-                _changeHandler.AfterChange(sheet, range);
+                _changeProcessor.AfterChange(sheet, range);
             }
         }
 
-        public IChangeHighlighter NewSimpleChangeHighlighter(int highlightColour)
+        public IChangeHandler NewSimpleChangeHighlighter(int highlightColour)
         {
             return new SimpleChangeHighlighter(highlightColour);
         }

@@ -2,6 +2,6 @@
 {
     class Configuration : IConfiguration
     {
-        public bool HighlighterEnabled { get; set; } = true;
+        public bool ChangeHandlingEnabled { get; set; } = true;
     }
 }
