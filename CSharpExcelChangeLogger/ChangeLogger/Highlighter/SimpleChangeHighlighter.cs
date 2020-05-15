@@ -1,4 +1,5 @@
 ﻿using CSharpExcelChangeLogger.Base;
+using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Memory;
 using CSharpExcelChangeLogger.Excel;
 using System;

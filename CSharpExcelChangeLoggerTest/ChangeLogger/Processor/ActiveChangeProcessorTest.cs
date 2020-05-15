@@ -1,6 +1,7 @@
 ﻿using CSharpExcelChangeLogger.Api;
 using CSharpExcelChangeLogger.ChangeLogger.Processor;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
+using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLoggerTest.Mock;
 using NUnit.Framework;
 using System;

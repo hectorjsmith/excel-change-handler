@@ -1,4 +1,4 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
+﻿using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
 

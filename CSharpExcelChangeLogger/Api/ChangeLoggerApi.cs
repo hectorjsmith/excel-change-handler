@@ -1,12 +1,9 @@
 ﻿using CSharpExcelChangeLogger.Base;
-using CSharpExcelChangeLogger.ChangeLogger;
-using CSharpExcelChangeLogger.ChangeLogger.Processor;
+using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
+using CSharpExcelChangeLogger.ChangeLogger.Processor;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSharpExcelChangeLogger.Api
 {
@@ -18,7 +15,7 @@ namespace CSharpExcelChangeLogger.Api
         public static IChangeLoggerApi Instance = _instance ?? (_instance = new ChangeLoggerApi());
 
         private readonly IChangeProcessor _changeProcessor = new ActiveChangeProcessor();
-        
+
         public IConfiguration Configuration { get; } = new Configuration();
         private bool ChangeHandlingEnabled => Configuration.ChangeHandlingEnabled;
 

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Highlighter
+namespace CSharpExcelChangeLogger.ChangeLogger.Handler
 {
     public interface IChangeHandler
     {
