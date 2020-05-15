@@ -9,12 +9,8 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Processor
 {
     class ActiveChangeProcessor : IChangeProcessor
     {
-        private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
-
         private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
         private readonly ISet<IChangeHandler> _handlerSet = new HashSet<IChangeHandler>();
-
-        private readonly IChangeHandler _defaultHighlighter = new SimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR);
 
         public void ClearAllHandlers()
         {
@@ -28,15 +24,21 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Processor
 
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
-            _memory.SetMemory(sheet, range);
+            if (_handlerSet.Count > 0)
+            {
+                _memory.SetMemory(sheet, range);
+            }
         }
 
         public void AfterChange(IWorksheet sheet, IRange range)
         {
-            IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
-            if (!memoryComparison.LocationMatchesAndDataMatches)
+            if (_handlerSet.Count > 0)
             {
-                CallAllHandlers(memoryComparison, sheet, range);
+                IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
+                if (!memoryComparison.LocationMatchesAndDataMatches)
+                {
+                    CallAllHandlers(memoryComparison, sheet, range);
+                }
             }
         }
 
