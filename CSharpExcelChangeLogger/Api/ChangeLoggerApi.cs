@@ -1,4 +1,5 @@
 ﻿using CSharpExcelChangeLogger.Base;
+using CSharpExcelChangeLogger.ChangeLogger.Factory;
 using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.ChangeLogger.Processor;
@@ -14,10 +15,13 @@ namespace CSharpExcelChangeLogger.Api
         private static IChangeLoggerApi? _instance;
         public static IChangeLoggerApi Instance = _instance ?? (_instance = new ChangeLoggerApi());
 
-        private readonly IChangeProcessor _changeProcessor = new ActiveChangeProcessor();
+        private IChangeProcessor ChangeProcessor { get; } = new ActiveChangeProcessor();
 
         public IConfiguration Configuration { get; } = new Configuration();
         private bool ChangeHandlingEnabled => Configuration.ChangeHandlingEnabled;
+
+        public IChangeHandlerFactory ChangeHandlerFactory { get; } = new SimpleChangeHandlerFactory();
+
 
         private ChangeLoggerApi()
         {
@@ -30,24 +34,24 @@ namespace CSharpExcelChangeLogger.Api
 
         public void ClearAllHandlers()
         {
-            _changeProcessor.ClearAllHandlers();
+            ChangeProcessor.ClearAllHandlers();
         }
 
         public void AddDefaultHandlers()
         {
-            AddCustomHandler(NewSimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR));
+            AddCustomHandler(ChangeHandlerFactory.NewSimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR));
         }
 
         public void AddCustomHandler(IChangeHandler handler)
         {
-            _changeProcessor.AddHandler(handler);
+            ChangeProcessor.AddHandler(handler);
         }
 
         public void BeforeChange(IWorksheet sheet, IRange range)
         {
             if (ChangeHandlingEnabled)
             {
-                _changeProcessor.BeforeChange(sheet, range);
+                ChangeProcessor.BeforeChange(sheet, range);
             }
         }
 
@@ -55,13 +59,8 @@ namespace CSharpExcelChangeLogger.Api
         {
             if (ChangeHandlingEnabled)
             {
-                _changeProcessor.AfterChange(sheet, range);
+                ChangeProcessor.AfterChange(sheet, range);
             }
-        }
-
-        public IChangeHandler NewSimpleChangeHighlighter(int highlightColour)
-        {
-            return new SimpleChangeHighlighter(highlightColour);
         }
     }
 }
