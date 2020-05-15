@@ -5,10 +5,10 @@ using NUnit.Framework;
 
 namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
 {
-    class ActiveChangeHighlighterTest
+    class SimpleChangeHighlighterTest
     {
         [Test]
-        public void Given_ActiveChangeHighlighter_When_HighlightRangeMethodCalled_Then_RangeIsHighlighted()
+        public void Given_SimpleChangeHighlighter_When_HandleChangeMethodCalled_Then_RangeIsHighlighted()
         {
             int testColour = 111;
 
