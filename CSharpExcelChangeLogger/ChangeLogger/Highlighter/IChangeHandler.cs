@@ -7,8 +7,8 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.ChangeLogger.Highlighter
 {
-    public interface IChangeHighlighter
+    public interface IChangeHandler
     {
-        void HighlightRange(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range);
+        void HandleChange(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range);
     }
 }

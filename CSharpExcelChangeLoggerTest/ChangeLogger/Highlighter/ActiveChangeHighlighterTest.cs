@@ -19,8 +19,8 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
 
-            IChangeHighlighter highlighter = new SimpleChangeHighlighter(testColour);
-            highlighter.HighlightRange(new SimpleMockMemoryComparison(), sheet, range);
+            IChangeHandler highlighter = new SimpleChangeHighlighter(testColour);
+            highlighter.HandleChange(new SimpleMockMemoryComparison(), sheet, range);
 
             Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour");
         }

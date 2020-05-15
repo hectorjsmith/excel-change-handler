@@ -14,8 +14,12 @@ namespace CSharpExcelChangeLogger.Api
 
         void AfterChange(IWorksheet sheet, IRange range);
 
-        void SetCustomHighlighter(IChangeHighlighter? highlighter);
+        void ClearAllHandlers();
 
-        IChangeHighlighter NewSimpleChangeHighlighter(int highlightColour);
+        void AddDefaultHandlers();
+
+        void AddCustomHandler(IChangeHandler handler);
+
+        IChangeHandler NewSimpleChangeHighlighter(int highlightColour);
     }
 }

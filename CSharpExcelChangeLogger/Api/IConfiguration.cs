@@ -6,6 +6,6 @@ namespace CSharpExcelChangeLogger.Api
 {
     public interface IConfiguration
     {
-        bool HighlighterEnabled { get; set; }
+        bool ChangeHandlingEnabled { get; set; }
     }
 }

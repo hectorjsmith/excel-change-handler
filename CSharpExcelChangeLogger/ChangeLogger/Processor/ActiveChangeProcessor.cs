@@ -12,14 +12,18 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Processor
         private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
 
         private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
-        private readonly IChangeHighlighter _defaultHighlighter = new SimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR);
-        private IChangeHighlighter? _injectedHighlighter;
+        private readonly ISet<IChangeHandler> _handlerSet = new HashSet<IChangeHandler>();
 
-        public IChangeHighlighter ChangeHighlighter => _injectedHighlighter ?? _defaultHighlighter;
+        private readonly IChangeHandler _defaultHighlighter = new SimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR);
 
-        public void SetHighlighter(IChangeHighlighter? highlighter)
+        public void ClearAllHandlers()
         {
-            _injectedHighlighter = highlighter;
+            _handlerSet.Clear();
+        }
+
+        public void AddHandler(IChangeHandler handler)
+        {
+            _handlerSet.Add(handler);
         }
 
         public void BeforeChange(IWorksheet sheet, IRange range)
@@ -32,9 +36,16 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Processor
             IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
             if (!memoryComparison.LocationMatchesAndDataMatches)
             {
-                ChangeHighlighter.HighlightRange(memoryComparison, sheet, range);
+                CallAllHandlers(memoryComparison, sheet, range);
             }
         }
 
+        private void CallAllHandlers(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range)
+        {
+            foreach (IChangeHandler handler in _handlerSet)
+            {
+                handler.HandleChange(memoryComparison, sheet, range);
+            }
+        }
     }
 }

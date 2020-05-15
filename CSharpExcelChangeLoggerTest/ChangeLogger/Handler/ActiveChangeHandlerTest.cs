@@ -16,7 +16,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
@@ -31,7 +31,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange();
@@ -50,7 +50,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange();
@@ -69,7 +69,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
+            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange("1");

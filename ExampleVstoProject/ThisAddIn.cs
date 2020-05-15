@@ -22,7 +22,7 @@ namespace ExampleVstoProject
             application.SheetChange += Application_SheetChange;
 
             IChangeLoggerApi api = ChangeLoggerApi.Instance;
-            api.SetCustomHighlighter(api.NewSimpleChangeHighlighter(16776960));
+            api.AddCustomHandler(api.NewSimpleChangeHighlighter(16776960));
         }
 
         private void Application_SheetChange(object sheet, Excel.Range range)
