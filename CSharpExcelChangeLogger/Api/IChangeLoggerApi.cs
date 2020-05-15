@@ -1,4 +1,5 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Handler;
+﻿using CSharpExcelChangeLogger.ChangeLogger.Factory;
+using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLogger.Logging;
 
@@ -7,6 +8,8 @@ namespace CSharpExcelChangeLogger.Api
     public interface IChangeLoggerApi
     {
         IConfiguration Configuration { get; }
+
+        IChangeHandlerFactory ChangeHandlerFactory { get; }
 
         void SetLogger(ILogger? logger);
 
@@ -19,7 +22,5 @@ namespace CSharpExcelChangeLogger.Api
         void AddDefaultHandlers();
 
         void AddCustomHandler(IChangeHandler handler);
-
-        IChangeHandler NewSimpleChangeHighlighter(int highlightColour);
     }
 }
