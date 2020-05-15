@@ -13,6 +13,22 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
     class ActiveChangeProcessorTest
     {
         [Test]
+        public void Given_ActiveChangeProcessor_When_AfterValidChangeDetected_Then_AllHandlersTriggered()
+        {
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+
+            SimpleMockChangeHandler handler1 = new SimpleMockChangeHandler();
+            SimpleMockChangeHandler handler2 = new SimpleMockChangeHandler();
+            changeHandler.AddHandler(handler1);
+            changeHandler.AddHandler(handler2);
+
+            changeHandler.AfterChange(new SimpleMockSheet(), new SimpleMockRange());
+
+            Assert.IsTrue(handler1.HandleChangeCalled, "Processor should have fired handler1");
+            Assert.IsTrue(handler2.HandleChangeCalled, "Processor should have fired handler2");
+        }
+
+        [Test]
         public void Given_ActiveChangeProcessorWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
         {
             int testColour = 111;
