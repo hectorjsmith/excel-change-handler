@@ -9,10 +9,10 @@ using System.Text;
 
 namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
 {
-    class ActiveChangeHandlerTest
+    class ActiveChangeProcessorTest
     {
         [Test]
-        public void Given_ActiveChangeHandlerWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
+        public void Given_ActiveChangeProcessorWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
@@ -27,7 +27,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         }
 
         [Test]
-        public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithNoDataChange_Then_RangeNotHighlighted()
+        public void Given_ActiveChangeProcessorWithMemory_When_AfterChangeCalledWithNoDataChange_Then_RangeNotHighlighted()
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
@@ -46,7 +46,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         }
 
         [Test]
-        public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDataChanges_Then_RangeHighlighted()
+        public void Given_ActiveChangeProcessorWithMemory_When_AfterChangeCalledWithDataChanges_Then_RangeHighlighted()
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
@@ -65,7 +65,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         }
 
         [Test]
-        public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDifferentRange_Then_RangeHighlighted()
+        public void Given_ActiveChangeProcessorWithMemory_When_AfterChangeCalledWithDifferentRange_Then_RangeHighlighted()
         {
             int testColour = 111;
             IChangeProcessor changeHandler = new ActiveChangeProcessor();
