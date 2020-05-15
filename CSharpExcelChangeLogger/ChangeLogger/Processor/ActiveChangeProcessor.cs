@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Handler
+namespace CSharpExcelChangeLogger.ChangeLogger.Processor
 {
-    class ActiveChangeHandler : IChangeHandler
+    class ActiveChangeProcessor : IChangeProcessor
     {
         private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
 

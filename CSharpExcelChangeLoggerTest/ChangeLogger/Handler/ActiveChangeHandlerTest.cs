@@ -1,5 +1,5 @@
 ﻿using CSharpExcelChangeLogger.Api;
-using CSharpExcelChangeLogger.ChangeLogger.Handler;
+using CSharpExcelChangeLogger.ChangeLogger.Processor;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLoggerTest.Mock;
 using NUnit.Framework;
@@ -15,7 +15,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
         {
             int testColour = 111;
-            IChangeHandler changeHandler = new ActiveChangeHandler();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
             changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -30,7 +30,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithNoDataChange_Then_RangeNotHighlighted()
         {
             int testColour = 111;
-            IChangeHandler changeHandler = new ActiveChangeHandler();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
             changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -49,7 +49,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDataChanges_Then_RangeHighlighted()
         {
             int testColour = 111;
-            IChangeHandler changeHandler = new ActiveChangeHandler();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
             changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
@@ -68,7 +68,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
         public void Given_ActiveChangeHandlerWithMemory_When_AfterChangeCalledWithDifferentRange_Then_RangeHighlighted()
         {
             int testColour = 111;
-            IChangeHandler changeHandler = new ActiveChangeHandler();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
             changeHandler.SetHighlighter(new SimpleChangeHighlighter(testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();

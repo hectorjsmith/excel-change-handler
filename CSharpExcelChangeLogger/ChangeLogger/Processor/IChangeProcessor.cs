@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Handler
+namespace CSharpExcelChangeLogger.ChangeLogger.Processor
 {
-    internal interface IChangeHandler
+    internal interface IChangeProcessor
     {
         void SetHighlighter(IChangeHighlighter? highlighter);
 
