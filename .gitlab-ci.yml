@@ -18,7 +18,15 @@ build:
 test:
     stage: test
     script:
-        - dotnet test CSharpExcelChangeLoggerTest/CSharpExcelChangeLoggerTest.csproj
+    - 'dotnet test CSharpExcelChangeLoggerTest/CSharpExcelChangeLoggerTest.csproj --test-adapter-path:. --logger:"junit;LogFilePath=..\artifacts\{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"'
+    artifacts:
+      when: always
+      paths:
+      - ./**/*test-result.xml
+      reports:
+        junit:
+        - ./**/*test-result.xml
+
 
 publish:
     stage: publish
@@ -33,8 +41,6 @@ publish:
       - if: $CI_MERGE_REQUEST_ID
         when: never
       - if: $CI_COMMIT_BRANCH == 'master'
-        when: on_success
-      - if: $CI_COMMIT_BRANCH == 'develop'
         when: on_success
       - if: $CI_COMMIT_TAG
         when: on_success
