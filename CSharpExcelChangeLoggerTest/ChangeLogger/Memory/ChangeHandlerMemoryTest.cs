@@ -211,5 +211,30 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             Assert.AreEqual(true, comparison.IsRowDelete, "Should report row delete as sheet size shrunk");
             Assert.AreEqual(true, comparison.IsColumnDelete, "Should report column delete as sheet size shrunk");
         }
+
+        [Test]
+        public void Given_SheetAndRangeSavedToMemory_When_ComparedToAnotherSheetAndRange_Then_BeforeAndAfterAddressProvided()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory();
+
+            string sheet1Name = "sheet 1";
+            string sheet2Name = "sheet 2";
+            string range1Addr = "A1";
+            string range2Addr = "B2";
+
+            SimpleMockSheet sheet1 = new SimpleMockSheet(sheet1Name);
+            SimpleMockSheet sheet2 = new SimpleMockSheet(sheet2Name);
+
+            SimpleMockRange range1 = new SimpleMockRange(range1Addr);
+            memory.SetMemory(sheet1, range1);
+
+            SimpleMockRange range2 = new SimpleMockRange(range2Addr);
+            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet2, range2);
+
+            Assert.AreEqual(sheet1Name, comparison.SheetNameBeforeChange, "Sheet name from before change should match name of sheet1");
+            Assert.AreEqual(sheet2Name, comparison.SheetNameAfterChange, "Sheet name from after change should match name of sheet2");
+            Assert.AreEqual(range1Addr, comparison.RangeAddressBeforeChange, "Range address from before change should match name of range1");
+            Assert.AreEqual(range2Addr, comparison.RangeAddressAfterChange, "Range address from after change should match name of range2");
+        }
     }
 }

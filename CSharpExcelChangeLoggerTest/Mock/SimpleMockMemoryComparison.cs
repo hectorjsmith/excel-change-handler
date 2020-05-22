@@ -13,10 +13,6 @@ namespace CSharpExcelChangeLoggerTest.Mock
 
         public bool LocationMatchesAndDataMatches => LocationMatches && DataMatches;
 
-        public string[,]? DataBeforeChange { get; set; }
-
-        public string[,]? DataAfterChange { get; set; }
-
         public bool IsNewRow { get; set; }
 
         public bool IsRowDelete { get; set; }
@@ -24,5 +20,17 @@ namespace CSharpExcelChangeLoggerTest.Mock
         public bool IsNewColumn { get; set; }
 
         public bool IsColumnDelete { get; set; }
+
+        public string? RangeAddressBeforeChange { get; set; }
+
+        public string? RangeAddressAfterChange { get; set; }
+
+        public string? SheetNameBeforeChange { get; set; }
+
+        public string? SheetNameAfterChange { get; set; }
+
+        public string[,]? DataBeforeChange { get; set; }
+
+        public string[,]? DataAfterChange { get; set; }
     }
 }

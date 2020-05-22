@@ -45,6 +45,14 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         /// </summary>
         bool LocationMatchesAndDataMatches { get; }
 
+        string? RangeAddressBeforeChange { get; }
+
+        string? RangeAddressAfterChange { get; }
+
+        string? SheetNameBeforeChange { get; }
+
+        string? SheetNameAfterChange { get; }
+
         /// <summary>
         /// Data saved to memory before the change occurred. Will be null if no data was stored in memory.
         /// </summary>
