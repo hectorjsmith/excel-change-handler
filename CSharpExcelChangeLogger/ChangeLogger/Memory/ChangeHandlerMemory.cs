@@ -49,11 +49,6 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
             bool dataMatches = false;
             string[,]? newRangeData = null;
 
-            if (SheetName?.Equals(sheet.Name) != true)
-            {
-                SetMemory(sheet, range);
-            }
-
             bool locationMatches = CheckLocationMatches(sheet, range);
             if (locationMatches && RangeData != null && CheckRangeSizeMatchesData(RangeData, range))
             {
