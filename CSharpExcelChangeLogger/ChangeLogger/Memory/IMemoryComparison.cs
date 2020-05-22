@@ -45,12 +45,24 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         /// </summary>
         bool LocationMatchesAndDataMatches { get; }
 
+        /// <summary>
+        /// Address of the range stored in memory before the change occurred.
+        /// </summary>
         string? RangeAddressBeforeChange { get; }
 
+        /// <summary>
+        /// Address of the range where the change occurred.
+        /// </summary>
         string? RangeAddressAfterChange { get; }
 
+        /// <summary>
+        /// Name of the sheet data stored in memory before the change occurred.
+        /// </summary>
         string? SheetNameBeforeChange { get; }
 
+        /// <summary>
+        /// Name of the sheet where the change occurred.
+        /// </summary>
         string? SheetNameAfterChange { get; }
 
         /// <summary>
