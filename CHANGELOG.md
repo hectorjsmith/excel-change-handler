@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_No unreleased changes_
+### Changed
+- Rename DoesMemoryMatch method to Compare (#22)
+
 
 ## [0.1.0] - 2020-05-18
 

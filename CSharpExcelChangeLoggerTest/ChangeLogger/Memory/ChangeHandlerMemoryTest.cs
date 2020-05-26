@@ -17,7 +17,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             IWorksheet sheet = new SimpleMockSheet();
             IRange range = new SimpleMockRange();
 
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range);
+            IMemoryComparison comparison = memory.Compare(sheet, range);
             Assert.AreEqual(false, comparison.LocationMatches, "Location should not match given sheet/range if no data saved to memory");
             Assert.AreEqual(false, comparison.LocationMatchesAndDataMatches, 
                 "Location and data should not match given sheet/range if no data saved to memory");
@@ -31,7 +31,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             IRange range = new SimpleMockRange();
 
             memory.SetMemory(sheet, range);
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range);
+            IMemoryComparison comparison = memory.Compare(sheet, range);
 
             Assert.AreEqual(true, comparison.LocationMatches, "Location should match given sheet/range");
             Assert.AreEqual(true, comparison.LocationMatchesAndDataMatches,
@@ -47,7 +47,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             IRange range2 = new SimpleMockRange("2");
 
             memory.SetMemory(sheet, range1);
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range2);
+            IMemoryComparison comparison = memory.Compare(sheet, range2);
 
             Assert.AreEqual(false, comparison.LocationMatches, "Location should not match because the saved range has a different address");
             Assert.AreEqual(false, comparison.LocationMatchesAndDataMatches,
@@ -65,7 +65,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             range2.RangeData = new string[2, 2] { { "1", "2" }, { "3", "4" } };
 
             memory.SetMemory(sheet, range1);
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range2);
+            IMemoryComparison comparison = memory.Compare(sheet, range2);
 
             Assert.AreEqual(true, comparison.LocationMatches, "Location should match because the saved range has the same address");
             Assert.AreEqual(false, comparison.LocationMatchesAndDataMatches,
@@ -83,7 +83,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             range2.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
 
             memory.SetMemory(sheet, range1);
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range2);
+            IMemoryComparison comparison = memory.Compare(sheet, range2);
 
             Assert.AreEqual(true, comparison.LocationMatches, "Location should match because the saved range has the same address");
             Assert.AreEqual(true, comparison.LocationMatchesAndDataMatches,
@@ -102,7 +102,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             range.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
 
             memory.SetMemory(sheet, range);
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet, range);
+            IMemoryComparison comparison = memory.Compare(sheet, range);
 
             Assert.AreEqual(true, comparison.LocationMatches, "Location should match because the saved range has the same address");
             Assert.AreEqual(false, comparison.LocationMatchesAndDataMatches,
@@ -125,7 +125,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             memory.SetMemory(sheet1, range);
             range.RowCount = 1048576;
             range.ColumnCount = 16384;
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet2, range);
+            IMemoryComparison comparison = memory.Compare(sheet2, range);
 
             Assert.AreEqual(true, comparison.IsNewRow, "Should report new row as sheet size grew");
             Assert.AreEqual(true, comparison.IsNewColumn, "Should report new column as sheet size grew");
@@ -149,7 +149,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             memory.SetMemory(sheet1, range);
             range.RowCount = 1048576;
             range.ColumnCount = 16384;
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet2, range);
+            IMemoryComparison comparison = memory.Compare(sheet2, range);
 
             Assert.AreEqual(false, comparison.IsNewRow, "Should not report new row as sheet size shrunk");
             Assert.AreEqual(false, comparison.IsNewColumn, "Should not report new column as sheet size shrunk");

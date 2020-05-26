@@ -35,7 +35,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Processor
         {
             if (_handlerSet.Count > 0)
             {
-                IMemoryComparison memoryComparison = _memory.DoesMemoryMatch(sheet, range);
+                IMemoryComparison memoryComparison = _memory.Compare(sheet, range);
                 if (!memoryComparison.LocationMatchesAndDataMatches)
                 {
                     CallAllHandlers(memoryComparison, sheet, range);
