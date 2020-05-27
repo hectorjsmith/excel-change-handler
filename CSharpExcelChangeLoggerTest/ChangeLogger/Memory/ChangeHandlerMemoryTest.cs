@@ -1,4 +1,4 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Memory;
+using CSharpExcelChangeLogger.ChangeLogger.Memory;
 using CSharpExcelChangeLogger.Excel;
 using CSharpExcelChangeLoggerTest.Mock;
 using NUnit.Framework;
@@ -124,7 +124,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
 
             memory.SetMemory(sheet1, range);
             range = new RowChangeMockRange();
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet2, range);
+            IMemoryComparison comparison = memory.Compare(sheet2, range);
 
             Assert.AreEqual(true, comparison.IsNewRow, "Should report new row as sheet row count increased");
             Assert.AreEqual(false, comparison.IsNewColumn, "Should not report new column as sheet column count remained the same");
@@ -323,7 +323,7 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
             memory.SetMemory(sheet1, range1);
 
             SimpleMockRange range2 = new SimpleMockRange(range2Addr);
-            IMemoryComparison comparison = memory.DoesMemoryMatch(sheet2, range2);
+            IMemoryComparison comparison = memory.Compare(sheet2, range2);
 
             Assert.AreEqual(sheet1Name, comparison.SheetNameBeforeChange, "Sheet name from before change should match name of sheet1");
             Assert.AreEqual(sheet2Name, comparison.SheetNameAfterChange, "Sheet name from after change should match name of sheet2");
