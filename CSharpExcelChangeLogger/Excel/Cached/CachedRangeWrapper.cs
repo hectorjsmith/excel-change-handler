@@ -4,30 +4,30 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.Excel.Cached
 {
-    internal class CachedRangeWrapper : IRange
+    internal class CachedRangeWrapper : ICachedRange
     {
-        private readonly IRange _delegate;
+        public IRange RawRange { get; }
 
         public CachedRangeWrapper(IRange range)
         {
-            _delegate = range;
+            RawRange = range;
         }
 
         private string? _address;
-        public string Address => _address ?? (_address = _delegate.Address);
+        public string Address => _address ?? (_address = RawRange.Address);
 
         private int? _rowCount;
-        public int RowCount => _rowCount ?? (int)(_rowCount = _delegate.RowCount);
+        public int RowCount => _rowCount ?? (int)(_rowCount = RawRange.RowCount);
 
         private int? _columnCount;
-        public int ColumnCount => _columnCount ?? (int)(_columnCount = _delegate.ColumnCount);
+        public int ColumnCount => _columnCount ?? (int)(_columnCount = RawRange.ColumnCount);
 
         private string[,]? _rangeData;
-        public string[,] RangeData => _rangeData ?? (_rangeData = _delegate.RangeData);
+        public string[,] RangeData => _rangeData ?? (_rangeData = RawRange.RangeData);
 
         public void FillRange(int colour)
         {
-            _delegate.FillRange(colour);
+            RawRange.FillRange(colour);
         }
     }
 }

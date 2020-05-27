@@ -52,7 +52,7 @@ namespace CSharpExcelChangeLogger.Api
         {
             if (ChangeHandlingEnabled)
             {
-                ChangeProcessor.BeforeChange(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
+                ChangeProcessor.BeforeChange(sheet, range);
             }
         }
 
@@ -60,7 +60,7 @@ namespace CSharpExcelChangeLogger.Api
         {
             if (ChangeHandlingEnabled)
             {
-                ChangeProcessor.AfterChange(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
+                ChangeProcessor.AfterChange(sheet, range);
             }
         }
     }
