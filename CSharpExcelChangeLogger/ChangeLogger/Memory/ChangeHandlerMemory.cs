@@ -62,6 +62,10 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
                                         isRowDelete: CheckForRowDelete(sheet, range),
                                         isNewColumn: CheckForNewColumn(sheet, range),
                                         isColumnDelete: CheckForColumnDelete(sheet, range),
+                                        rangeAddressBeforeChange: RangeAddress,
+                                        rangeAddressAfterChange: range.Address,
+                                        sheetNameBeforeChange: SheetName,
+                                        sheetNameAfterChange: sheet.Name,
                                         dataBeforeChange: RangeData,
                                         dataAfterChange: newRangeData);
         }
