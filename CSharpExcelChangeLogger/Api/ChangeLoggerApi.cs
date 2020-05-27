@@ -4,6 +4,7 @@ using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.ChangeLogger.Processor;
 using CSharpExcelChangeLogger.Excel;
+using CSharpExcelChangeLogger.Excel.Cached;
 using CSharpExcelChangeLogger.Logging;
 
 namespace CSharpExcelChangeLogger.Api
@@ -51,7 +52,7 @@ namespace CSharpExcelChangeLogger.Api
         {
             if (ChangeHandlingEnabled)
             {
-                ChangeProcessor.BeforeChange(sheet, range);
+                ChangeProcessor.BeforeChange(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
             }
         }
 
@@ -59,7 +60,7 @@ namespace CSharpExcelChangeLogger.Api
         {
             if (ChangeHandlingEnabled)
             {
-                ChangeProcessor.AfterChange(sheet, range);
+                ChangeProcessor.AfterChange(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
             }
         }
     }
