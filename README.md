@@ -37,6 +37,8 @@ To avoid having any dependencies on Excel interop libraries, the sheet and range
 The client code must create instances of the `IWorksheet` and `IRange` interfaces that expose the information the library needs (sheet name, range address, etc).
 These instances can then be passed into the before/after methods on the API.
 
+**Note**: The provided sheet and range data objects are internally wrapped in a caching class to improve performance. That means properties on these objects are only read once.
+
 In the example application the before and after methods are hooked into the `SheetSelectionChange` and `SheetChange` respectively.
 
 ### Handle Changes
