@@ -4,15 +4,23 @@ namespace CSharpExcelChangeLoggerTest.Mock
 {
     class SimpleMockRange : IRange
     {
-        private string[,] rangeData = new string[0, 0];
+        private string[,] _rangeData = new string[0, 0];
+        private string _address;
+        private int _rowCount;
+        private int _columnCount;
 
-        public string Address { get; set; }
+        public int AddressCallCount { get; private set; }
+        public string Address { get { AddressCallCount++; return _address; } set => _address = value; }
 
-        public int RowCount { get; set; }
+        public int RowCountCallCount { get; private set; }
+        public int RowCount { get { RowCountCallCount++; return _rowCount; } set => _rowCount = value; }
 
-        public int ColumnCount { get; set; }
+        public int ColumnCountCallCount { get; private set; }
+        public int ColumnCount { get { ColumnCountCallCount++; return _columnCount; } set => _columnCount = value; }
 
-        public string[,] RangeData { get => rangeData; set { rangeData = value; RowCount = rangeData.GetLength(0); ColumnCount = rangeData.GetLength(1); } }
+        public int RangeDataCallCount { get; private set; }
+        public string[,] RangeData { get { RangeDataCallCount++; return _rangeData; } set { _rangeData = value; RowCount = _rangeData.GetLength(0); ColumnCount = _rangeData.GetLength(1); } }
+
         public int FillColour { get; private set; } = 0;
 
         public void FillRange(int colour)
@@ -22,7 +30,7 @@ namespace CSharpExcelChangeLoggerTest.Mock
 
         public SimpleMockRange(string rangeAddress = "mock:address")
         {
-            Address = rangeAddress;
+            _address = rangeAddress;
         }
     }
 }

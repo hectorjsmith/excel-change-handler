@@ -2,6 +2,7 @@
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.ChangeLogger.Memory;
 using CSharpExcelChangeLogger.Excel;
+using CSharpExcelChangeLogger.Excel.Cached;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +28,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Processor
         {
             if (_handlerSet.Count > 0)
             {
-                _memory.SetMemory(sheet, range);
+                _memory.SetMemory(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
             }
         }
 
@@ -35,7 +36,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Processor
         {
             if (_handlerSet.Count > 0)
             {
-                IMemoryComparison memoryComparison = _memory.Compare(sheet, range);
+                IMemoryComparison memoryComparison = _memory.Compare(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
                 if (!memoryComparison.LocationMatchesAndDataMatches)
                 {
                     CallAllHandlers(memoryComparison, sheet, range);

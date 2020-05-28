@@ -4,6 +4,7 @@ using CSharpExcelChangeLogger.ChangeLogger.Handler;
 using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
 using CSharpExcelChangeLogger.ChangeLogger.Processor;
 using CSharpExcelChangeLogger.Excel;
+using CSharpExcelChangeLogger.Excel.Cached;
 using CSharpExcelChangeLogger.Logging;
 
 namespace CSharpExcelChangeLogger.Api

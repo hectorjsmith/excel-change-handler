@@ -97,5 +97,85 @@ namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
 
             Assert.AreEqual(testColour, range2.FillColour, "Range should be highlighted if address is different");
         }
+
+        [Test]
+        public void Given_ActiveChangeProcessor_When_BeforeChangeCalled_Then_MethodsOnSheetCachedAndOnlyCalledOnce()
+        {
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            changeHandler.AddHandler(new InactiveMockChangeHandler());
+            SimpleMockSheet sheet = new SimpleMockSheet();
+            SimpleMockRange range = new SimpleMockRange();
+
+            Assert.AreEqual(0, sheet.NameCallCount, "Given: Call count for Name property should be 0 before running method");
+            Assert.AreEqual(0, sheet.RowCountCallCount, "Given: Call count for RowCount property should be 0 before running method");
+            Assert.AreEqual(0, sheet.ColumnCountCallCount, "Given: Call count for ColumnCount property should be 0 before running method");
+
+            changeHandler.BeforeChange(sheet, range);
+
+            Assert.LessOrEqual(sheet.NameCallCount, 1, "Call count for Name property should be no more than 1");
+            Assert.LessOrEqual(sheet.RowCountCallCount, 1, "Call count for RowCount property should be no more than 1");
+            Assert.LessOrEqual(sheet.ColumnCountCallCount, 1, "Call count for ColumnCount property should be no more than 1");
+        }
+
+        [Test]
+        public void Given_ActiveChangeProcessor_When_AfterChangeCalled_Then_MethodsOnSheetCachedAndOnlyCalledOnce()
+        {
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            changeHandler.AddHandler(new InactiveMockChangeHandler());
+            SimpleMockSheet sheet = new SimpleMockSheet();
+            SimpleMockRange range = new SimpleMockRange();
+
+            Assert.AreEqual(0, sheet.NameCallCount, "Given: Call count for Name property should be 0 before running method");
+            Assert.AreEqual(0, sheet.RowCountCallCount, "Given: Call count for RowCount property should be 0 before running method");
+            Assert.AreEqual(0, sheet.ColumnCountCallCount, "Given: Call count for ColumnCount property should be 0 before running method");
+
+            changeHandler.AfterChange(sheet, range);
+
+            Assert.LessOrEqual(sheet.NameCallCount, 1, "Call count for Name property should be no more than 1");
+            Assert.LessOrEqual(sheet.RowCountCallCount, 1, "Call count for RowCount property should be no more than 1");
+            Assert.LessOrEqual(sheet.ColumnCountCallCount, 1, "Call count for ColumnCount property should be no more than 1");
+        }
+
+        [Test]
+        public void Given_ActiveChangeProcessor_When_BeforeChangeCalled_Then_MethodsOnRangeCachedAndOnlyCalledOnce()
+        {
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            changeHandler.AddHandler(new InactiveMockChangeHandler());
+            SimpleMockSheet sheet = new SimpleMockSheet();
+            SimpleMockRange range = new SimpleMockRange();
+
+            Assert.AreEqual(0, range.AddressCallCount, "Given: Call count for Address property should be 0 before running method");
+            Assert.AreEqual(0, range.RowCountCallCount, "Given: Call count for RowCount property should be 0 before running method");
+            Assert.AreEqual(0, range.ColumnCountCallCount, "Given: Call count for ColumnCount property should be 0 before running method");
+            Assert.AreEqual(0, range.RangeDataCallCount, "Given: Call count for RangeData property should be 0 before running method");
+
+            changeHandler.BeforeChange(sheet, range);
+
+            Assert.LessOrEqual(range.AddressCallCount, 1, "Call count for Address property should be no more than 1");
+            Assert.LessOrEqual(range.RowCountCallCount, 1, "Call count for RowCount property should be no more than 1");
+            Assert.LessOrEqual(range.ColumnCountCallCount, 1, "Call count for ColumnCount property should be no more than 1");
+            Assert.LessOrEqual(range.RangeDataCallCount, 1, "Call count for RangeData property should be no more than 1");
+        }
+
+        [Test]
+        public void Given_ActiveChangeProcessor_When_AfterChangeCalled_Then_MethodsOnRangeCachedAndOnlyCalledOnce()
+        {
+            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            changeHandler.AddHandler(new InactiveMockChangeHandler());
+            SimpleMockSheet sheet = new SimpleMockSheet();
+            SimpleMockRange range = new SimpleMockRange();
+
+            Assert.AreEqual(0, range.AddressCallCount, "Given: Call count for Address property should be 0 before running method");
+            Assert.AreEqual(0, range.RowCountCallCount, "Given: Call count for RowCount property should be 0 before running method");
+            Assert.AreEqual(0, range.ColumnCountCallCount, "Given: Call count for ColumnCount property should be 0 before running method");
+            Assert.AreEqual(0, range.RangeDataCallCount, "Given: Call count for RangeData property should be 0 before running method");
+
+            changeHandler.AfterChange(sheet, range);
+
+            Assert.LessOrEqual(range.AddressCallCount, 1, "Call count for Address property should be no more than 1");
+            Assert.LessOrEqual(range.RowCountCallCount, 1, "Call count for RowCount property should be no more than 1");
+            Assert.LessOrEqual(range.ColumnCountCallCount, 1, "Call count for ColumnCount property should be no more than 1");
+            Assert.LessOrEqual(range.RangeDataCallCount, 1, "Call count for RangeData property should be no more than 1");
+        }
     }
 }
