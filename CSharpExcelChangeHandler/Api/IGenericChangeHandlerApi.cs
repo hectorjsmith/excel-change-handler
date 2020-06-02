@@ -1,3 +1,4 @@
+using CSharpExcelChangeHandler.Api.Config;
 using CSharpExcelChangeHandler.ChangeHandling.Factory;
 using CSharpExcelChangeHandler.ChangeHandling.Handler;
 using CSharpExcelChangeHandler.Excel;
@@ -5,7 +6,7 @@ using CSharpExcelChangeHandler.Logging;
 
 namespace CSharpExcelChangeHandler.Api
 {
-    public interface IChangeHandlerApi<TWorksheetType, TRangeType> 
+    public interface IGenericChangeHandlerApi<TWorksheetType, TRangeType> 
         where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         /// <summary>

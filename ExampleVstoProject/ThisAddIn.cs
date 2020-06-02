@@ -9,12 +9,13 @@ using ExampleVstoProject.Wrapper;
 using System.Windows.Forms;
 using CSharpExcelChangeHandler.Api;
 using CSharpExcelChangeHandler.Excel;
+using CSharpExcelChangeHandler.Api.Factory;
 
 namespace ExampleVstoProject
 {
     public partial class ThisAddIn
     {
-        private static IChangeHandlerApi<IWorksheet, IRange> Api { get; } = ChangeHandlerApi<IWorksheet, IRange>.NewInstance();
+        private static IChangeHandlerApi Api { get; } = ChangeHandlerApiFactory.NewApiInstance();
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {

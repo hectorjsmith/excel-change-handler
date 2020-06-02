@@ -1,4 +1,5 @@
 ﻿using CSharpExcelChangeHandler.Api;
+using CSharpExcelChangeHandler.Api.Factory;
 using CSharpExcelChangeHandler.ChangeHandling.Handler;
 using CSharpExcelChangeHandler.Excel;
 using CSharpExcelChangeHandlerTest.Mock;
@@ -15,7 +16,7 @@ namespace CSharpExcelChangeHandlerTest.Api
         public void Given_Api_When_BeforeAndAfterChangeHookCalledWithDataChange_Then_RangeIsHighlighted()
         {
             int testColour = 33;
-            IChangeHandlerApi<IWorksheet, IRange> api = ChangeHandlerApi<IWorksheet, IRange>.NewInstance();
+            IChangeHandlerApi api = ChangeHandlerApiFactory.NewApiInstance();
             api.AddCustomHandler(api.ChangeHandlerFactory.NewSimpleChangeHighlighter(testColour));
             api.SetApplicationLogger(new TestAppLogger());
 
@@ -34,7 +35,7 @@ namespace CSharpExcelChangeHandlerTest.Api
         [Test]
         public void Given_ApiCreatedWithSpecificType_When_ValidChangeDetected_Then_HandlersGetTheSameType()
         {
-            IChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApi<SimpleMockSheet, SimpleMockRange>.NewInstance();
+            IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
             GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange> controlHandler = new GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange>();
             IChangeHandler<SimpleMockSheet, SimpleMockRange> handler = new MockChangeHandlerWithCustomProcessing<SimpleMockSheet, SimpleMockRange>((memory, sheet, range) =>
             {
@@ -54,7 +55,7 @@ namespace CSharpExcelChangeHandlerTest.Api
             SimpleMockSheet mockSheet = new SimpleMockSheet();
             SimpleMockRange mockRange = new SimpleMockRange();
 
-            IChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApi<SimpleMockSheet, SimpleMockRange>.NewInstance();
+            IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
             GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange> controlHandler = new GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange>();
             IChangeHandler<SimpleMockSheet, SimpleMockRange> handler = new MockChangeHandlerWithCustomProcessing<SimpleMockSheet, SimpleMockRange>((memory, sheet, range) =>
             {
