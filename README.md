@@ -12,12 +12,12 @@ The goal of this project is to provide a standard way to detect and handle data 
 
 ### API
 
-The library is driven through a singleton API class. The class has methods that should get triggered before and after a change.
+The library is driven by a main API class. The class has methods that should get triggered before and after a change.
 
-The API instance can be accessed as so:
+A new instance of the API can be created using the static factory method:
 
 ```csharp
-IChangeHandlerApi api = ChangeHandlerApi.Instance;
+IChangeHandlerApi api = ChangeHandlerApiFactory.NewApiInstance();
 ```
 
 ### Detect Changes
@@ -29,8 +29,8 @@ The API class needs to be informed of changes that happen in the Excel workbook.
 There are two methods that should get called to handle a change. One is to be called before the change, and one after.
 
 ```csharp
-ChangeHandlerApi.Instance.BeforeChange(wrappedSheet, wrappedRange);
-ChangeHandlerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
+api.BeforeChange(wrappedSheet, wrappedRange);
+api.AfterChange(wrappedSheet, wrappedRange);
 ```
 
 To avoid having any dependencies on Excel interop libraries, the sheet and range the API class takes are wrappers.
@@ -42,6 +42,9 @@ These instances can then be passed into the before/after methods on the API.
 The provided example application shows an implementation of these wrapper interfaces based on excel ranges and worksheets.
 The example application also shows how before and after methods can be hooked into the `SheetSelectionChange` and `SheetChange` events respectively.
 
+Note that in order to correctly detect changes, the same API instance must be used for both `BeforeChange` and `AfterChange`.
+This is because the state memory from before the change is tied to that particular API instance. If a different instance is used, there will be no memory of the data provided in the `BeforeChange` method.
+
 ### Handle Changes
 
 The library can be setup with a number of change handlers. Each change handler must implement the `IChangeHandler` interface.
@@ -49,15 +52,15 @@ The library can be setup with a number of change handlers. Each change handler m
 To add a new change handler:
 
 ```csharp
-ChangeHandlerApi.Instance.AddCustomHandler(...);
+api.AddCustomHandler(...);
 ```
 
 The library contains a couple of default implementations to get started. A standard change highlighter and a standard change logger.
 These can be created by using the change handler factory on the API.
 
 ```csharp
-ChangeHandlerApi.Instance.ChangeHandlerFactory.NewSimpleChangeHighlighter(...);
-ChangeHandlerApi.Instance.ChangeHandlerFactory.NewSimpleChangeLogger();
+api.ChangeHandlerFactory.NewSimpleChangeHighlighter(...);
+api.ChangeHandlerFactory.NewSimpleChangeLogger();
 ```
 
 Custom handlers can be crated by extending the `IChangeHandler` interface and implementing the `HandleChange` method.
@@ -65,12 +68,35 @@ Custom handlers can be crated by extending the `IChangeHandler` interface and im
 One of the parameters to the `HandleChange` method is the memory comparison object - `IMemoryComparison`.
 This object contains is the result of comparing the data provided to the library in the `BeforeChange` and `AfterChange` methods and holds a lot of useful data about the comparison.
 
+### Generic Types
+
+It is possible to create two types of API instances. A standard one or a generic one.
+
+The API allows creating instances that are generic on the sub-type of `IWorksheet` or `IRange` that is used.
+
+A generic API instance can be created using the same static factory:
+
+```csharp
+IGenericChangeHandlerApi<MySheet, MyRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<MySheet, MyRange>();
+```
+
+The `IChangeHandler` interface is also generic on the type of `IWorksheet` and `IRange` used. When adding a new handler to the API instance, the exact same type of worksheet and range must be used.
+This is an example from one of the unit tests:
+
+```csharp
+IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
+GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange> handler = new GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange>();
+```
+
+This also means that when the handler is called, it has access to the exact type of object used to call the `BeforeChange` and `AfterChange` methods.
+This makes it easy to propagate custom classes down to the change handlers.
+
 ### Configuration
 
 The library configuration object can be accessed through the API class:
 
 ```csharp
-ChangeHandlerApi.Instance.Configuration
+api.Configuration
 ```
 
 ### Logging
@@ -82,8 +108,10 @@ class MyLogger : ILogger {
     // ...
 }
 ...
-ChangeHandlerApi.Instance.SetApplicationLogger(new MyLogger());
+api.SetApplicationLogger(new MyLogger());
 ```
+
+Note that the logger being used is specific to each API instance.
 
 ---
 
@@ -119,7 +147,7 @@ When the `AfterChange` method is called, the data in memory is compared to the d
     - If data is different, valid change
 - If everything matches, no change - handles do not get called
 
-**NOTE:** The code in `BeforeChange` and `AfterChange` does not fire if no handlers have been set, or if `ChangeHandlerApi.Instance.Configuration.ChangeHandlingEnabled` is set to `false`.
+**NOTE:** The code in `BeforeChange` and `AfterChange` does not fire if no handlers have been set, or if `api.Configuration.ChangeHandlingEnabled` is set to `false`.
 
 The `IMemoryComparison` object provided to the change handlers will include the results of this comparison as well as information about what data was in memory before the change:
 
