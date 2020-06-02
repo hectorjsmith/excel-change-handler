@@ -109,18 +109,20 @@ When the `AfterChange` method is called, the data in memory is compared to the d
 
 **NOTE:** The code in `BeforeChange` and `AfterChange` does not fire if no handlers have been set, or if `ChangeLoggerApi.Instance.Configuration.ChangeHandlingEnabled` is set to `false`.
 
-The `IMemoryComparison` object provided to the change handlers will include the results of this comparison:
+The `IMemoryComparison` object provided to the change handlers will include the results of this comparison as well as information about what data was in memory before the change:
 
 ```csharp
 public bool LocationMatches { get; }
-public bool DataMatches { get; }
 public bool IsNewRow { get; }
 public bool IsRowDelete { get; }
 public bool IsNewColumn { get; }
 public bool IsColumnDelete { get; }
 public bool LocationMatchesAndDataMatches { get; }
-public string[,]? DataBeforeChange { get; }
-public string[,]? DataAfterChange { get; }
+string? RangeAddressBeforeChange { get; }
+string? RangeAddressAfterChange { get; }
+string? SheetNameBeforeChange { get; }
+string? SheetNameAfterChange { get; }
+string[,]? DataBeforeChange { get; }
 ```
 
 **NOTE:** The data before and after change may be null. To help improve performance data will only be loaded into memory if necessary.

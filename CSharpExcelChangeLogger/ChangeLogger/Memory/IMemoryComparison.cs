@@ -15,12 +15,6 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
         bool LocationMatches { get; }
 
         /// <summary>
-        /// True if the data in the changed range is an exact match to the range data saved to memory.
-        /// Will always be false if the 'LocationMatches' field is false since there is no point calculating it.
-        /// </summary>
-        bool DataMatches { get; }
-
-        /// <summary>
         /// Returns true if the change logger detected that the latest change was a new row. False otherwise.
         /// </summary>
         bool IsNewRow { get; }
