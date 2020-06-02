@@ -1,5 +1,6 @@
 ﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
 using CSharpExcelChangeHandler.ChangeHandling.Logger;
+using CSharpExcelChangeHandler.Excel;
 using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 using System;
@@ -15,7 +16,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Logger
         {
             TestAppLogger logger = new TestAppLogger();
             
-            IChangeHandler highlighter = new SimpleInfoChangeLogger(logger);
+            IChangeHandler<IWorksheet, IRange> highlighter = new SimpleInfoChangeLogger<IWorksheet, IRange>(logger);
             highlighter.HandleChange(new SimpleMockMemoryComparison(), new SimpleMockSheet(), new SimpleMockRange());
 
             Assert.AreEqual(1, logger.InfoMessageCount, "One info message should be logged for a change");

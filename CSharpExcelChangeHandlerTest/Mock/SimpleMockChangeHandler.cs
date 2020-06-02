@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CSharpExcelChangeHandlerTest.Mock
 {
-    class SimpleMockChangeHandler : IChangeHandler
+    class SimpleMockChangeHandler : IChangeHandler<IWorksheet, IRange>
     {
         public bool HandleChangeCalled { get; private set; }
 

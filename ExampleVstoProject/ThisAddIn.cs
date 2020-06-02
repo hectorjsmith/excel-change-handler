@@ -14,7 +14,7 @@ namespace ExampleVstoProject
 {
     public partial class ThisAddIn
     {
-        private static IChangeHandlerApi Api { get; } = ChangeHandlerApi.NewInstance();
+        private static IChangeHandlerApi<IWorksheet, IRange> Api { get; } = ChangeHandlerApi<IWorksheet, IRange>.NewInstance();
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {

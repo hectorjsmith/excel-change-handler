@@ -1,4 +1,5 @@
 ﻿using CSharpExcelChangeHandler.Api;
+using CSharpExcelChangeHandler.Excel;
 using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 using System;
@@ -13,7 +14,7 @@ namespace CSharpExcelChangeHandlerTest.Api
         public void Given_Api_When_BeforeAndAfterChangeHookCalledWithDataChange_Then_RangeIsHighlighted()
         {
             int testColour = 33;
-            IChangeHandlerApi api = ChangeHandlerApi.NewInstance();
+            IChangeHandlerApi<IWorksheet, IRange> api = ChangeHandlerApi<IWorksheet, IRange>.NewInstance();
             api.AddCustomHandler(api.ChangeHandlerFactory.NewSimpleChangeHighlighter(testColour));
             api.SetApplicationLogger(new TestAppLogger());
 
