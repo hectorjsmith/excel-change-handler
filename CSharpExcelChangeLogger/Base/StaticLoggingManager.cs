@@ -1,9 +1,9 @@
-﻿using CSharpExcelChangeLogger.Logging;
+﻿using CSharpExcelChangeHandler.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.Base
+namespace CSharpExcelChangeHandler.Base
 {
     internal static class StaticLoggingManager
     {

@@ -1,9 +1,9 @@
-﻿using CSharpExcelChangeLogger.Logging;
+﻿using CSharpExcelChangeHandler.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLoggerTest.Mock
+namespace CSharpExcelChangeHandlerTest.Mock
 {
     class TestLogger : ILogger
     {

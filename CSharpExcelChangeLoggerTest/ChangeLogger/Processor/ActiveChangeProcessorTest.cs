@@ -1,14 +1,14 @@
-﻿using CSharpExcelChangeLogger.Api;
-using CSharpExcelChangeLogger.ChangeLogger.Processor;
-using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
-using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLoggerTest.Mock;
+﻿using CSharpExcelChangeHandler.Api;
+using CSharpExcelChangeHandler.ChangeHandling.Processor;
+using CSharpExcelChangeHandler.ChangeHandling.Highlighter;
+using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLoggerTest.ChangeLogger.Handler
+namespace CSharpExcelChangeHandlerTest.ChangeLogger.Handler
 {
     class ActiveChangeProcessorTest
     {

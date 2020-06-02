@@ -1,11 +1,11 @@
-using CSharpExcelChangeLogger.ChangeLogger.Factory;
-using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.Excel;
-using CSharpExcelChangeLogger.Logging;
+using CSharpExcelChangeHandler.ChangeHandling.Factory;
+using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.Excel;
+using CSharpExcelChangeHandler.Logging;
 
-namespace CSharpExcelChangeLogger.Api
+namespace CSharpExcelChangeHandler.Api
 {
-    public interface IChangeLoggerApi
+    public interface IChangeHandlerApi
     {
         /// <summary>
         /// API configuration object.
@@ -20,7 +20,7 @@ namespace CSharpExcelChangeLogger.Api
         /// <summary>
         /// Set the logger used to log system messages and errors in the API code.
         /// </summary>
-        void SetApplicationLogger(ILogger? logger);
+        void SetAppplicationLogger(ILogger? logger);
 
         /// <summary>
         /// Hook to prepare the API code for an upcoming change. This method will set the internal memory of the library to the sheet and range provided.

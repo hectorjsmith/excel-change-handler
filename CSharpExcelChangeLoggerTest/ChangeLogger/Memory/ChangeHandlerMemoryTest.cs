@@ -1,12 +1,12 @@
-using CSharpExcelChangeLogger.ChangeLogger.Memory;
-using CSharpExcelChangeLogger.Excel;
-using CSharpExcelChangeLoggerTest.Mock;
+using CSharpExcelChangeHandler.ChangeHandling.Memory;
+using CSharpExcelChangeHandler.Excel;
+using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLoggerTest.ChangeLogger.Memory
+namespace CSharpExcelChangeHandlerTest.ChangeLogger.Memory
 {
     class ChangeHandlerMemoryTest
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Memory
+namespace CSharpExcelChangeHandler.ChangeHandling.Memory
 {
     class MemoryComparison : IMemoryComparison
     {

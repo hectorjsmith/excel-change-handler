@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLoggerTest.Mock
+namespace CSharpExcelChangeHandlerTest.Mock
 {
     class ColumnChangeMockRange : SimpleMockRange
     {

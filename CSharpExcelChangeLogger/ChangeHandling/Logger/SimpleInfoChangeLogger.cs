@@ -1,14 +1,14 @@
-﻿using CSharpExcelChangeLogger.Base;
-using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.ChangeLogger.Memory;
-using CSharpExcelChangeLogger.Excel;
-using CSharpExcelChangeLogger.Logging;
+﻿using CSharpExcelChangeHandler.Base;
+using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.ChangeHandling.Memory;
+using CSharpExcelChangeHandler.Excel;
+using CSharpExcelChangeHandler.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Logger
+namespace CSharpExcelChangeHandler.ChangeHandling.Logger
 {
     class SimpleInfoChangeLogger : IChangeHandler
     {

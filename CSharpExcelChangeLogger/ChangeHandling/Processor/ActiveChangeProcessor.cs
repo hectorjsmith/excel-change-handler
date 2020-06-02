@@ -1,13 +1,12 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
-using CSharpExcelChangeLogger.ChangeLogger.Memory;
-using CSharpExcelChangeLogger.Excel;
-using CSharpExcelChangeLogger.Excel.Cached;
+﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.ChangeHandling.Memory;
+using CSharpExcelChangeHandler.Excel;
+using CSharpExcelChangeHandler.Excel.Cached;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Processor
+namespace CSharpExcelChangeHandler.ChangeHandling.Processor
 {
     class ActiveChangeProcessor : IChangeProcessor
     {

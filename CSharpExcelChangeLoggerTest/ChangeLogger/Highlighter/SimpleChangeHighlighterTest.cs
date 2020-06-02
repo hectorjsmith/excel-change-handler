@@ -1,9 +1,9 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
-using CSharpExcelChangeLoggerTest.Mock;
+﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.ChangeHandling.Highlighter;
+using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 
-namespace CSharpExcelChangeLoggerTest.ChangeLogger.Highlighter
+namespace CSharpExcelChangeHandlerTest.ChangeLogger.Highlighter
 {
     class SimpleChangeHighlighterTest
     {

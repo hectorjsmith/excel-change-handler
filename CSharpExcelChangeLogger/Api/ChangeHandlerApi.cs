@@ -1,20 +1,20 @@
-﻿using CSharpExcelChangeLogger.Base;
-using CSharpExcelChangeLogger.ChangeLogger.Factory;
-using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
-using CSharpExcelChangeLogger.ChangeLogger.Processor;
-using CSharpExcelChangeLogger.Excel;
-using CSharpExcelChangeLogger.Excel.Cached;
-using CSharpExcelChangeLogger.Logging;
+﻿using CSharpExcelChangeHandler.Base;
+using CSharpExcelChangeHandler.ChangeHandling.Factory;
+using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.ChangeHandling.Highlighter;
+using CSharpExcelChangeHandler.ChangeHandling.Processor;
+using CSharpExcelChangeHandler.Excel;
+using CSharpExcelChangeHandler.Excel.Cached;
+using CSharpExcelChangeHandler.Logging;
 
-namespace CSharpExcelChangeLogger.Api
+namespace CSharpExcelChangeHandler.Api
 {
-    public class ChangeLoggerApi : IChangeLoggerApi
+    public class ChangeHandlerApi : IChangeHandlerApi
     {
         private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
 
-        private static IChangeLoggerApi? _instance;
-        public static IChangeLoggerApi Instance = _instance ?? (_instance = new ChangeLoggerApi());
+        private static IChangeHandlerApi? _instance;
+        public static IChangeHandlerApi Instance = _instance ?? (_instance = new ChangeHandlerApi());
 
         private IChangeProcessor ChangeProcessor { get; } = new ActiveChangeProcessor();
 
@@ -24,11 +24,11 @@ namespace CSharpExcelChangeLogger.Api
         public IChangeHandlerFactory ChangeHandlerFactory { get; } = new SimpleChangeHandlerFactory();
 
 
-        private ChangeLoggerApi()
+        private ChangeHandlerApi()
         {
         }
 
-        public void SetApplicationLogger(ILogger? logger)
+        public void SetAppplicationLogger(ILogger? logger)
         {
             StaticLoggingManager.SetLogger(logger);
         }

@@ -1,8 +1,8 @@
-﻿using CSharpExcelChangeLogger.Excel;
+﻿using CSharpExcelChangeHandler.Excel;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Memory
+namespace CSharpExcelChangeHandler.ChangeHandling.Memory
 {
     internal interface IChangeHandlerMemory
     {

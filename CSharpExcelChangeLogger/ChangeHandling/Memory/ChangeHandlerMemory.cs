@@ -1,8 +1,8 @@
-﻿using CSharpExcelChangeLogger.Base;
-using CSharpExcelChangeLogger.Excel;
+﻿using CSharpExcelChangeHandler.Base;
+using CSharpExcelChangeHandler.Excel;
 using System;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Memory
+namespace CSharpExcelChangeHandler.ChangeHandling.Memory
 {
     class ChangeHandlerMemory : BaseClass, IChangeHandlerMemory
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.Excel.Cached
+namespace CSharpExcelChangeHandler.Excel.Cached
 {
     internal interface ICachedWorksheet : IWorksheet
     {

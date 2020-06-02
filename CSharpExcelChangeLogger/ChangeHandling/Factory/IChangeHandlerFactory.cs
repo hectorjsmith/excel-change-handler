@@ -1,10 +1,10 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.Logging;
+﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Factory
+namespace CSharpExcelChangeHandler.ChangeHandling.Factory
 {
     public interface IChangeHandlerFactory
     {

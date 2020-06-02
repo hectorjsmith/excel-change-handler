@@ -1,12 +1,12 @@
-﻿using CSharpExcelChangeLogger.Base;
-using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.ChangeLogger.Memory;
-using CSharpExcelChangeLogger.Excel;
+﻿using CSharpExcelChangeHandler.Base;
+using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.ChangeHandling.Memory;
+using CSharpExcelChangeHandler.Excel;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Highlighter
+namespace CSharpExcelChangeHandler.ChangeHandling.Highlighter
 {
     internal class SimpleChangeHighlighter : BaseClass, IChangeHandler
     {

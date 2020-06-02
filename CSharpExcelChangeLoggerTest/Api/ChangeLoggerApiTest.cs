@@ -1,11 +1,11 @@
-﻿using CSharpExcelChangeLogger.Api;
-using CSharpExcelChangeLoggerTest.Mock;
+﻿using CSharpExcelChangeHandler.Api;
+using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLoggerTest.Api
+namespace CSharpExcelChangeHandlerTest.Api
 {
     class ChangeLoggerApiTest
     {
@@ -13,9 +13,9 @@ namespace CSharpExcelChangeLoggerTest.Api
         public void Given_Api_When_BeforeAndAfterChangeHookCalledWithDataChange_Then_RangeIsHighlighted()
         {
             int testColour = 33;
-            IChangeLoggerApi api = ChangeLoggerApi.Instance;
+            IChangeHandlerApi api = ChangeHandlerApi.Instance;
             api.AddCustomHandler(api.ChangeHandlerFactory.NewSimpleChangeHighlighter(testColour));
-            api.SetApplicationLogger(new TestLogger());
+            api.SetAppplicationLogger(new TestLogger());
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange rangeBefore = new SimpleMockRange();

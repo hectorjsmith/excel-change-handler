@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.Logging
+namespace CSharpExcelChangeHandler.Logging
 {
     public interface ILogger
     {

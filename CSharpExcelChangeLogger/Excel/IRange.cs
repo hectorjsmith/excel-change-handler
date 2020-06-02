@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.Excel
+namespace CSharpExcelChangeHandler.Excel
 {
     public interface IRange
     {

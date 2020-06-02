@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CSharpExcelChangeLogger\CSharpExcelChangeLogger.csproj" />
+    <ProjectReference Include="..\CSharpExcelChangeLogger\CSharpExcelChangeHandler.csproj" />
   </ItemGroup>
 
 </Project>

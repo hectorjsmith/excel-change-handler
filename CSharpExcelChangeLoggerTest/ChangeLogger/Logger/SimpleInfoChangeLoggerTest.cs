@@ -1,12 +1,12 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.ChangeLogger.Logger;
-using CSharpExcelChangeLoggerTest.Mock;
+﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.ChangeHandling.Logger;
+using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLoggerTest.ChangeLogger.Logger
+namespace CSharpExcelChangeHandlerTest.ChangeLogger.Logger
 {
     class SimpleInfoChangeLoggerTest
     {

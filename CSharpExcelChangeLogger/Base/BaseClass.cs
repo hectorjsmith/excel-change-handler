@@ -1,10 +1,10 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger;
-using CSharpExcelChangeLogger.Logging;
+﻿using CSharpExcelChangeHandler.ChangeHandling;
+using CSharpExcelChangeHandler.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.Base
+namespace CSharpExcelChangeHandler.Base
 {
     class BaseClass
     {

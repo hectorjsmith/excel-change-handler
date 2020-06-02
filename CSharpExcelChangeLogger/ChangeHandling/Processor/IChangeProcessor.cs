@@ -1,11 +1,11 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Handler;
-using CSharpExcelChangeLogger.ChangeLogger.Highlighter;
-using CSharpExcelChangeLogger.Excel;
+﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
+using CSharpExcelChangeHandler.ChangeHandling.Highlighter;
+using CSharpExcelChangeHandler.Excel;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Processor
+namespace CSharpExcelChangeHandler.ChangeHandling.Processor
 {
     internal interface IChangeProcessor
     {

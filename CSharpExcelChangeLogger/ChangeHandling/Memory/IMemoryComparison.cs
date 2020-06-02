@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLogger.ChangeLogger.Memory
+namespace CSharpExcelChangeHandler.ChangeHandling.Memory
 {
     /// <summary>
     /// Output data from comparing the range data before and after a change.

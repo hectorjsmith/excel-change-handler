@@ -1,9 +1,9 @@
-﻿using CSharpExcelChangeLogger.ChangeLogger.Memory;
+﻿using CSharpExcelChangeHandler.ChangeHandling.Memory;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeLoggerTest.Mock
+namespace CSharpExcelChangeHandlerTest.Mock
 {
     class SimpleMockMemoryComparison : IMemoryComparison
     {

@@ -1,4 +1,4 @@
-﻿namespace CSharpExcelChangeLogger.Api
+﻿namespace CSharpExcelChangeHandler.Api
 {
     class Configuration : IConfiguration
     {

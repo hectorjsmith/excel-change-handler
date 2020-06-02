@@ -3,7 +3,7 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExampleVstoProject.Wrapper
 {
-    class ExcelRangeWrapper : CSharpExcelChangeLogger.Excel.IRange
+    class ExcelRangeWrapper : CSharpExcelChangeHandler.Excel.IRange
     {
         private readonly Range _range;
 

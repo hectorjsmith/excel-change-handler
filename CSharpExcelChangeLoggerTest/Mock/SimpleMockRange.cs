@@ -1,6 +1,6 @@
-﻿using CSharpExcelChangeLogger.Excel;
+﻿using CSharpExcelChangeHandler.Excel;
 
-namespace CSharpExcelChangeLoggerTest.Mock
+namespace CSharpExcelChangeHandlerTest.Mock
 {
     class SimpleMockRange : IRange
     {
