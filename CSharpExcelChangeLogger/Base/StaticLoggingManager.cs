@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSharpExcelChangeLogger.Base
 {
-    internal static class StaticLogManager
+    internal static class StaticLoggingManager
     {
         private static readonly ILogger _inactiveLogger = new InactiveLogger();
         private static ILogger? _injectedLogger;

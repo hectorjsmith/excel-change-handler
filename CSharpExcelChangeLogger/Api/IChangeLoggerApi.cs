@@ -18,9 +18,9 @@ namespace CSharpExcelChangeLogger.Api
         IChangeHandlerFactory ChangeHandlerFactory { get; }
 
         /// <summary>
-        /// Set the logger used to log messages in the API code.
+        /// Set the logger used to log system messages and errors in the API code.
         /// </summary>
-        void SetLogger(ILogger? logger);
+        void SetApplicationLogger(ILogger? logger);
 
         /// <summary>
         /// Hook to prepare the API code for an upcoming change. This method will set the internal memory of the library to the sheet and range provided.

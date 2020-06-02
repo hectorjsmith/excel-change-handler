@@ -73,6 +73,18 @@ The library configuration object can be accessed through the API class:
 ChangeLoggerApi.Instance.Configuration
 ```
 
+### Logging
+
+The library supports injecting a custom logger to log system messages and errors. To inject a logger the client code must create a class that implements the `ILogger` interface and inject it into the main API.
+
+```
+class MyLogger : ILogger {
+    // ...
+}
+...
+ChangeLoggerApi.Instance.SetApplicationLogger(new MyLogger());
+```
+
 ---
 
 ## Design

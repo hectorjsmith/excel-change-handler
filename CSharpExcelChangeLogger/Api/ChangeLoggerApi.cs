@@ -28,9 +28,9 @@ namespace CSharpExcelChangeLogger.Api
         {
         }
 
-        public void SetLogger(ILogger? logger)
+        public void SetApplicationLogger(ILogger? logger)
         {
-            StaticLogManager.SetLogger(logger);
+            StaticLoggingManager.SetLogger(logger);
         }
 
         public void ClearAllHandlers()
