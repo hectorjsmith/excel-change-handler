@@ -9,29 +9,30 @@ using CSharpExcelChangeHandler.Logging;
 
 namespace CSharpExcelChangeHandler.Api
 {
-    public class ChangeHandlerApi : IChangeHandlerApi
+    public class ChangeHandlerApi<TWorksheetType, TRangeType> : IChangeHandlerApi<TWorksheetType, TRangeType>
+        where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
 
-        public static IChangeHandlerApi NewInstance()
+        public static IChangeHandlerApi<TWorksheetType, TRangeType> NewInstance()
         {
-            return new ChangeHandlerApi();
+            return new ChangeHandlerApi<TWorksheetType, TRangeType>();
         }
 
         public IConfiguration Configuration { get; } = new Configuration();
 
         private readonly ILoggingManager _loggingManager = new LoggingManager();
 
-        private IChangeProcessor ChangeProcessor { get; }
+        private IChangeProcessor<TWorksheetType, TRangeType> ChangeProcessor { get; }
 
-        public IChangeHandlerFactory ChangeHandlerFactory { get; }
+        public IChangeHandlerFactory<TWorksheetType, TRangeType> ChangeHandlerFactory { get; }
 
         private bool ChangeHandlingEnabled => Configuration.ChangeHandlingEnabled;
 
         private ChangeHandlerApi()
         {
-            ChangeProcessor = new ActiveChangeProcessor(_loggingManager);
-            ChangeHandlerFactory = new SimpleChangeHandlerFactory(_loggingManager);
+            ChangeProcessor = new ActiveChangeProcessor<TWorksheetType, TRangeType>(_loggingManager);
+            ChangeHandlerFactory = new SimpleChangeHandlerFactory<TWorksheetType, TRangeType>(_loggingManager);
         }
 
         public void SetApplicationLogger(ILogger? logger)
@@ -49,12 +50,12 @@ namespace CSharpExcelChangeHandler.Api
             AddCustomHandler(ChangeHandlerFactory.NewSimpleChangeHighlighter(DEFAULT_HIGHLIGHT_COLOUR));
         }
 
-        public void AddCustomHandler(IChangeHandler handler)
+        public void AddCustomHandler(IChangeHandler<TWorksheetType, TRangeType> handler)
         {
             ChangeProcessor.AddHandler(handler);
         }
 
-        public void BeforeChange(IWorksheet sheet, IRange range)
+        public void BeforeChange(TWorksheetType sheet, TRangeType range)
         {
             if (ChangeHandlingEnabled)
             {
@@ -62,7 +63,7 @@ namespace CSharpExcelChangeHandler.Api
             }
         }
 
-        public void AfterChange(IWorksheet sheet, IRange range)
+        public void AfterChange(TWorksheetType sheet, TRangeType range)
         {
             if (ChangeHandlingEnabled)
             {

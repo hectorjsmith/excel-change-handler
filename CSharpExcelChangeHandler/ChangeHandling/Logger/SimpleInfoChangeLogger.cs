@@ -10,7 +10,8 @@ using System.Text;
 
 namespace CSharpExcelChangeHandler.ChangeHandling.Logger
 {
-    class SimpleInfoChangeLogger : IChangeHandler
+    class SimpleInfoChangeLogger<TWorksheetType, TRangeType> : IChangeHandler<TWorksheetType, TRangeType>
+        where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         private readonly ILogger _logger;
 
@@ -19,7 +20,7 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Logger
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void HandleChange(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range)
+        public void HandleChange(IMemoryComparison memoryComparison, TWorksheetType sheet, TRangeType range)
         {
             if (memoryComparison.IsNewRow)
             {

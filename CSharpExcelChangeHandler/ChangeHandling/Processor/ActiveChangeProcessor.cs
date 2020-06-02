@@ -9,10 +9,11 @@ using System.Text;
 
 namespace CSharpExcelChangeHandler.ChangeHandling.Processor
 {
-    class ActiveChangeProcessor : IChangeProcessor
+    class ActiveChangeProcessor<TWorksheetType, TRangeType> : IChangeProcessor<TWorksheetType, TRangeType>
+        where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         private readonly IChangeHandlerMemory _memory;
-        private readonly ISet<IChangeHandler> _handlerSet = new HashSet<IChangeHandler>();
+        private readonly ISet<IChangeHandler<TWorksheetType, TRangeType>> _handlerSet = new HashSet<IChangeHandler<TWorksheetType, TRangeType>>();
 
         public ActiveChangeProcessor(ILoggingManager loggingManager)
         {
@@ -24,12 +25,12 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
             _handlerSet.Clear();
         }
 
-        public void AddHandler(IChangeHandler handler)
+        public void AddHandler(IChangeHandler<TWorksheetType, TRangeType> handler)
         {
             _handlerSet.Add(handler);
         }
 
-        public void BeforeChange(IWorksheet sheet, IRange range)
+        public void BeforeChange(TWorksheetType sheet, TRangeType range)
         {
             if (_handlerSet.Count > 0)
             {
@@ -37,7 +38,7 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
             }
         }
 
-        public void AfterChange(IWorksheet sheet, IRange range)
+        public void AfterChange(TWorksheetType sheet, TRangeType range)
         {
             if (_handlerSet.Count > 0)
             {
@@ -49,9 +50,9 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
             }
         }
 
-        private void CallAllHandlers(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range)
+        private void CallAllHandlers(IMemoryComparison memoryComparison, TWorksheetType sheet, TRangeType range)
         {
-            foreach (IChangeHandler handler in _handlerSet)
+            foreach (IChangeHandler<TWorksheetType, TRangeType> handler in _handlerSet)
             {
                 handler.HandleChange(memoryComparison, sheet, range);
             }

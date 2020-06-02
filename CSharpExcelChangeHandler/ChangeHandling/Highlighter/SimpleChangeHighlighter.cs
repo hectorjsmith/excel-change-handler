@@ -8,7 +8,8 @@ using System.Text;
 
 namespace CSharpExcelChangeHandler.ChangeHandling.Highlighter
 {
-    internal class SimpleChangeHighlighter : BaseClass, IChangeHandler
+    internal class SimpleChangeHighlighter<TWorksheetType, TRangeType> : BaseClass, IChangeHandler<TWorksheetType, TRangeType>
+        where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         private readonly int _highlightColour;
 
@@ -17,7 +18,7 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Highlighter
             _highlightColour = highlightColour;
         }
 
-        public void HandleChange(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range)
+        public void HandleChange(IMemoryComparison memoryComparison, TWorksheetType sheet, TRangeType range)
         {
             if (!memoryComparison.IsColumnDelete && !memoryComparison.IsRowDelete)
             {
