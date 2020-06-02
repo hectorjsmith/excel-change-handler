@@ -18,7 +18,7 @@ build:
 test:
     stage: test
     script:
-    - 'dotnet test CSharpExcelChangeLoggerTest/CSharpExcelChangeLoggerTest.csproj --test-adapter-path:. --logger:"junit;LogFilePath=..\artifacts\{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"'
+    - 'dotnet test CSharpExcelChangeHandlerTest/CSharpExcelChangeHandlerTest.csproj --test-adapter-path:. --logger:"junit;LogFilePath=..\artifacts\{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"'
     artifacts:
       when: always
       paths:
@@ -35,7 +35,7 @@ publish:
     - ./BuildTools/Build.sh
     artifacts:
       paths:
-      - CSharpExcelChangeLogger/bin/Release/*.nupkg
+      - CSharpExcelChangeHandler/bin/Release/*.nupkg
       expire_in: 1 day
     rules:
       - if: $CI_MERGE_REQUEST_ID

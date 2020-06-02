@@ -1,10 +1,10 @@
-# C# Excel ChangeLogger
+# C# Excel ChangeHandler
 
-C# library to enable logging and highlighting changes made on an Excel worksheet.
+C# library to enable detecting and processing changes made on an Excel worksheet.
 
-The goal of this project is to provide a standard way to detect and handle data changes in an excel workbook.
+The goal of this project is to provide a standard way to detect and handle data changes in an excel workbook. This can be used to log or highlight any data changes.
 
-[![pipeline status](https://gitlab.com/hectorjsmith/csharp-excel-changelogger/badges/master/pipeline.svg)](https://gitlab.com/hectorjsmith/csharp-excel-changelogger/-/commits/master)
+[![pipeline status](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/badges/master/pipeline.svg)](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/-/commits/master)
 
 ## How to Use
 
@@ -17,7 +17,7 @@ The library is driven through a singleton API class. The class has methods that 
 The API instance can be accessed as so:
 
 ```csharp
-IChangeLoggerApi api = ChangeLoggerApi.Instance;
+IChangeHandlerApi api = ChangeHandlerApi.Instance;
 ```
 
 ### Detect Changes
@@ -29,8 +29,8 @@ The API class needs to be informed of changes that happen in the Excel workbook.
 There are two methods that should get called to handle a change. One is to be called before the change, and one after.
 
 ```csharp
-ChangeLoggerApi.Instance.BeforeChange(wrappedSheet, wrappedRange);
-ChangeLoggerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
+ChangeHandlerApi.Instance.BeforeChange(wrappedSheet, wrappedRange);
+ChangeHandlerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
 ```
 
 To avoid having any dependencies on Excel interop libraries, the sheet and range the API class takes are wrappers.
@@ -49,15 +49,15 @@ The library can be setup with a number of change handlers. Each change handler m
 To add a new change handler:
 
 ```csharp
-ChangeLoggerApi.Instance.AddCustomHandler(...);
+ChangeHandlerApi.Instance.AddCustomHandler(...);
 ```
 
 The library contains a couple of default implementations to get started. A standard change highlighter and a standard change logger.
 These can be created by using the change handler factory on the API.
 
 ```csharp
-ChangeLoggerApi.Instance.ChangeHandlerFactory.NewSimpleChangeHighlighter(...);
-ChangeLoggerApi.Instance.ChangeHandlerFactory.NewSimpleChangeLogger();
+ChangeHandlerApi.Instance.ChangeHandlerFactory.NewSimpleChangeHighlighter(...);
+ChangeHandlerApi.Instance.ChangeHandlerFactory.NewSimpleChangeLogger();
 ```
 
 Custom handlers can be crated by extending the `IChangeHandler` interface and implementing the `HandleChange` method.
@@ -70,7 +70,7 @@ This object contains is the result of comparing the data provided to the library
 The library configuration object can be accessed through the API class:
 
 ```csharp
-ChangeLoggerApi.Instance.Configuration
+ChangeHandlerApi.Instance.Configuration
 ```
 
 ### Logging
@@ -82,7 +82,7 @@ class MyLogger : ILogger {
     // ...
 }
 ...
-ChangeLoggerApi.Instance.SetApplicationLogger(new MyLogger());
+ChangeHandlerApi.Instance.SetApplicationLogger(new MyLogger());
 ```
 
 ---
@@ -119,7 +119,7 @@ When the `AfterChange` method is called, the data in memory is compared to the d
     - If data is different, valid change
 - If everything matches, no change - handles do not get called
 
-**NOTE:** The code in `BeforeChange` and `AfterChange` does not fire if no handlers have been set, or if `ChangeLoggerApi.Instance.Configuration.ChangeHandlingEnabled` is set to `false`.
+**NOTE:** The code in `BeforeChange` and `AfterChange` does not fire if no handlers have been set, or if `ChangeHandlerApi.Instance.Configuration.ChangeHandlingEnabled` is set to `false`.
 
 The `IMemoryComparison` object provided to the change handlers will include the results of this comparison as well as information about what data was in memory before the change:
 

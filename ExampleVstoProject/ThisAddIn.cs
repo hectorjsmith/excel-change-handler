@@ -5,10 +5,10 @@ using System.Text;
 using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
-using CSharpExcelChangeLogger.Api;
-using CSharpExcelChangeLogger.Excel;
 using ExampleVstoProject.Wrapper;
 using System.Windows.Forms;
+using CSharpExcelChangeHandler.Api;
+using CSharpExcelChangeHandler.Excel;
 
 namespace ExampleVstoProject
 {
@@ -21,7 +21,7 @@ namespace ExampleVstoProject
             application.SheetSelectionChange += Application_SheetSelectionChange;
             application.SheetChange += Application_SheetChange;
 
-            IChangeLoggerApi api = ChangeLoggerApi.Instance;
+            IChangeHandlerApi api = ChangeHandlerApi.Instance;
             api.AddCustomHandler(api.ChangeHandlerFactory.NewSimpleChangeHighlighter(16776960));
         }
 
@@ -32,7 +32,7 @@ namespace ExampleVstoProject
                 Excel.Worksheet worksheet = (Excel.Worksheet)sheet;
                 IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
                 IRange wrappedRange = new ExcelRangeWrapper(range);
-                ChangeLoggerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
+                ChangeHandlerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace ExampleVstoProject
                 Excel.Worksheet worksheet = (Excel.Worksheet)sheet;
                 IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
                 IRange wrappedRange = new ExcelRangeWrapper(range);
-                ChangeLoggerApi.Instance.BeforeChange(wrappedSheet, wrappedRange);
+                ChangeHandlerApi.Instance.BeforeChange(wrappedSheet, wrappedRange);
             }
             catch (Exception ex)
             {

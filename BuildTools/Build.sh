@@ -3,4 +3,4 @@
 ./BuildTools/UpdateVersion.sh
 
 dotnet build --configuration Release
-dotnet pack CSharpExcelChangeLogger/CSharpExcelChangeLogger.csproj --configuration Release
+dotnet pack CSharpExcelChangeLogger/CSharpExcelChangeHandler.csproj --configuration Release
