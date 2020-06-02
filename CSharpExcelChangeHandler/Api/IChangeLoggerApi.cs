@@ -20,7 +20,7 @@ namespace CSharpExcelChangeHandler.Api
         /// <summary>
         /// Set the logger used to log system messages and errors in the API code.
         /// </summary>
-        void SetAppplicationLogger(ILogger? logger);
+        void SetApplicationLogger(ILogger? logger);
 
         /// <summary>
         /// Hook to prepare the API code for an upcoming change. This method will set the internal memory of the library to the sheet and range provided.
