@@ -1,6 +1,6 @@
 #!/bin/bash
 
-csprojPath=CSharpExcelChangeLogger/CSharpExcelChangeLogger.csproj
+csprojPath=CSharpExcelChangeLogger/CSharpExcelChangeHandler.csproj
 gitDescribe=`git describe --tags`
 versionTag=`git describe --tags --abbrev=0`
 cleanVersion=`echo ${versionTag} | sed -e "s;v;;g"`
