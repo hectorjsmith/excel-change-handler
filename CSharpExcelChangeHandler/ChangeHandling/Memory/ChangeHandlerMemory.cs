@@ -17,6 +17,10 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Memory
         public string? RangeAddress { get; private set; }
         public string[,]? RangeData { get; private set; }
 
+        public ChangeHandlerMemory(ILoggingManager loggingManager) : base(loggingManager)
+        {
+        }
+
         public void UnsetMemory()
         {
             SheetName = null;

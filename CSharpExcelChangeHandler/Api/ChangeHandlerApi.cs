@@ -13,24 +13,30 @@ namespace CSharpExcelChangeHandler.Api
     {
         private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
 
-        private static IChangeHandlerApi? _instance;
-        public static IChangeHandlerApi Instance = _instance ?? (_instance = new ChangeHandlerApi());
-
-        private IChangeProcessor ChangeProcessor { get; } = new ActiveChangeProcessor();
+        public static IChangeHandlerApi NewInstance()
+        {
+            return new ChangeHandlerApi();
+        }
 
         public IConfiguration Configuration { get; } = new Configuration();
+
+        private readonly ILoggingManager _loggingManager = new LoggingManager();
+
+        private IChangeProcessor ChangeProcessor { get; }
+
+        public IChangeHandlerFactory ChangeHandlerFactory { get; }
+
         private bool ChangeHandlingEnabled => Configuration.ChangeHandlingEnabled;
-
-        public IChangeHandlerFactory ChangeHandlerFactory { get; } = new SimpleChangeHandlerFactory();
-
 
         private ChangeHandlerApi()
         {
+            ChangeProcessor = new ActiveChangeProcessor(_loggingManager);
+            ChangeHandlerFactory = new SimpleChangeHandlerFactory(_loggingManager);
         }
 
         public void SetApplicationLogger(ILogger? logger)
         {
-            StaticLoggingManager.SetLogger(logger);
+            _loggingManager.SetLogger(logger);
         }
 
         public void ClearAllHandlers()

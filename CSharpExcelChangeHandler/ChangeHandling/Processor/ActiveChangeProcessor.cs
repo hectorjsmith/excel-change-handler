@@ -1,4 +1,5 @@
-﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
+﻿using CSharpExcelChangeHandler.Base;
+using CSharpExcelChangeHandler.ChangeHandling.Handler;
 using CSharpExcelChangeHandler.ChangeHandling.Memory;
 using CSharpExcelChangeHandler.Excel;
 using CSharpExcelChangeHandler.Excel.Cached;
@@ -10,8 +11,13 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
 {
     class ActiveChangeProcessor : IChangeProcessor
     {
-        private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
+        private readonly IChangeHandlerMemory _memory;
         private readonly ISet<IChangeHandler> _handlerSet = new HashSet<IChangeHandler>();
+
+        public ActiveChangeProcessor(ILoggingManager loggingManager)
+        {
+            _memory = new ChangeHandlerMemory(loggingManager);
+        }
 
         public void ClearAllHandlers()
         {

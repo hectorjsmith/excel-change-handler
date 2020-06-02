@@ -13,7 +13,7 @@ namespace CSharpExcelChangeHandlerTest.Api
         public void Given_Api_When_BeforeAndAfterChangeHookCalledWithDataChange_Then_RangeIsHighlighted()
         {
             int testColour = 33;
-            IChangeHandlerApi api = ChangeHandlerApi.Instance;
+            IChangeHandlerApi api = ChangeHandlerApi.NewInstance();
             api.AddCustomHandler(api.ChangeHandlerFactory.NewSimpleChangeHighlighter(testColour));
             api.SetApplicationLogger(new TestAppLogger());
 

@@ -11,9 +11,13 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Factory
 {
     class SimpleChangeHandlerFactory : BaseClass, IChangeHandlerFactory
     {
+        public SimpleChangeHandlerFactory(ILoggingManager loggingManager) : base(loggingManager)
+        {
+        }
+
         public IChangeHandler NewSimpleChangeHighlighter(int highlightColour)
         {
-            return new SimpleChangeHighlighter(highlightColour);
+            return new SimpleChangeHighlighter(LoggingManager, highlightColour);
         }
 
         public IChangeHandler NewSimpleChangeLogger(ILogger logger)

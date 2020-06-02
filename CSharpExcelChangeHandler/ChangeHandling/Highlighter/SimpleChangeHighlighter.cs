@@ -12,7 +12,7 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Highlighter
     {
         private readonly int _highlightColour;
 
-        public SimpleChangeHighlighter(int highlightColour)
+        public SimpleChangeHighlighter(ILoggingManager loggingManager, int highlightColour) : base(loggingManager)
         {
             _highlightColour = highlightColour;
         }

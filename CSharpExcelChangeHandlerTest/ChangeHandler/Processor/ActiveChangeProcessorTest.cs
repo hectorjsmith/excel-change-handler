@@ -15,7 +15,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         [Test]
         public void Given_ActiveChangeProcessor_When_AfterValidChangeDetected_Then_AllHandlersTriggered()
         {
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
 
             SimpleMockChangeHandler handler1 = new SimpleMockChangeHandler();
             SimpleMockChangeHandler handler2 = new SimpleMockChangeHandler();
@@ -32,8 +32,8 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         public void Given_ActiveChangeProcessorWithNoMemory_When_AfterChangeCalled_Then_ChangeHighlighted()
         {
             int testColour = 111;
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
+            changeHandler.AddHandler(new SimpleChangeHighlighter(new MockLoggingManager(), testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
@@ -47,8 +47,8 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         public void Given_ActiveChangeProcessorWithMemory_When_AfterChangeCalledWithNoDataChange_Then_RangeNotHighlighted()
         {
             int testColour = 111;
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
+            changeHandler.AddHandler(new SimpleChangeHighlighter(new MockLoggingManager(), testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange();
@@ -66,8 +66,8 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         public void Given_ActiveChangeProcessorWithMemory_When_AfterChangeCalledWithDataChanges_Then_RangeHighlighted()
         {
             int testColour = 111;
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
+            changeHandler.AddHandler(new SimpleChangeHighlighter(new MockLoggingManager(), testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange();
@@ -85,8 +85,8 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         public void Given_ActiveChangeProcessorWithMemory_When_AfterChangeCalledWithDifferentRange_Then_RangeHighlighted()
         {
             int testColour = 111;
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
-            changeHandler.AddHandler(new SimpleChangeHighlighter(testColour));
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
+            changeHandler.AddHandler(new SimpleChangeHighlighter(new MockLoggingManager(), testColour));
 
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange("1");
@@ -101,7 +101,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         [Test]
         public void Given_ActiveChangeProcessor_When_BeforeChangeCalled_Then_MethodsOnSheetCachedAndOnlyCalledOnce()
         {
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
             changeHandler.AddHandler(new InactiveMockChangeHandler());
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
@@ -120,7 +120,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         [Test]
         public void Given_ActiveChangeProcessor_When_AfterChangeCalled_Then_MethodsOnSheetCachedAndOnlyCalledOnce()
         {
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
             changeHandler.AddHandler(new InactiveMockChangeHandler());
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
@@ -139,7 +139,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         [Test]
         public void Given_ActiveChangeProcessor_When_BeforeChangeCalled_Then_MethodsOnRangeCachedAndOnlyCalledOnce()
         {
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
             changeHandler.AddHandler(new InactiveMockChangeHandler());
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
@@ -160,7 +160,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
         [Test]
         public void Given_ActiveChangeProcessor_When_AfterChangeCalled_Then_MethodsOnRangeCachedAndOnlyCalledOnce()
         {
-            IChangeProcessor changeHandler = new ActiveChangeProcessor();
+            IChangeProcessor changeHandler = new ActiveChangeProcessor(new MockLoggingManager());
             changeHandler.AddHandler(new InactiveMockChangeHandler());
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();

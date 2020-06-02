@@ -15,7 +15,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Highlighter
             SimpleMockSheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange();
 
-            IChangeHandler highlighter = new SimpleChangeHighlighter(testColour);
+            IChangeHandler highlighter = new SimpleChangeHighlighter(new MockLoggingManager(), testColour);
             highlighter.HandleChange(new SimpleMockMemoryComparison(), sheet, range);
 
             Assert.AreEqual(testColour, range.FillColour, "Range should be filled with correct colour");
