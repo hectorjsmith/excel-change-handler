@@ -11,7 +11,7 @@
     <Copyright>2020 Hector</Copyright>
     <Description>C# library to enable handling changes made on an Excel worksheet</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RepositoryUrl>https://gitlab.com/hectorjsmith/csharp-excel-changelogger</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.com/hectorjsmith/csharp-excel-changehandler</RepositoryUrl>
     <PackageTags>Excel</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>

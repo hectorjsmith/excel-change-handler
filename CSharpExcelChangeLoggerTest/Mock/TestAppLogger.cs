@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSharpExcelChangeHandlerTest.Mock
 {
-    class TestLogger : ILogger
+    class TestAppLogger : ILogger
     {
         public int DebugMessageCount {get; private set;}
         public int InfoMessageCount {get; private set;}

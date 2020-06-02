@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeHandlerTest.ChangeLogger.Memory
+namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
 {
     class ChangeHandlerMemoryTest
     {

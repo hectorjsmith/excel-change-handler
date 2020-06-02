@@ -3,7 +3,7 @@ using CSharpExcelChangeHandler.ChangeHandling.Highlighter;
 using CSharpExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
 
-namespace CSharpExcelChangeHandlerTest.ChangeLogger.Highlighter
+namespace CSharpExcelChangeHandlerTest.ChangeHandler.Highlighter
 {
     class SimpleChangeHighlighterTest
     {

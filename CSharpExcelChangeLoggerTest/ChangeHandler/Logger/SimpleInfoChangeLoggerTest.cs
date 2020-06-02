@@ -6,14 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeHandlerTest.ChangeLogger.Logger
+namespace CSharpExcelChangeHandlerTest.ChangeHandler.Logger
 {
     class SimpleInfoChangeLoggerTest
     {
         [Test]
         public void Given_SimpleChangeLogger_When_HandleChangeMethodCalled_Then_ChangeIsLogged()
         {
-            TestLogger logger = new TestLogger();
+            TestAppLogger logger = new TestAppLogger();
             
             IChangeHandler highlighter = new SimpleInfoChangeLogger(logger);
             highlighter.HandleChange(new SimpleMockMemoryComparison(), new SimpleMockSheet(), new SimpleMockRange());

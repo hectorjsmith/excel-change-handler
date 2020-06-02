@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeHandlerTest.ChangeLogger.Handler
+namespace CSharpExcelChangeHandlerTest.ChangeHandler.Handler
 {
     class ActiveChangeProcessorTest
     {
