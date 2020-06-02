@@ -6,8 +6,6 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
     {
         public bool LocationMatches { get; }
 
-        public bool DataMatches { get; }
-
         public bool IsNewRow { get; }
 
         public bool IsRowDelete { get; }
@@ -16,7 +14,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 
         public bool IsColumnDelete { get; }
 
-        public bool LocationMatchesAndDataMatches => LocationMatches && DataMatches;
+        public bool LocationMatchesAndDataMatches { get; }
 
         public string? RangeAddressBeforeChange { get; }
 
@@ -44,7 +42,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
                                 string[,]? dataAfterChange)
         {
             LocationMatches = locationMatches;
-            DataMatches = dataMatches;
+            LocationMatchesAndDataMatches = LocationMatches && dataMatches;
             IsNewRow = isNewRow;
             IsRowDelete = isRowDelete;
             IsNewColumn = isNewColumn;

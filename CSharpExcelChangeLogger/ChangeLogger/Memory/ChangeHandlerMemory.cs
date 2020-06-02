@@ -44,7 +44,7 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
             }
         }
 
-        public IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range)
+        public IMemoryComparison Compare(IWorksheet sheet, IRange range)
         {
             bool dataMatches = false;
             string[,]? newRangeData = null;

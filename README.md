@@ -39,7 +39,8 @@ These instances can then be passed into the before/after methods on the API.
 
 **Note**: The provided sheet and range data objects are internally wrapped in a caching class to improve performance. That means properties on these objects are only read once.
 
-In the example application the before and after methods are hooked into the `SheetSelectionChange` and `SheetChange` respectively.
+The provided example application shows an implementation of these wrapper interfaces based on excel ranges and worksheets.
+The example application also shows how before and after methods can be hooked into the `SheetSelectionChange` and `SheetChange` events respectively.
 
 ### Handle Changes
 
@@ -70,6 +71,18 @@ The library configuration object can be accessed through the API class:
 
 ```csharp
 ChangeLoggerApi.Instance.Configuration
+```
+
+### Logging
+
+The library supports injecting a custom logger to log system messages and errors. To inject a logger the client code must create a class that implements the `ILogger` interface and inject it into the main API.
+
+```
+class MyLogger : ILogger {
+    // ...
+}
+...
+ChangeLoggerApi.Instance.SetApplicationLogger(new MyLogger());
 ```
 
 ---
@@ -108,18 +121,20 @@ When the `AfterChange` method is called, the data in memory is compared to the d
 
 **NOTE:** The code in `BeforeChange` and `AfterChange` does not fire if no handlers have been set, or if `ChangeLoggerApi.Instance.Configuration.ChangeHandlingEnabled` is set to `false`.
 
-The `IMemoryComparison` object provided to the change handlers will include the results of this comparison:
+The `IMemoryComparison` object provided to the change handlers will include the results of this comparison as well as information about what data was in memory before the change:
 
 ```csharp
 public bool LocationMatches { get; }
-public bool DataMatches { get; }
 public bool IsNewRow { get; }
 public bool IsRowDelete { get; }
 public bool IsNewColumn { get; }
 public bool IsColumnDelete { get; }
 public bool LocationMatchesAndDataMatches { get; }
-public string[,]? DataBeforeChange { get; }
-public string[,]? DataAfterChange { get; }
+string? RangeAddressBeforeChange { get; }
+string? RangeAddressAfterChange { get; }
+string? SheetNameBeforeChange { get; }
+string? SheetNameAfterChange { get; }
+string[,]? DataBeforeChange { get; }
 ```
 
 **NOTE:** The data before and after change may be null. To help improve performance data will only be loaded into memory if necessary.

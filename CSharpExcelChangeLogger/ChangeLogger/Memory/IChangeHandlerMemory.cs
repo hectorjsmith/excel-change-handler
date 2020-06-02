@@ -15,6 +15,6 @@ namespace CSharpExcelChangeLogger.ChangeLogger.Memory
 
         void SetMemory(IWorksheet sheet, IRange range);
 
-        IMemoryComparison DoesMemoryMatch(IWorksheet sheet, IRange range);
+        IMemoryComparison Compare(IWorksheet sheet, IRange range);
     }
 }
