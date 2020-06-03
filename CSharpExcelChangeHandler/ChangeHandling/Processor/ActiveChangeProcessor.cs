@@ -1,4 +1,5 @@
-﻿using CSharpExcelChangeHandler.ChangeHandling.Handler;
+﻿using CSharpExcelChangeHandler.Base;
+using CSharpExcelChangeHandler.ChangeHandling.Handler;
 using CSharpExcelChangeHandler.ChangeHandling.Memory;
 using CSharpExcelChangeHandler.Excel;
 using CSharpExcelChangeHandler.Excel.Cached;
@@ -8,34 +9,41 @@ using System.Text;
 
 namespace CSharpExcelChangeHandler.ChangeHandling.Processor
 {
-    class ActiveChangeProcessor : IChangeProcessor
+    class ActiveChangeProcessor<TWorksheetType, TRangeType> : BaseClass, IChangeProcessor<TWorksheetType, TRangeType>
+        where TWorksheetType : IWorksheet where TRangeType : IRange
     {
-        private readonly IChangeHandlerMemory _memory = new ChangeHandlerMemory();
-        private readonly ISet<IChangeHandler> _handlerSet = new HashSet<IChangeHandler>();
+        private readonly ISet<IChangeHandler<TWorksheetType, TRangeType>> _handlerSet = new HashSet<IChangeHandler<TWorksheetType, TRangeType>>();
+
+        private IChangeHandlerMemory? _memory;
+        private IChangeHandlerMemory Memory => _memory ?? (_memory = new ChangeHandlerMemory(LoggingManager));
+
+        public ActiveChangeProcessor(ILoggingManager loggingManager) : base(loggingManager)
+        {
+        }
 
         public void ClearAllHandlers()
         {
             _handlerSet.Clear();
         }
 
-        public void AddHandler(IChangeHandler handler)
+        public void AddHandler(IChangeHandler<TWorksheetType, TRangeType> handler)
         {
             _handlerSet.Add(handler);
         }
 
-        public void BeforeChange(IWorksheet sheet, IRange range)
+        public void BeforeChange(TWorksheetType sheet, TRangeType range)
         {
             if (_handlerSet.Count > 0)
             {
-                _memory.SetMemory(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
+                Memory.SetMemory(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
             }
         }
 
-        public void AfterChange(IWorksheet sheet, IRange range)
+        public void AfterChange(TWorksheetType sheet, TRangeType range)
         {
             if (_handlerSet.Count > 0)
             {
-                IMemoryComparison memoryComparison = _memory.Compare(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
+                IMemoryComparison memoryComparison = Memory.Compare(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
                 if (!memoryComparison.LocationMatchesAndDataMatches)
                 {
                     CallAllHandlers(memoryComparison, sheet, range);
@@ -43,9 +51,9 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
             }
         }
 
-        private void CallAllHandlers(IMemoryComparison memoryComparison, IWorksheet sheet, IRange range)
+        private void CallAllHandlers(IMemoryComparison memoryComparison, TWorksheetType sheet, TRangeType range)
         {
-            foreach (IChangeHandler handler in _handlerSet)
+            foreach (IChangeHandler<TWorksheetType, TRangeType> handler in _handlerSet)
             {
                 handler.HandleChange(memoryComparison, sheet, range);
             }

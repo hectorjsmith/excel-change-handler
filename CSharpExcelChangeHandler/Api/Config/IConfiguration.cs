@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CSharpExcelChangeHandler.Api
+namespace CSharpExcelChangeHandler.Api.Config
 {
     public interface IConfiguration
     {

@@ -7,14 +7,15 @@ using System.Text;
 
 namespace CSharpExcelChangeHandler.ChangeHandling.Processor
 {
-    internal interface IChangeProcessor
+    internal interface IChangeProcessor<TWorksheetType, TRangeType>
+        where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         void ClearAllHandlers();
 
-        void AddHandler(IChangeHandler highlighter);
+        void AddHandler(IChangeHandler<TWorksheetType, TRangeType> highlighter);
 
-        void BeforeChange(IWorksheet sheet, IRange range);
+        void BeforeChange(TWorksheetType sheet, TRangeType range);
 
-        void AfterChange(IWorksheet sheet, IRange range);
+        void AfterChange(TWorksheetType sheet, TRangeType range);
     }
 }

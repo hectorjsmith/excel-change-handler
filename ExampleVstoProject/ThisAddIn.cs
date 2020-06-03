@@ -9,11 +9,14 @@ using ExampleVstoProject.Wrapper;
 using System.Windows.Forms;
 using CSharpExcelChangeHandler.Api;
 using CSharpExcelChangeHandler.Excel;
+using CSharpExcelChangeHandler.Api.Factory;
 
 namespace ExampleVstoProject
 {
     public partial class ThisAddIn
     {
+        private static IChangeHandlerApi Api { get; } = ChangeHandlerApiFactory.NewApiInstance();
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Excel.Application application = Globals.ThisAddIn.Application;
@@ -21,8 +24,7 @@ namespace ExampleVstoProject
             application.SheetSelectionChange += Application_SheetSelectionChange;
             application.SheetChange += Application_SheetChange;
 
-            IChangeHandlerApi api = ChangeHandlerApi.Instance;
-            api.AddCustomHandler(api.ChangeHandlerFactory.NewSimpleChangeHighlighter(16776960));
+            Api.AddCustomHandler(Api.ChangeHandlerFactory.NewSimpleChangeHighlighter(16776960));
         }
 
         private void Application_SheetChange(object sheet, Excel.Range range)
@@ -32,7 +34,7 @@ namespace ExampleVstoProject
                 Excel.Worksheet worksheet = (Excel.Worksheet)sheet;
                 IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
                 IRange wrappedRange = new ExcelRangeWrapper(range);
-                ChangeHandlerApi.Instance.AfterChange(wrappedSheet, wrappedRange);
+                Api.AfterChange(wrappedSheet, wrappedRange);
             }
             catch (Exception ex)
             {
@@ -47,7 +49,7 @@ namespace ExampleVstoProject
                 Excel.Worksheet worksheet = (Excel.Worksheet)sheet;
                 IWorksheet wrappedSheet = new ExcelWorksheetWrapper(worksheet);
                 IRange wrappedRange = new ExcelRangeWrapper(range);
-                ChangeHandlerApi.Instance.BeforeChange(wrappedSheet, wrappedRange);
+                Api.BeforeChange(wrappedSheet, wrappedRange);
             }
             catch (Exception ex)
             {

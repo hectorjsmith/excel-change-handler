@@ -8,6 +8,12 @@ namespace CSharpExcelChangeHandler.Base
 {
     class BaseClass
     {
-        protected ILogger Log => StaticLoggingManager.Log;
+        protected ILoggingManager LoggingManager { get; }
+        protected ILogger Log => LoggingManager.Log;
+
+        public BaseClass(ILoggingManager loggingManager)
+        {
+            LoggingManager = loggingManager;
+        }
     }
 }

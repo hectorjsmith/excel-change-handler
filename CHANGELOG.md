@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename SetLogger method to SetApplicationLogger to help avoid confusion (#22)
 - Sheet and range data is now cached to avoid expesive read operations on the provided sheet and range classes (#26)
 - Rename library to CSharp Excel ChangeHandler (#28)
+- Refactor library to no longer use static-state or singleton patterns and instead only use instance-state (#27)
 
 ### Added
 - Add properties on the memory comparison object for the range address and sheet name before and after a change (#24)
