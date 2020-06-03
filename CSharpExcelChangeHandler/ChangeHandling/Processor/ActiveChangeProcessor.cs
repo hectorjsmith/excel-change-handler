@@ -9,15 +9,16 @@ using System.Text;
 
 namespace CSharpExcelChangeHandler.ChangeHandling.Processor
 {
-    class ActiveChangeProcessor<TWorksheetType, TRangeType> : IChangeProcessor<TWorksheetType, TRangeType>
+    class ActiveChangeProcessor<TWorksheetType, TRangeType> : BaseClass, IChangeProcessor<TWorksheetType, TRangeType>
         where TWorksheetType : IWorksheet where TRangeType : IRange
     {
-        private readonly IChangeHandlerMemory _memory;
         private readonly ISet<IChangeHandler<TWorksheetType, TRangeType>> _handlerSet = new HashSet<IChangeHandler<TWorksheetType, TRangeType>>();
 
-        public ActiveChangeProcessor(ILoggingManager loggingManager)
+        private IChangeHandlerMemory? _memory;
+        private IChangeHandlerMemory Memory => _memory ?? (_memory = new ChangeHandlerMemory(LoggingManager));
+
+        public ActiveChangeProcessor(ILoggingManager loggingManager) : base(loggingManager)
         {
-            _memory = new ChangeHandlerMemory(loggingManager);
         }
 
         public void ClearAllHandlers()
@@ -34,7 +35,7 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
         {
             if (_handlerSet.Count > 0)
             {
-                _memory.SetMemory(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
+                Memory.SetMemory(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
             }
         }
 
@@ -42,7 +43,7 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
         {
             if (_handlerSet.Count > 0)
             {
-                IMemoryComparison memoryComparison = _memory.Compare(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
+                IMemoryComparison memoryComparison = Memory.Compare(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
                 if (!memoryComparison.LocationMatchesAndDataMatches)
                 {
                     CallAllHandlers(memoryComparison, sheet, range);

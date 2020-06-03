@@ -14,20 +14,21 @@ namespace CSharpExcelChangeHandler.Api
     {
         private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;
 
-        public IConfiguration Configuration { get; } = new Configuration();
-
         private readonly ILoggingManager _loggingManager = new LoggingManager();
 
-        private IChangeProcessor<TWorksheetType, TRangeType> ChangeProcessor { get; }
+        private IChangeProcessor<TWorksheetType, TRangeType>? _changeProcessor;
+        private IChangeProcessor<TWorksheetType, TRangeType> ChangeProcessor =>
+            _changeProcessor ?? (_changeProcessor = new ActiveChangeProcessor<TWorksheetType, TRangeType>(_loggingManager));
 
-        public IChangeHandlerFactory<TWorksheetType, TRangeType> ChangeHandlerFactory { get; }
+        private IChangeHandlerFactory<TWorksheetType, TRangeType>? _changeHandlerFactory;
+        public IChangeHandlerFactory<TWorksheetType, TRangeType> ChangeHandlerFactory =>
+            _changeHandlerFactory ?? (_changeHandlerFactory = new SimpleChangeHandlerFactory<TWorksheetType, TRangeType>(_loggingManager));
 
+        public IConfiguration Configuration { get; } = new Configuration();
         private bool ChangeHandlingEnabled => Configuration.ChangeHandlingEnabled;
 
         internal GenericChangeHandlerApi()
         {
-            ChangeProcessor = new ActiveChangeProcessor<TWorksheetType, TRangeType>(_loggingManager);
-            ChangeHandlerFactory = new SimpleChangeHandlerFactory<TWorksheetType, TRangeType>(_loggingManager);
         }
 
         public void SetApplicationLogger(ILogger? logger)

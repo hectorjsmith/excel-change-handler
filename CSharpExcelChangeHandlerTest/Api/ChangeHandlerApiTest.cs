@@ -33,23 +33,6 @@ namespace CSharpExcelChangeHandlerTest.Api
         }
 
         [Test]
-        public void Given_ApiCreatedWithSpecificType_When_ValidChangeDetected_Then_HandlersGetTheSameType()
-        {
-            IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
-            GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange> controlHandler = new GenericMockChangeHandler<SimpleMockSheet, SimpleMockRange>();
-            IChangeHandler<SimpleMockSheet, SimpleMockRange> handler = new MockChangeHandlerWithCustomProcessing<SimpleMockSheet, SimpleMockRange>((memory, sheet, range) =>
-            {
-                Assert.IsInstanceOf<SimpleMockSheet>(sheet, "Sheet type provided to handler should be of correct type");
-                Assert.IsInstanceOf<SimpleMockRange>(range, "Range type provided to handler should be of correct type");
-            });
-            api.AddCustomHandler(controlHandler);
-            api.AddCustomHandler(handler);
-            api.AfterChange(new SimpleMockSheet(), new SimpleMockRange());
-
-            Assert.IsTrue(controlHandler.HandleChangeCalled, "Control handler was not called. Test is invalid.");
-        }
-
-        [Test]
         public void Given_ApiCreatedWithSpecificType_When_ValidChangeDetected_Then_HandlersGetTheExactSameObjects()
         {
             SimpleMockSheet mockSheet = new SimpleMockSheet();
