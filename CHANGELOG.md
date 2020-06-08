@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+_No unreleased changes_
+
+## [0.2.0] - 2020-06-08
+
 ### Changed
 - Rename DoesMemoryMatch method to Compare (#22)
 - Remove DataMatches property from IMemoryComparison interface (#22)
