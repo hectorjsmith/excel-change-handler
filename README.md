@@ -4,7 +4,7 @@ C# library to enable detecting and processing changes made on an Excel worksheet
 
 The goal of this project is to provide a standard way to detect and handle data changes in an excel workbook. This can be used to log or highlight any data changes.
 
-[![pipeline status](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/badges/master/pipeline.svg)](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/-/commits/master)
+[![pipeline status](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/badges/develop/pipeline.svg)](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/-/commits/develop)
 
 ## How to Use
 
