@@ -6,7 +6,7 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Memory
 {
     internal interface IChangeHandlerMemory
     {
-        int MaxRangeSizeForStoringData { get; set; }
+        int MaxRangeSizeForStoringData { get; }
         string? SheetName { get; }
         string? RangeAddress { get; }
         string[,]? RangeData { get; }
