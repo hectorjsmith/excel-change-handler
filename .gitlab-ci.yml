@@ -30,8 +30,9 @@ test:
 publish:
     stage: publish
     script:
-    - chmod +x BuildTools/*.sh
-    - ./BuildTools/Build.sh
+    - chmod +x tools/build/*.sh
+    - ./tools/build.updateVersion.sh
+    - ./tools//build/build.sh
     artifacts:
       paths:
       - CSharpExcelChangeHandler/bin/Release/*.nupkg
