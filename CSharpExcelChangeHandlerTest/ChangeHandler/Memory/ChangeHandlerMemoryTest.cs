@@ -114,6 +114,42 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         }
 
         [Test]
+        public void Given_MemorySizeConfigSetOnCreation_When_MemorySizeChanged_Then_MemoryObjectShouldUseNewMaxSize()
+        {
+            // PHASE 1: Setup the memory object with a large size and use it
+
+            // Set the max range size to 100 to test that the data is loaded into memory
+            IConfiguration config = new Configuration
+            {
+                MaxMemorySize = 100
+            };
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), config);
+
+            IWorksheet sheet = new SimpleMockSheet();
+            SimpleMockRange range = new SimpleMockRange("addr");
+            range.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
+
+            memory.SetMemory(sheet, range);
+            IMemoryComparison comparison = memory.Compare(sheet, range);
+
+            Assert.AreEqual(true, comparison.LocationMatchesAndDataMatches,
+                "GIVEN: Location and data should match when using a large memory size");
+
+            // PHASE 2: Update the configuration and use the memory object - the new max size should take effect
+
+            // Unset memory to ensure cache is cleared
+            memory.UnsetMemory();
+            // Set memory size to 1 (smaller than sheet data)
+            config.MaxMemorySize = 1;
+
+            memory.SetMemory(sheet, range);
+            IMemoryComparison comparisonTwo = memory.Compare(sheet, range);
+
+            Assert.AreEqual(false, comparisonTwo.LocationMatchesAndDataMatches,
+                "Location and data should no longer match with a smaller memory size");
+        }
+
+        [Test]
         public void Given_SheetSavedToMemory_When_ComparedToSheetWithMoreRows_Then_ShouldReportRowsAdded()
         {
             IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
