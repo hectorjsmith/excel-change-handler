@@ -6,9 +6,19 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 ## [Unreleased]
 
+
+## [v0.3.0] - 2021-01-22
 ### Features
 - (ae13935) feat: support setting max memory size ([#30](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/30))
 - (cbceab9) feat: auto-generate project changelog based on commits ([#33](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/33))
+
+### Merge Requests
+- (abd6ea2) Merge branch '32-publish-library-to-nuget' into 'main'
+- (67ae1c3) Merge branch '30-support-custom-max-memory-cache-size' into 'main'
+- (5b70054) Merge branch 'ci/simplify-gitlab-ci-pipeline' into 'main'
+- (4e87f41) Merge branch '33-auto-generate-changelog-using-commit-messages' into 'main'
+- (2e1fc0d) Merge branch 'chore/update-default-branch-to-main' into 'main'
+- (20ce562) Merge branch 'fix-pipeline-status-badge' into 'develop'
 
 ### BREAKING CHANGE
 
@@ -61,6 +71,7 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [git-chglog]: https://github.com/git-chglog/git-chglog
-[Unreleased]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.2.0...develop
+[Unreleased]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.3.0...main
+[v0.3.0]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.0.0...v0.1.0
