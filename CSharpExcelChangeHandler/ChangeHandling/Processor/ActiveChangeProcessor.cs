@@ -1,4 +1,5 @@
-﻿using CSharpExcelChangeHandler.Base;
+﻿using CSharpExcelChangeHandler.Api.Config;
+using CSharpExcelChangeHandler.Base;
 using CSharpExcelChangeHandler.ChangeHandling.Handler;
 using CSharpExcelChangeHandler.ChangeHandling.Memory;
 using CSharpExcelChangeHandler.Excel;
@@ -12,13 +13,15 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
     class ActiveChangeProcessor<TWorksheetType, TRangeType> : BaseClass, IChangeProcessor<TWorksheetType, TRangeType>
         where TWorksheetType : IWorksheet where TRangeType : IRange
     {
+        private readonly IConfiguration _configuration;
         private readonly ISet<IChangeHandler<TWorksheetType, TRangeType>> _handlerSet = new HashSet<IChangeHandler<TWorksheetType, TRangeType>>();
 
         private IChangeHandlerMemory? _memory;
-        private IChangeHandlerMemory Memory => _memory ?? (_memory = new ChangeHandlerMemory(LoggingManager));
+        private IChangeHandlerMemory Memory => _memory ?? (_memory = NewChangeHandlerMemory());
 
-        public ActiveChangeProcessor(ILoggingManager loggingManager) : base(loggingManager)
+        public ActiveChangeProcessor(ILoggingManager loggingManager, IConfiguration configuration) : base(loggingManager)
         {
+            _configuration = configuration;
         }
 
         public void ClearAllHandlers()
@@ -57,6 +60,11 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Processor
             {
                 handler.HandleChange(memoryComparison, sheet, range);
             }
+        }
+
+        private IChangeHandlerMemory NewChangeHandlerMemory()
+        {
+            return new ChangeHandlerMemory(LoggingManager, _configuration);
         }
     }
 }

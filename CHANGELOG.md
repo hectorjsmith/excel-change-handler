@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 ## [Unreleased]
 
 ### Features
+- (ae13935) feat: support setting max memory size ([#30](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/30))
 - (cbceab9) feat: auto-generate project changelog based on commits ([#33](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/33))
 
 ### BREAKING CHANGE

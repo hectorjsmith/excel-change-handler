@@ -1,3 +1,4 @@
+using CSharpExcelChangeHandler.Api.Config;
 using CSharpExcelChangeHandler.ChangeHandling.Memory;
 using CSharpExcelChangeHandler.Excel;
 using CSharpExcelChangeHandlerTest.Mock;
@@ -13,7 +14,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_NoDataSavedToMemory_When_ComparedToSheetAndRange_Then_AddressesShouldNotMatch()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
             IWorksheet sheet = new SimpleMockSheet();
             IRange range = new SimpleMockRange();
 
@@ -26,7 +27,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetAndRangeSavedToMemory_When_ComparedToTheSameAddress_Then_TheAddressesShouldMatch()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
             IWorksheet sheet = new SimpleMockSheet();
             IRange range = new SimpleMockRange();
 
@@ -41,7 +42,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetAndRangeSavedToMemory_When_ComparedToDifferentAddress_Then_TheAddressesShouldNotMatch()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
             IWorksheet sheet = new SimpleMockSheet();
             IRange range1 = new SimpleMockRange("1");
             IRange range2 = new SimpleMockRange("2");
@@ -57,7 +58,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetAndRangeSavedToMemory_When_ComparedToTheSameAddressWithDifferentData_Then_ShouldReportDataChanged()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
             IWorksheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange("addr");
             range1.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
@@ -75,7 +76,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetAndRangeSavedToMemory_When_ComparedToTheSameAddressWithTheSameData_Then_ShouldReportNoDataChanged()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
             IWorksheet sheet = new SimpleMockSheet();
             SimpleMockRange range1 = new SimpleMockRange("addr");
             range1.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
@@ -93,9 +94,12 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetAndRangeLargerThanMaxSizeSavedToMemory_When_ComparedToTheSameAddressWithTheSameData_Then_ShouldReportDataChanged()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
             // Set the max range size to 1 so that a range with more than 1 cell does not get its data loaded into memory
-            memory.MaxRangeSizeForStoringData = 1;
+            IConfiguration config = new Configuration
+            {
+                MaxMemorySize = 1
+            };
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), config);
 
             IWorksheet sheet = new SimpleMockSheet();
             SimpleMockRange range = new SimpleMockRange("addr");
@@ -110,9 +114,45 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         }
 
         [Test]
+        public void Given_MemorySizeConfigSetOnCreation_When_MemorySizeChanged_Then_MemoryObjectShouldUseNewMaxSize()
+        {
+            // PHASE 1: Setup the memory object with a large size and use it
+
+            // Set the max range size to 100 to test that the data is loaded into memory
+            IConfiguration config = new Configuration
+            {
+                MaxMemorySize = 100
+            };
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), config);
+
+            IWorksheet sheet = new SimpleMockSheet();
+            SimpleMockRange range = new SimpleMockRange("addr");
+            range.RangeData = new string[2, 2] { { "one", "two" }, { "three", "four" } };
+
+            memory.SetMemory(sheet, range);
+            IMemoryComparison comparison = memory.Compare(sheet, range);
+
+            Assert.AreEqual(true, comparison.LocationMatchesAndDataMatches,
+                "GIVEN: Location and data should match when using a large memory size");
+
+            // PHASE 2: Update the configuration and use the memory object - the new max size should take effect
+
+            // Unset memory to ensure cache is cleared
+            memory.UnsetMemory();
+            // Set memory size to 1 (smaller than sheet data)
+            config.MaxMemorySize = 1;
+
+            memory.SetMemory(sheet, range);
+            IMemoryComparison comparisonTwo = memory.Compare(sheet, range);
+
+            Assert.AreEqual(false, comparisonTwo.LocationMatchesAndDataMatches,
+                "Location and data should no longer match with a smaller memory size");
+        }
+
+        [Test]
         public void Given_SheetSavedToMemory_When_ComparedToSheetWithMoreRows_Then_ShouldReportRowsAdded()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 1;
@@ -135,7 +175,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetSavedToMemory_When_ComparedToSheetWithMoreColumns_Then_ShouldReportColumnsAdded()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 1;
@@ -158,7 +198,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetWithNoDataSavedToMemory_When_ComparedToSheetWithMoreRows_Then_ShouldReportRowsAdded()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 1;
@@ -184,7 +224,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetWithNoDataSavedToMemory_When_ComparedToSheetWithMoreColumns_Then_ShouldReportColumnsAdded()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 1;
@@ -210,7 +250,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetSavedToMemory_When_ComparedToSheetWithFewerRows_Then_ShouldReportRowsDeleted()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 2;
@@ -233,7 +273,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetSavedToMemory_When_ComparedToSheetWithFewerColumns_Then_ShouldReportColumnsDeleted()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 2;
@@ -257,7 +297,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetWithNoDataSavedToMemory_When_ComparedToSheetWithFewerRows_Then_ShouldReportRowsDeleted()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 2;
@@ -283,7 +323,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetWithNoDataSavedToMemory_When_ComparedToSheetWithFewerColumns_Then_ShouldReportColumnsDeleted()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             SimpleMockSheet sheet1 = new SimpleMockSheet();
             sheet1.RowCount = 2;
@@ -309,7 +349,7 @@ namespace CSharpExcelChangeHandlerTest.ChangeHandler.Memory
         [Test]
         public void Given_SheetAndRangeSavedToMemory_When_ComparedToAnotherSheetAndRange_Then_BeforeAndAfterAddressProvided()
         {
-            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager());
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
 
             string sheet1Name = "sheet 1";
             string sheet2Name = "sheet 2";

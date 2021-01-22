@@ -6,6 +6,7 @@ using CSharpExcelChangeHandler.ChangeHandling.Processor;
 using CSharpExcelChangeHandler.Excel;
 using CSharpExcelChangeHandler.Excel.Cached;
 using CSharpExcelChangeHandler.Logging;
+using System;
 
 namespace CSharpExcelChangeHandler.Api
 {
@@ -18,13 +19,14 @@ namespace CSharpExcelChangeHandler.Api
 
         private IChangeProcessor<TWorksheetType, TRangeType>? _changeProcessor;
         private IChangeProcessor<TWorksheetType, TRangeType> ChangeProcessor =>
-            _changeProcessor ?? (_changeProcessor = new ActiveChangeProcessor<TWorksheetType, TRangeType>(_loggingManager));
+            _changeProcessor ?? (_changeProcessor = NewActiveChangeProcessor());
 
         private IChangeHandlerFactory<TWorksheetType, TRangeType>? _changeHandlerFactory;
         public IChangeHandlerFactory<TWorksheetType, TRangeType> ChangeHandlerFactory =>
-            _changeHandlerFactory ?? (_changeHandlerFactory = new SimpleChangeHandlerFactory<TWorksheetType, TRangeType>(_loggingManager));
+            _changeHandlerFactory ?? (_changeHandlerFactory = NewSimpleChangeHandlerFactory());
 
         public IConfiguration Configuration { get; } = new Configuration();
+
         private bool ChangeHandlingEnabled => Configuration.ChangeHandlingEnabled;
 
         internal GenericChangeHandlerApi()
@@ -65,6 +67,16 @@ namespace CSharpExcelChangeHandler.Api
             {
                 ChangeProcessor.AfterChange(sheet, range);
             }
+        }
+
+        private IChangeProcessor<TWorksheetType, TRangeType> NewActiveChangeProcessor()
+        {
+            return new ActiveChangeProcessor<TWorksheetType, TRangeType>(_loggingManager, Configuration);
+        }
+
+        private IChangeHandlerFactory<TWorksheetType, TRangeType> NewSimpleChangeHandlerFactory()
+        {
+            return new SimpleChangeHandlerFactory<TWorksheetType, TRangeType>(_loggingManager);
         }
     }
 }

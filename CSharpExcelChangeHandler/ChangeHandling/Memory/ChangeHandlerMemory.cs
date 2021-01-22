@@ -1,4 +1,5 @@
-﻿using CSharpExcelChangeHandler.Base;
+﻿using CSharpExcelChangeHandler.Api.Config;
+using CSharpExcelChangeHandler.Base;
 using CSharpExcelChangeHandler.Excel;
 using System;
 
@@ -8,17 +9,19 @@ namespace CSharpExcelChangeHandler.ChangeHandling.Memory
     {
         private const int ExcelMaxColumnCount = 16384;
         private const int ExcelMaxRowCount = 1048576;
-        private const int DefaultMaxRangeSizeForStoringData = 15000;
 
-        public int MaxRangeSizeForStoringData { get; set; } = DefaultMaxRangeSizeForStoringData;
+        private readonly IConfiguration _configuration;
+
+        public int MaxRangeSizeForStoringData => _configuration.MaxMemorySize;
         public string? SheetName { get; private set; }
         public int? SheetRows { get; private set; }
         public int? SheetColumns { get; private set; }
         public string? RangeAddress { get; private set; }
         public string[,]? RangeData { get; private set; }
 
-        public ChangeHandlerMemory(ILoggingManager loggingManager) : base(loggingManager)
+        public ChangeHandlerMemory(ILoggingManager loggingManager, IConfiguration configuration) : base(loggingManager)
         {
+            _configuration = configuration;
         }
 
         public void UnsetMemory()
