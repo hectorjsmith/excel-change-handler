@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 ## [Unreleased]
 
+### Features
+- (cbceab9) feat: auto-generate project changelog based on commits ([#33](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/33))
+
+### BREAKING CHANGE
+
+- The CHANGELOG file no longer includes detailed release notes for previous versions.
 
 ## [v0.2.0] - 2020-06-08
 ### Reverts
