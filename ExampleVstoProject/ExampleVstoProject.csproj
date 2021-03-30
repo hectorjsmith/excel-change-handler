@@ -191,9 +191,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSharpExcelChangeHandler\CSharpExcelChangeHandler.csproj">
-      <Project>{CD1C2AF3-7889-48A8-AFB0-6A3F3B2461F2}</Project>
-      <Name>CSharpExcelChangeHandler</Name>
+    <ProjectReference Include="..\ExcelChangeHandler\ExcelChangeHandler.csproj">
+      <Project>{d1787833-f85f-4b2b-903d-41fb4800a936}</Project>
+      <Name>ExcelChangeHandler</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

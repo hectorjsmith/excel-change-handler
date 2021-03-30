@@ -7,9 +7,9 @@ using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
 using ExampleVstoProject.Wrapper;
 using System.Windows.Forms;
-using CSharpExcelChangeHandler.Api;
-using CSharpExcelChangeHandler.Excel;
-using CSharpExcelChangeHandler.Api.Factory;
+using ExcelChangeHandler.Api;
+using ExcelChangeHandler.Excel;
+using ExcelChangeHandler.Api.Factory;
 
 namespace ExampleVstoProject
 {
