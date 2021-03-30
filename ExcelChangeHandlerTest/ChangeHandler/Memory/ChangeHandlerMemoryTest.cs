@@ -214,7 +214,7 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
             range = new RowChangeMockRange();
             IMemoryComparison comparison = memory.Compare(sheet2, range);
 
-            Assert.IsNull(comparison.DataBeforeChange, "GIVEN: Data from before change should not be saved");
+            Assert.IsNull(comparison.PropertiesBeforeChange?.RangeFormulas, "GIVEN: Data from before change should not be saved");
             Assert.AreEqual(true, comparison.IsNewRow, "Should report new row as sheet row count increased");
             Assert.AreEqual(false, comparison.IsNewColumn, "Should not report new column as sheet column count remained the same");
             Assert.AreEqual(false, comparison.IsRowDelete, "Should not report row delete as sheet row count increased");
@@ -240,7 +240,7 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
             range = new ColumnChangeMockRange();
             IMemoryComparison comparison = memory.Compare(sheet2, range);
 
-            Assert.IsNull(comparison.DataBeforeChange, "GIVEN: Data from before change should not be saved");
+            Assert.IsNull(comparison.PropertiesBeforeChange?.RangeFormulas, "GIVEN: Data from before change should not be saved");
             Assert.AreEqual(false, comparison.IsNewRow, "Should not report new row as sheet row count remained the same");
             Assert.AreEqual(true, comparison.IsNewColumn, "Should report new column as sheet size grew");
             Assert.AreEqual(false, comparison.IsRowDelete, "Should not report row delete as sheet row count remained the same");
@@ -313,7 +313,7 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
             range = new RowChangeMockRange();
             IMemoryComparison comparison = memory.Compare(sheet2, range);
 
-            Assert.IsNull(comparison.DataBeforeChange, "GIVEN: Data from before change should not be saved");
+            Assert.IsNull(comparison.PropertiesBeforeChange?.RangeFormulas, "GIVEN: Data from before change should not be saved");
             Assert.AreEqual(false, comparison.IsNewRow, "Should not report new row as sheet row count decreased");
             Assert.AreEqual(false, comparison.IsNewColumn, "Should not report new column as sheet column count remained the same");
             Assert.AreEqual(true, comparison.IsRowDelete, "Should report row delete as sheet row count decreased");
@@ -339,7 +339,7 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
             range = new ColumnChangeMockRange();
             IMemoryComparison comparison = memory.Compare(sheet2, range);
 
-            Assert.IsNull(comparison.DataBeforeChange, "GIVEN: Data from before change should not be saved");
+            Assert.IsNull(comparison.PropertiesBeforeChange?.RangeFormulas, "GIVEN: Data from before change should not be saved");
             Assert.AreEqual(false, comparison.IsNewRow, "Should not report new row as sheet column count remained the same");
             Assert.AreEqual(false, comparison.IsNewColumn, "Should report new column as sheet column count decreased");
             Assert.AreEqual(false, comparison.IsRowDelete, "Should not report row delete as sheet column count remained the same");
@@ -365,10 +365,30 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
             SimpleMockRange range2 = new SimpleMockRange(range2Addr);
             IMemoryComparison comparison = memory.Compare(sheet2, range2);
 
-            Assert.AreEqual(sheet1Name, comparison.SheetNameBeforeChange, "Sheet name from before change should match name of sheet1");
-            Assert.AreEqual(sheet2Name, comparison.SheetNameAfterChange, "Sheet name from after change should match name of sheet2");
-            Assert.AreEqual(range1Addr, comparison.RangeAddressBeforeChange, "Range address from before change should match name of range1");
-            Assert.AreEqual(range2Addr, comparison.RangeAddressAfterChange, "Range address from after change should match name of range2");
+            Assert.NotNull(comparison.PropertiesBeforeChange, "Data from before change should be saved");
+            Assert.AreEqual(sheet1Name, comparison.PropertiesBeforeChange!.SheetName, "Sheet name from before change should match name of sheet1");
+            Assert.AreEqual(sheet2Name, comparison.PropertiesAfterChange.SheetName, "Sheet name from after change should match name of sheet2");
+            Assert.AreEqual(range1Addr, comparison.PropertiesBeforeChange.RangeAddress, "Range address from before change should match name of range1");
+            Assert.AreEqual(range2Addr, comparison.PropertiesAfterChange!.RangeAddress, "Range address from after change should match name of range2");
         }
+
+        [Test]
+        public void Given_ChangeHanderMemory_When_ComparedToSheetWithoutSettingMemory_Then_BeforeChangePropertiesAreNull()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
+
+            SimpleMockSheet sheet1 = new SimpleMockSheet();
+            sheet1.RowCount = 1;
+            sheet1.ColumnCount = 1;
+            SimpleMockSheet sheet2 = new SimpleMockSheet();
+            sheet2.RowCount = 2;
+            sheet2.ColumnCount = 1;
+            SimpleMockRange range = new SimpleMockRange();
+
+            IMemoryComparison comparison = memory.Compare(sheet2, range);
+
+            Assert.IsNull(comparison.PropertiesBeforeChange, "Properties from before change should be null");
+        }
+
     }
 }

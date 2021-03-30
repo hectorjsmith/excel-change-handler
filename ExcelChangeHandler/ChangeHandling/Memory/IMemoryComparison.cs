@@ -10,11 +10,6 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
     public interface IMemoryComparison
     {
         /// <summary>
-        /// True if the address of the changed range matches the address of the range saved to memory.
-        /// </summary>
-        bool LocationMatches { get; }
-
-        /// <summary>
         /// Returns true if the change logger detected that the latest change was a new row. False otherwise.
         /// </summary>
         bool IsNewRow { get; }
@@ -35,38 +30,24 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
         bool IsColumnDelete { get; }
 
         /// <summary>
+        /// True if the address of the changed range matches the address of the range saved to memory.
+        /// </summary>
+        bool LocationMatches { get; }
+
+        /// <summary>
         /// 'LocationMatches' and 'DataMatches'
         /// </summary>
         bool LocationMatchesAndDataMatches { get; }
 
         /// <summary>
-        /// Address of the range stored in memory before the change occurred.
-        /// </summary>
-        string? RangeAddressBeforeChange { get; }
-
-        /// <summary>
-        /// Address of the range where the change occurred.
-        /// </summary>
-        string? RangeAddressAfterChange { get; }
-
-        /// <summary>
-        /// Name of the sheet data stored in memory before the change occurred.
-        /// </summary>
-        string? SheetNameBeforeChange { get; }
-
-        /// <summary>
-        /// Name of the sheet where the change occurred.
-        /// </summary>
-        string? SheetNameAfterChange { get; }
-
-        /// <summary>
         /// Data saved to memory before the change occurred. Will be null if no data was stored in memory.
+        /// Will only include data stored in memory before the change was triggered.
         /// </summary>
-        string[,]? DataBeforeChange { get; }
+        IChangeProperties? PropertiesBeforeChange { get; }
 
         /// <summary>
-        /// Data read from the changed range. Data is loaded only when absolutely necessary, so may be null.
-        /// Data will be null if:
+        /// Change properties read from the modified range. The formulas for the changed cell will only be read into memory if necessary, so may be null.
+        /// Range formulas will be null if:
         /// <list type="">
         /// <item>- Saved range address is different from changed range address</item>
         /// <item>- Saved range has a different dimension to the changed range</item>
@@ -74,6 +55,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
         /// <item>- Size of changed range exceeds the cut-off threshold</item>
         /// </list>
         /// </summary>
-        string[,]? DataAfterChange { get; }
+        IChangeProperties PropertiesAfterChange { get; }
+
     }
 }

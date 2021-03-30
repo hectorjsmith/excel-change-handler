@@ -4,8 +4,6 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 {
     class MemoryComparison : IMemoryComparison
     {
-        public bool LocationMatches { get; }
-
         public bool IsNewRow { get; }
 
         public bool IsRowDelete { get; }
@@ -14,45 +12,31 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 
         public bool IsColumnDelete { get; }
 
+        public bool LocationMatches { get; }
+
         public bool LocationMatchesAndDataMatches { get; }
 
-        public string? RangeAddressBeforeChange { get; }
+        public IChangeProperties? PropertiesBeforeChange { get; }
 
-        public string? RangeAddressAfterChange { get; }
+        public IChangeProperties PropertiesAfterChange { get; }
 
-        public string? SheetNameBeforeChange { get; }
-
-        public string? SheetNameAfterChange { get; }
-
-        public string[,]? DataBeforeChange { get; }
-
-        public string[,]? DataAfterChange { get; }
-
-        public MemoryComparison(bool locationMatches,
-                                bool dataMatches,
-                                bool isNewRow,
+        public MemoryComparison(bool isNewRow,
                                 bool isRowDelete,
                                 bool isNewColumn,
                                 bool isColumnDelete,
-                                string? rangeAddressBeforeChange,
-                                string? rangeAddressAfterChange,
-                                string? sheetNameBeforeChange,
-                                string? sheetNameAfterChange,
-                                string[,]? dataBeforeChange,
-                                string[,]? dataAfterChange)
+                                bool locationMatches,
+                                bool dataMatches,
+                                IChangeProperties? propertiesBeforeChange,
+                                IChangeProperties propertiesAfterChange)
         {
-            LocationMatches = locationMatches;
-            LocationMatchesAndDataMatches = LocationMatches && dataMatches;
             IsNewRow = isNewRow;
             IsRowDelete = isRowDelete;
             IsNewColumn = isNewColumn;
             IsColumnDelete = isColumnDelete;
-            RangeAddressBeforeChange = rangeAddressBeforeChange;
-            RangeAddressAfterChange = rangeAddressAfterChange;
-            SheetNameBeforeChange = sheetNameBeforeChange;
-            SheetNameAfterChange = sheetNameAfterChange;
-            DataBeforeChange = dataBeforeChange;
-            DataAfterChange = dataAfterChange;
+            LocationMatches = locationMatches;
+            LocationMatchesAndDataMatches = locationMatches && dataMatches;
+            PropertiesBeforeChange = propertiesBeforeChange;
+            PropertiesAfterChange = propertiesAfterChange ?? throw new ArgumentNullException(nameof(propertiesAfterChange));
         }
     }
 }
