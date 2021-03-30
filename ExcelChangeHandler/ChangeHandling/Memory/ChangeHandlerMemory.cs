@@ -13,6 +13,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
         private readonly IConfiguration _configuration;
 
         public int MaxRangeSizeForStoringData => _configuration.MaxMemorySize;
+        private bool MemorySet { get; set; }
         public string? SheetName { get; private set; }
         public int? SheetRows { get; private set; }
         public int? SheetColumns { get; private set; }
@@ -26,6 +27,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 
         public void UnsetMemory()
         {
+            MemorySet = false;
             SheetName = null;
             SheetRows = null;
             SheetColumns = null;
@@ -49,6 +51,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
             {
                 RangeData = null;
             }
+            MemorySet = true;
         }
 
         public IMemoryComparison Compare(IWorksheet sheet, IRange range)
@@ -63,18 +66,26 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
                 dataMatches = newRangeData != null && CompareDataArrays(RangeData, newRangeData);
             }
 
+            IChangeProperties? propertiesBeforeChange = GetChangePropertiesBeforeChangeOrNull();
+            IChangeProperties propertiesAfterChange = new ChangePropertiesImpl(sheet.Name, sheet.ColumnCount, sheet.RowCount, range.Address, newRangeData);
+
             return new MemoryComparison(locationMatches: locationMatches,
                                         dataMatches: dataMatches,
                                         isNewRow: CheckForNewRow(sheet, range),
                                         isRowDelete: CheckForRowDelete(sheet, range),
                                         isNewColumn: CheckForNewColumn(sheet, range),
                                         isColumnDelete: CheckForColumnDelete(sheet, range),
-                                        rangeAddressBeforeChange: RangeAddress,
-                                        rangeAddressAfterChange: range.Address,
-                                        sheetNameBeforeChange: SheetName,
-                                        sheetNameAfterChange: sheet.Name,
-                                        dataBeforeChange: RangeData,
-                                        dataAfterChange: newRangeData);
+                                        propertiesBeforeChange: propertiesBeforeChange,
+                                        propertiesAfterChange: propertiesAfterChange);
+        }
+
+        private IChangeProperties? GetChangePropertiesBeforeChangeOrNull()
+        {
+            if (!MemorySet)
+            {
+                return null;
+            }
+            return new ChangePropertiesImpl(SheetName, SheetColumns, SheetRows, RangeAddress, RangeData);
         }
 
         private string[,]? TryReadRangeData(IWorksheet sheet, IRange range)

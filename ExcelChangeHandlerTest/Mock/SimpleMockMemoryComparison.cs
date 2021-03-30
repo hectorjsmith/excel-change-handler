@@ -21,16 +21,8 @@ namespace ExcelChangeHandlerTest.Mock
 
         public bool IsColumnDelete { get; set; }
 
-        public string? RangeAddressBeforeChange { get; set; }
+        public IChangeProperties? PropertiesBeforeChange { get; set; }
 
-        public string? RangeAddressAfterChange { get; set; }
-
-        public string? SheetNameBeforeChange { get; set; }
-
-        public string? SheetNameAfterChange { get; set; }
-
-        public string[,]? DataBeforeChange { get; set; }
-
-        public string[,]? DataAfterChange { get; set; }
+        public IChangeProperties PropertiesAfterChange { get; set; } = new ChangePropertiesImpl(null, null, null, null, null);
     }
 }

@@ -152,20 +152,21 @@ When the `AfterChange` method is called, the data in memory is compared to the d
 The `IMemoryComparison` object provided to the change handlers will include the results of this comparison as well as information about what data was in memory before the change:
 
 ```csharp
-public bool LocationMatches { get; }
 public bool IsNewRow { get; }
 public bool IsRowDelete { get; }
 public bool IsNewColumn { get; }
 public bool IsColumnDelete { get; }
+public bool LocationMatches { get; }
 public bool LocationMatchesAndDataMatches { get; }
-string? RangeAddressBeforeChange { get; }
-string? RangeAddressAfterChange { get; }
-string? SheetNameBeforeChange { get; }
-string? SheetNameAfterChange { get; }
-string[,]? DataBeforeChange { get; }
+IChangeProperties? PropertiesBeforeChange { get; }
+IChangeProperties PropertiesAfterChange { get; }
 ```
 
-**NOTE:** The data before and after change may be null. To help improve performance data will only be loaded into memory if necessary.
+The `PropertiesBeforeChange` property will be null if no memory was set before the change was recorded (i.e. the `BeforeChange` method was not called). The `PropertiesAfterChange` will never be null and include data known about the new state of the range.
+
+All properties on the `IChangeProperties` interface are nullable and will only be populated if known.
+
+**NOTE:** The range formula data before and after change may be null, this data is only read when necessary to improve performance.
 
 ### Max Memory Size
 
