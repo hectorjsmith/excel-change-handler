@@ -6,11 +6,17 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 ## [Unreleased]
 
+### Features
+- (cb90144) feat: rename library to remove csharp reference ([#35](https://gitlab.com/hectorjsmith/excel-change-handler/issues/35))
+
+### BREAKING CHANGE
+
+- Library and all namespaces renamed to `ExcelChangeHandler`
 
 ## [v0.3.0] - 2021-01-22
 ### Features
-- (ae13935) feat: support setting max memory size ([#30](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/30))
-- (cbceab9) feat: auto-generate project changelog based on commits ([#33](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/33))
+- (ae13935) feat: support setting max memory size ([#30](https://gitlab.com/hectorjsmith/excel-change-handler/issues/30))
+- (cbceab9) feat: auto-generate project changelog based on commits ([#33](https://gitlab.com/hectorjsmith/excel-change-handler/issues/33))
 
 ### Merge Requests
 - (abd6ea2) Merge branch '32-publish-library-to-nuget' into 'main'
@@ -26,7 +32,7 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 ## [v0.2.0] - 2020-06-08
 ### Reverts
-- (c586c98) [#24](https://gitlab.com/hectorjsmith/csharp-excel-changehandler/issues/24): Set memory when sheet data not set
+- (c586c98) [#24](https://gitlab.com/hectorjsmith/excel-change-handler/issues/24): Set memory when sheet data not set
 
 ### Merge Requests
 - (53f2932) Merge branch 'bugfix/fix-build-script-path' into 'master'
@@ -71,7 +77,7 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [git-chglog]: https://github.com/git-chglog/git-chglog
-[Unreleased]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.3.0...main
-[v0.3.0]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.2.0...v0.3.0
-[v0.2.0]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.1.0...v0.2.0
-[v0.1.0]: https://gitlab.com/hectorjsmith/csharp-excel-changehandler/compare/v0.0.0...v0.1.0
+[Unreleased]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.3.0...main
+[v0.3.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.2.0...v0.3.0
+[v0.2.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.1.0...v0.2.0
+[v0.1.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.0.0...v0.1.0
