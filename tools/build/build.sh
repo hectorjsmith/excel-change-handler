@@ -1,4 +1,4 @@
 #!/bin/bash
 
 dotnet build --configuration Release
-dotnet pack CSharpExcelChangeHandler/CSharpExcelChangeHandler.csproj --configuration Release
+dotnet pack ExcelChangeHandler/ExcelChangeHandler.csproj --configuration Release
