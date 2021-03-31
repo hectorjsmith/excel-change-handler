@@ -369,7 +369,7 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
             Assert.AreEqual(sheet1Name, comparison.PropertiesBeforeChange!.SheetName, "Sheet name from before change should match name of sheet1");
             Assert.AreEqual(sheet2Name, comparison.PropertiesAfterChange.SheetName, "Sheet name from after change should match name of sheet2");
             Assert.AreEqual(range1Addr, comparison.PropertiesBeforeChange.RangeAddress, "Range address from before change should match name of range1");
-            Assert.AreEqual(range2Addr, comparison.PropertiesAfterChange!.RangeAddress, "Range address from after change should match name of range2");
+            Assert.AreEqual(range2Addr, comparison.PropertiesAfterChange.RangeAddress, "Range address from after change should match name of range2");
         }
 
         [Test]
@@ -388,6 +388,53 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
             IMemoryComparison comparison = memory.Compare(sheet2, range);
 
             Assert.IsNull(comparison.PropertiesBeforeChange, "Properties from before change should be null");
+        }
+
+        [Test]
+        public void Given_ChangeHanderMemory_When_ComparedToSheetAndRange_Then_RangeCellCountsAreCorrect()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
+
+            SimpleMockSheet sheet = new SimpleMockSheet();
+            SimpleMockRange range1 = new SimpleMockRange
+            {
+                RangeData = new string[,] { { "1", "1" }, { "1", "1" } }
+            };
+            SimpleMockRange range2 = new SimpleMockRange
+            {
+                RangeData = new string[,] { { "2", "2" }, { "2", "2" } }
+            };
+
+            memory.SetMemory(sheet, range1);
+            IMemoryComparison comparison = memory.Compare(sheet, range2);
+
+            Assert.IsNotNull(comparison.PropertiesBeforeChange, "GIVEN: Properties from before change should not be null");
+            Assert.AreEqual(4, comparison.PropertiesBeforeChange?.RangeCellCount, "Range cell count from before change should match expected");
+            Assert.AreEqual(4, comparison.PropertiesAfterChange.RangeCellCount, "Range cell count from after change should match expected");
+        }
+
+        [Test]
+        public void Given_ChangeHanderMemory_When_ComparedToSheetAndRangeOfDifferentSize_Then_RangeCellCountsAreCorrect()
+        {
+            IChangeHandlerMemory memory = new ChangeHandlerMemory(new MockLoggingManager(), new Configuration());
+
+            SimpleMockSheet sheet = new SimpleMockSheet();
+            SimpleMockRange range1 = new SimpleMockRange
+            {
+                RangeData = new string[,] { { "1", "1" }, { "1", "1" } }
+            };
+            SimpleMockRange range2 = new SimpleMockRange
+            {
+                RangeData = new string[,] { { "2", "2" }, { "2", "2" }, { "2", "2" } }
+            };
+
+            memory.SetMemory(sheet, range1);
+            IMemoryComparison comparison = memory.Compare(sheet, range2);
+
+            Assert.IsNotNull(comparison.PropertiesBeforeChange, "GIVEN: Properties from before change should not be null");
+            Assert.IsNull(comparison.PropertiesAfterChange.RangeFormulas, "GIVEN: Range data from after change should be null because range dimension is different");
+            Assert.AreEqual(4, comparison.PropertiesBeforeChange?.RangeCellCount, "Range cell count from before change should match expected");
+            Assert.AreEqual(6, comparison.PropertiesAfterChange.RangeCellCount, "Range cell count from after change should match expected");
         }
 
     }

@@ -36,7 +36,7 @@ namespace ExcelChangeHandlerTest.ChangeHandler.Memory
 
         private IMemoryComparison NewMemoryComparisonObject(bool isNewRow, bool isRowDelete, bool isNewColumn, bool isColumnDelete)
         {
-            return new MemoryComparison(isNewRow, isRowDelete, isNewColumn, isColumnDelete, true, true, null, new ChangePropertiesImpl(null, null, null, null, null));
+            return new MemoryComparison(isNewRow, isRowDelete, isNewColumn, isColumnDelete, true, true, null, new ChangePropertiesImpl(null, null, null, null, null, null));
         }
     }
 }

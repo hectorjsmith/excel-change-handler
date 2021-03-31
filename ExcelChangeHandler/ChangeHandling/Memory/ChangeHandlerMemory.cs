@@ -18,6 +18,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
         public int? SheetRows { get; private set; }
         public int? SheetColumns { get; private set; }
         public string? RangeAddress { get; private set; }
+        public int? RangeDataSize { get; private set; }
         public string[,]? RangeData { get; private set; }
 
         public ChangeHandlerMemory(ILoggingManager loggingManager, IConfiguration configuration) : base(loggingManager)
@@ -32,6 +33,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
             SheetRows = null;
             SheetColumns = null;
             RangeAddress = null;
+            RangeDataSize = null;
             RangeData = null;
         }
 
@@ -42,8 +44,8 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
             SheetColumns = sheet.ColumnCount;
             RangeAddress = range.Address;
 
-            int cellCount = range.RowCount * range.ColumnCount;
-            if (cellCount <= MaxRangeSizeForStoringData)
+            RangeDataSize = range.RowCount * range.ColumnCount;
+            if (RangeDataSize <= MaxRangeSizeForStoringData)
             {
                 RangeData = TryReadRangeData(sheet, range);
             }
@@ -67,7 +69,8 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
             }
 
             IChangeProperties? propertiesBeforeChange = GetChangePropertiesBeforeChangeOrNull();
-            IChangeProperties propertiesAfterChange = new ChangePropertiesImpl(sheet.Name, sheet.ColumnCount, sheet.RowCount, range.Address, newRangeData);
+            int cellCountAfterChange = range.RowCount * range.ColumnCount;
+            IChangeProperties propertiesAfterChange = new ChangePropertiesImpl(sheet.Name, sheet.ColumnCount, sheet.RowCount, range.Address, cellCountAfterChange, newRangeData);
 
             return new MemoryComparison(locationMatches: locationMatches,
                                         dataMatches: dataMatches,
@@ -85,7 +88,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
             {
                 return null;
             }
-            return new ChangePropertiesImpl(SheetName, SheetColumns, SheetRows, RangeAddress, RangeData);
+            return new ChangePropertiesImpl(SheetName, SheetColumns, SheetRows, RangeAddress, RangeDataSize, RangeData);
         }
 
         private string[,]? TryReadRangeData(IWorksheet sheet, IRange range)
