@@ -10,6 +10,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
         string? SheetName { get; }
         string? RangeAddress { get; }
         string[,]? RangeData { get; }
+        int? RangeDataSize { get; }
 
         void UnsetMemory();
 

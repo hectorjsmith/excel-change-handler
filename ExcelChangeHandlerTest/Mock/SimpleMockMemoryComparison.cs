@@ -25,6 +25,6 @@ namespace ExcelChangeHandlerTest.Mock
 
         public IChangeProperties? PropertiesBeforeChange { get; set; }
 
-        public IChangeProperties PropertiesAfterChange { get; set; } = new ChangePropertiesImpl(null, null, null, null, null);
+        public IChangeProperties PropertiesAfterChange { get; set; } = new ChangePropertiesImpl(null, null, null, null, null, null);
     }
 }

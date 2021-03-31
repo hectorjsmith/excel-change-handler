@@ -26,6 +26,11 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
         string? RangeAddress { get; }
 
         /// <summary>
+        /// Count the number of cells in the changed range.
+        /// </summary>
+        int? RangeCellCount { get; }
+
+        /// <summary>
         /// Formula data for the range on this sheet.
         /// </summary>
         string[,]? RangeFormulas { get; }
