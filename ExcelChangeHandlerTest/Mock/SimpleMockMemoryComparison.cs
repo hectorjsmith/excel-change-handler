@@ -7,6 +7,8 @@ namespace ExcelChangeHandlerTest.Mock
 {
     class SimpleMockMemoryComparison : IMemoryComparison
     {
+        public bool HasSheetSizeChanged => IsNewRow || IsNewColumn || IsRowDelete || IsColumnDelete;
+
         public bool LocationMatches { get; set; }
 
         public bool DataMatches { get; set; }

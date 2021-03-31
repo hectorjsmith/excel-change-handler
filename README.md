@@ -152,6 +152,7 @@ When the `AfterChange` method is called, the data in memory is compared to the d
 The `IMemoryComparison` object provided to the change handlers will include the results of this comparison as well as information about what data was in memory before the change:
 
 ```csharp
+public bool HasSheetSizeChanged { get; }
 public bool IsNewRow { get; }
 public bool IsRowDelete { get; }
 public bool IsNewColumn { get; }

@@ -4,6 +4,8 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 {
     class MemoryComparison : IMemoryComparison
     {
+        public bool HasSheetSizeChanged { get; }
+
         public bool IsNewRow { get; }
 
         public bool IsRowDelete { get; }
@@ -20,6 +22,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 
         public IChangeProperties PropertiesAfterChange { get; }
 
+
         public MemoryComparison(bool isNewRow,
                                 bool isRowDelete,
                                 bool isNewColumn,
@@ -29,6 +32,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
                                 IChangeProperties? propertiesBeforeChange,
                                 IChangeProperties propertiesAfterChange)
         {
+            HasSheetSizeChanged = isNewRow || isRowDelete || isNewColumn || isColumnDelete;
             IsNewRow = isNewRow;
             IsRowDelete = isRowDelete;
             IsNewColumn = isNewColumn;

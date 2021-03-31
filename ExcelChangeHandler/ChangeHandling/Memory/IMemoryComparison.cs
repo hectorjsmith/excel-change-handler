@@ -10,6 +10,11 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
     public interface IMemoryComparison
     {
         /// <summary>
+        /// Returns true if the size of the sheet has changed (rows or columns being added or removed).
+        /// </summary>
+        public bool HasSheetSizeChanged { get; }
+
+        /// <summary>
         /// Returns true if the change logger detected that the latest change was a new row. False otherwise.
         /// </summary>
         bool IsNewRow { get; }
