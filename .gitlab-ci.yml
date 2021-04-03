@@ -1,15 +1,16 @@
-image: microsoft/dotnet:latest
-
 stages:
     - test
     - build
 
-before_script:
+.dotnet_template:
+  image: microsoft/dotnet:latest
+  before_script:
     - apt-get update
     - apt-get install nuget build-essential -y
     - nuget restore
 
 test:
+    extends: .dotnet_template
     stage: test
     script:
     - 'dotnet test ExcelChangeHandlerTest/ExcelChangeHandlerTest.csproj --test-adapter-path:. --logger:"junit;LogFilePath=..\artifacts\{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"'
@@ -18,7 +19,30 @@ test:
         junit:
         - ./**/*test-result.xml
 
+build_pages:
+  stage: test
+  image: registry.gitlab.com/pages/hugo/hugo:latest
+  script:
+    - apk add make
+    - make docs/downloadTheme
+    - make docs/build
+  artifacts:
+    paths:
+      - docs/public/
+
+pages:
+  stage: build
+  image: alpine
+  only:
+    - main
+  script:
+    - mv docs/public/ public/
+  artifacts:
+    paths:
+      - public/
+
 package:
+    extends: .dotnet_template
     stage: build
     script:
     - make updateVersion
