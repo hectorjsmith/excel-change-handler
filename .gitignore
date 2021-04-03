@@ -31,5 +31,9 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+docs/public/
+docs/themes/
+
 # Exclusions
 !tools/build/
+
