@@ -28,7 +28,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
         /// <summary>
         /// Count the number of cells in the changed range.
         /// </summary>
-        int? RangeCellCount { get; }
+        long? RangeCellCount { get; }
 
         /// <summary>
         /// Formula data for the range on this sheet.

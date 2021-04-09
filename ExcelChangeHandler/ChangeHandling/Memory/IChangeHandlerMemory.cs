@@ -6,11 +6,11 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 {
     internal interface IChangeHandlerMemory
     {
-        int MaxRangeSizeForStoringData { get; }
+        long MaxRangeSizeForStoringData { get; }
         string? SheetName { get; }
         string? RangeAddress { get; }
         string[,]? RangeData { get; }
-        int? RangeDataSize { get; }
+        long? RangeDataSize { get; }
 
         void UnsetMemory();
 
