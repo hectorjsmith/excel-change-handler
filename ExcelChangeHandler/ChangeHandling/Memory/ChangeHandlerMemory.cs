@@ -12,13 +12,13 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 
         private readonly IConfiguration _configuration;
 
-        public int MaxRangeSizeForStoringData => _configuration.MaxMemorySize;
+        public long MaxRangeSizeForStoringData => _configuration.MaxMemorySize;
         private bool MemorySet { get; set; }
         public string? SheetName { get; private set; }
         public int? SheetRows { get; private set; }
         public int? SheetColumns { get; private set; }
         public string? RangeAddress { get; private set; }
-        public int? RangeDataSize { get; private set; }
+        public long? RangeDataSize { get; private set; }
         public string[,]? RangeData { get; private set; }
 
         public ChangeHandlerMemory(ILoggingManager loggingManager, IConfiguration configuration) : base(loggingManager)
@@ -44,7 +44,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
             SheetColumns = sheet.ColumnCount;
             RangeAddress = range.Address;
 
-            RangeDataSize = range.RowCount * range.ColumnCount;
+            RangeDataSize = (long)range.RowCount * (long)range.ColumnCount;
             if (RangeDataSize <= MaxRangeSizeForStoringData)
             {
                 RangeData = TryReadRangeData(sheet, range);
@@ -69,7 +69,7 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
             }
 
             IChangeProperties? propertiesBeforeChange = GetChangePropertiesBeforeChangeOrNull();
-            int cellCountAfterChange = range.RowCount * range.ColumnCount;
+            long cellCountAfterChange = (long)range.RowCount * (long)range.ColumnCount;
             IChangeProperties propertiesAfterChange = new ChangePropertiesImpl(sheet.Name, sheet.ColumnCount, sheet.RowCount, range.Address, cellCountAfterChange, newRangeData);
 
             return new MemoryComparison(locationMatches: locationMatches,

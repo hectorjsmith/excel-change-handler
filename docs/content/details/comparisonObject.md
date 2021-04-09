@@ -26,7 +26,7 @@ string? SheetName { get; }
 int? SheetColumns { get; }
 int? SheetRows { get; }
 string? RangeAddress { get; }
-int? RangeCellCount { get; }
+long? RangeCellCount { get; }
 string[,]? RangeFormulas { get; }
 {{< /highlight >}}
 

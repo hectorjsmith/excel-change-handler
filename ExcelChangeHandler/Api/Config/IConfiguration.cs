@@ -18,6 +18,6 @@ namespace ExcelChangeHandler.Api.Config
         /// This means that the entire range will be flagged as changed.
         /// Setting this to a high value may cause out-of-memory errors.
         /// </summary>
-        int MaxMemorySize { get; set; }
+        long MaxMemorySize { get; set; }
     }
 }
