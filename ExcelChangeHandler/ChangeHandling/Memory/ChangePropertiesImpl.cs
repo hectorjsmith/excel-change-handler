@@ -12,11 +12,11 @@ namespace ExcelChangeHandler.ChangeHandling.Memory
 
         public string? RangeAddress { get; }
 
-        public int? RangeCellCount { get; }
+        public long? RangeCellCount { get; }
 
         public string[,]? RangeFormulas { get; }
 
-        public ChangePropertiesImpl(string? sheetName, int? sheetColumns, int? sheetRows, string? rangeAddress, int? rangeCellCount, string[,]? rangeFormulas)
+        public ChangePropertiesImpl(string? sheetName, int? sheetColumns, int? sheetRows, string? rangeAddress, long? rangeCellCount, string[,]? rangeFormulas)
         {
             SheetName = sheetName;
             SheetColumns = sheetColumns;
