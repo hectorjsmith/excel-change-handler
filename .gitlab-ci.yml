@@ -3,7 +3,7 @@ stages:
     - build
 
 .dotnet_template:
-  image: microsoft/dotnet:latest
+  image: mcr.microsoft.com/dotnet/sdk:2.1
   before_script:
     - apt-get update
     - apt-get install nuget build-essential -y
