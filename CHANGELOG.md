@@ -5,13 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog], and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
+*Nothing yet*
+
+## [v0.4.0] - 2022-01-06
+### Bug Fixes
+- (c91ca6c) fix: prevent int overflow when calculating range size ([#37](https://gitlab.com/hectorjsmith/excel-change-handler/issues/37))
 
 ### Features
+- (2f3cddf) feat: include size of range in change properties
+- (af3df58) feat: new property to flag is sheet size has changed
+- (8d7de24) feat: new data class to store change properties ([#25](https://gitlab.com/hectorjsmith/excel-change-handler/issues/25))
 - (cb90144) feat: rename library to remove csharp reference ([#35](https://gitlab.com/hectorjsmith/excel-change-handler/issues/35))
 
 ### BREAKING CHANGE
-
+- All references to range size now stored as long variables instead of int
+- Replaced before and after properties on the `IMemoryComparison` object with new data classes
 - Library and all namespaces renamed to `ExcelChangeHandler`
+
+### Merge Requests
+- (16c8357) Merge branch '37-range-size-overflows-int-type' into 'main'
+- (cdf09e0) Merge branch 'docs/prune-readme-file' into 'main'
+- (a139502) Merge branch 'docs/restructure-documentation-site' into 'main'
+- (01a0fd4) Merge branch '36-deploy-documentation-site' into 'main'
+- (aecb37b) Merge branch 'feat/include-size-of-range-in-comparison' into 'main'
+- (5bfbf06) Merge branch 'feat/new-has-sheet-size-changed-property' into 'main'
+- (beeeef6) Merge branch '34-treat-all-warnings-as-errors' into 'main'
+- (3c99127) Merge branch '25-add-new-memory-object' into 'main'
+- (fd129b9) Merge branch '35-rename-library-to-remove-csharp' into 'main'
+- (9b00af8) Merge branch 'docs/add-nuget-badge-to-readme' into 'main'
+- (0b31e5c) Merge branch 'release/v0.3.0' into 'main'
 
 ## [v0.3.0] - 2021-01-22
 ### Features
@@ -77,7 +99,8 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [git-chglog]: https://github.com/git-chglog/git-chglog
-[Unreleased]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.3.0...main
+[Unreleased]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.4.0...main
+[v0.4.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.0.0...v0.1.0
