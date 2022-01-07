@@ -6,7 +6,7 @@ The goal of this project is to provide a standard way to detect and handle data 
 
 [![documentation](https://img.shields.io/badge/docs-latest-orange)](https://hectorjsmith.gitlab.io/excel-change-handler/)
 [![pipeline status](https://gitlab.com/hectorjsmith/excel-change-handler/badges/main/pipeline.svg)](https://gitlab.com/hectorjsmith/excel-change-handler/-/commits/main)
-[![project version on nuget](https://badgen.net/nuget/v/CSharpExcelChangeHandler/latest)](https://www.nuget.org/packages/CSharpExcelChangeHandler/)
+[![project version on nuget](https://badgen.net/nuget/v/ExcelChangeHandler/latest)](https://www.nuget.org/packages/ExcelChangeHandler/)
 
 ## How to Use
 
