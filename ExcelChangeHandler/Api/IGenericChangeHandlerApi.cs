@@ -49,13 +49,13 @@ namespace ExcelChangeHandler.Api
 
         /// <summary>
         /// Add a custom change handler class. This handler will be called when a change is detected (using the BeforeChange and AfterChange methods).
-        /// No ordering of change handlers is guaranteed, handlers are called in an arbitrary order.
+        /// Handlers are called in the order they are added.
         /// </summary>
         void AddCustomHandler(IChangeHandler<TWorksheetType, TRangeType> handler);
 
         /// <summary>
         /// Add a custom change handler action. This handler will be called when a change is detected (using the BeforeChange and AfterChange methods).
-        /// No ordering of change handlers is guaranteed, handlers are called in an arbitrary order.
+        /// Handlers are called in the order they are added.
         /// </summary>
         void AddCustomHandler(Action<IMemoryComparison, TWorksheetType, TRangeType> handler);
     }
