@@ -1,6 +1,7 @@
 ﻿using ExcelChangeHandler.Api;
 using ExcelChangeHandler.Api.Factory;
 using ExcelChangeHandler.ChangeHandling.Handler;
+using ExcelChangeHandler.ChangeHandling.Memory;
 using ExcelChangeHandler.Excel;
 using ExcelChangeHandlerTest.Mock;
 using NUnit.Framework;
@@ -50,6 +51,26 @@ namespace ExcelChangeHandlerTest.Api
             api.AfterChange(mockSheet, mockRange);
 
             Assert.IsTrue(controlHandler.HandleChangeCalled, "Control handler was not called. Test is invalid.");
+        }
+
+        [Test]
+        public void Given_ApiSetupWithActionHandler_When_ValidChangeDetected_Then_ActionHandlerIsInvoked()
+        {
+            // Assemble
+            bool actionInvoked = false;
+            Action<IMemoryComparison, IWorksheet, IRange> action = (memory, sheet, range) => actionInvoked = true;
+
+            SimpleMockSheet mockSheet = new SimpleMockSheet();
+            SimpleMockRange mockRange = new SimpleMockRange();
+
+            IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
+            api.AddCustomHandler(action);
+
+            // Act
+            api.AfterChange(mockSheet, mockRange);
+
+            // Assert
+            Assert.IsTrue(actionInvoked, "Action should have been invoked when a valid change was detected");
         }
     }
 }

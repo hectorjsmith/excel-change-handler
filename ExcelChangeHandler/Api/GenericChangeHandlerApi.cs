@@ -2,6 +2,7 @@
 using ExcelChangeHandler.Base;
 using ExcelChangeHandler.ChangeHandling.Factory;
 using ExcelChangeHandler.ChangeHandling.Handler;
+using ExcelChangeHandler.ChangeHandling.Memory;
 using ExcelChangeHandler.ChangeHandling.Processor;
 using ExcelChangeHandler.Excel;
 using ExcelChangeHandler.Excel.Cached;
@@ -51,6 +52,11 @@ namespace ExcelChangeHandler.Api
         public void AddCustomHandler(IChangeHandler<TWorksheetType, TRangeType> handler)
         {
             ChangeProcessor.AddHandler(handler);
+        }
+
+        public void AddCustomHandler(Action<IMemoryComparison, TWorksheetType, TRangeType> handler)
+        {
+            ChangeProcessor.AddHandler(new ActionBasedChangeHandler<TWorksheetType, TRangeType>(handler));
         }
 
         public void BeforeChange(TWorksheetType sheet, TRangeType range)

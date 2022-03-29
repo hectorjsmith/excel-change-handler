@@ -1,8 +1,10 @@
 using ExcelChangeHandler.Api.Config;
 using ExcelChangeHandler.ChangeHandling.Factory;
 using ExcelChangeHandler.ChangeHandling.Handler;
+using ExcelChangeHandler.ChangeHandling.Memory;
 using ExcelChangeHandler.Excel;
 using ExcelChangeHandler.Logging;
+using System;
 
 namespace ExcelChangeHandler.Api
 {
@@ -46,9 +48,15 @@ namespace ExcelChangeHandler.Api
         void AddDefaultHandlers();
 
         /// <summary>
-        /// Add a custom change handler. This handler will be called when a change is detected (using the BeforeChange and AfterChange methods).
+        /// Add a custom change handler class. This handler will be called when a change is detected (using the BeforeChange and AfterChange methods).
         /// No ordering of change handlers is guaranteed, handlers are called in an arbitrary order.
         /// </summary>
         void AddCustomHandler(IChangeHandler<TWorksheetType, TRangeType> handler);
+
+        /// <summary>
+        /// Add a custom change handler action. This handler will be called when a change is detected (using the BeforeChange and AfterChange methods).
+        /// No ordering of change handlers is guaranteed, handlers are called in an arbitrary order.
+        /// </summary>
+        void AddCustomHandler(Action<IMemoryComparison, TWorksheetType, TRangeType> handler);
     }
 }
