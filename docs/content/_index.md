@@ -13,3 +13,8 @@ title: Documentation
 <!-- markdownlint-restore -->
 # Excel Change Handler
 *C# library to enable detecting and processing changes made on an Excel worksheet*
+
+![Gif of change handler highlighting changes automatically](img/changeHandler.gif)
+
+The gif above shows how the library can be used to automatically highlight changes made to a workbook. These highlights are then saved in the workbook to facilitate reviews by other people.
+
