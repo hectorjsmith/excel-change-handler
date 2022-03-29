@@ -2,7 +2,7 @@
 
 namespace ExcelChangeHandler.Api
 {
-    public class ChangeHandlerApi : GenericChangeHandlerApi<IWorksheet, IRange>, IChangeHandlerApi
+    internal class ChangeHandlerApi : GenericChangeHandlerApi<IWorksheet, IRange>, IChangeHandlerApi
     {
     }
 }

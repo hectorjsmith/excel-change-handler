@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ExcelChangeHandler.Api.Config
 {
+    /// <summary>
+    /// Change handler configuration object.
+    /// </summary>
     public interface IConfiguration
     {
         /// <summary>

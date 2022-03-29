@@ -11,7 +11,7 @@ using System;
 
 namespace ExcelChangeHandler.Api
 {
-    public class GenericChangeHandlerApi<TWorksheetType, TRangeType> : IGenericChangeHandlerApi<TWorksheetType, TRangeType>
+    internal class GenericChangeHandlerApi<TWorksheetType, TRangeType> : IGenericChangeHandlerApi<TWorksheetType, TRangeType>
         where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         private const int DEFAULT_HIGHLIGHT_COLOUR = 65535;

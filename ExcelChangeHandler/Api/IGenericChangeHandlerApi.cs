@@ -8,6 +8,11 @@ using System;
 
 namespace ExcelChangeHandler.Api
 {
+    /// <summary>
+    /// Main generic API to handle all interactions with the change handler.
+    /// </summary>
+    /// <typeparam name="TWorksheetType">Type of worksheet to process changes for.</typeparam>
+    /// <typeparam name="TRangeType">Type of range to process changes for.</typeparam>
     public interface IGenericChangeHandlerApi<TWorksheetType, TRangeType> 
         where TWorksheetType : IWorksheet where TRangeType : IRange
     {
