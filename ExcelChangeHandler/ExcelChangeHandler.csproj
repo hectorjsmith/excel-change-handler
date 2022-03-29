@@ -9,6 +9,7 @@
     <Version>0.0.0</Version>
     <Authors>hectorjsmith</Authors>
     <Copyright>2020 Hector</Copyright>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>
 C# library to detect and process changes made on an Excel worksheet.
 
