@@ -3,6 +3,9 @@ using System.Text;
 
 namespace ExcelChangeHandler.ChangeHandling.Memory
 {
+    /// <summary>
+    /// Set of properties related to the sheet and range affected by a change.
+    /// </summary>
     public interface IChangeProperties
     {
         /// <summary>
