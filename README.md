@@ -64,6 +64,8 @@ Custom handlers can be crated by extending the `IChangeHandler` interface and im
 One of the parameters to the `HandleChange` method is the memory comparison object - `IMemoryComparison`.
 This object contains is the result of comparing the data provided to the library in the `BeforeChange` and `AfterChange` methods and holds a lot of useful data about the comparison.
 
+![Gif of change handler highlighting changes automatically](docs/static/img/changeHandler.gif)
+
 ## Design
 
 The Excel event for `SheetChange` is triggered after the change has occured and does not contain information about what the state was **before** the change.
