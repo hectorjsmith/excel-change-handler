@@ -14,12 +14,12 @@ namespace ExcelChangeHandler.Excel.Cached
         }
 
         private string? _name;
-        public string Name => _name ?? (_name = RawWorksheet.Name);
+        public string Name => _name ?? (_name = ExcelAccessProtection.ReadDataAndWrapException(nameof(RawWorksheet.Name), () => RawWorksheet.Name));
 
         private int? _rowCount;
-        public int RowCount => _rowCount ?? (int)(_rowCount = RawWorksheet.RowCount);
+        public int RowCount => _rowCount ?? (int)(_rowCount = ExcelAccessProtection.ReadDataAndWrapException(nameof(RawWorksheet.RowCount), () => RawWorksheet.RowCount));
 
         private int? _columnCount;
-        public int ColumnCount => _columnCount ?? (int)(_columnCount = RawWorksheet.ColumnCount);
+        public int ColumnCount => _columnCount ?? (int)(_columnCount = ExcelAccessProtection.ReadDataAndWrapException(nameof(RawWorksheet.ColumnCount), () => RawWorksheet.ColumnCount));
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExcelChangeHandler.Excel.Exception;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,20 +15,20 @@ namespace ExcelChangeHandler.Excel.Cached
         }
 
         private string? _address;
-        public string Address => _address ?? (_address = RawRange.Address);
+        public string Address => _address ?? (_address = ExcelAccessProtection.ReadDataAndWrapException(nameof(RawRange.Address), () => RawRange.Address));
 
         private int? _rowCount;
-        public int RowCount => _rowCount ?? (int)(_rowCount = RawRange.RowCount);
+        public int RowCount => _rowCount ?? (int)(_rowCount = ExcelAccessProtection.ReadDataAndWrapException(nameof(RawRange.RowCount), () => RawRange.RowCount));
 
         private int? _columnCount;
-        public int ColumnCount => _columnCount ?? (int)(_columnCount = RawRange.ColumnCount);
+        public int ColumnCount => _columnCount ?? (int)(_columnCount = ExcelAccessProtection.ReadDataAndWrapException(nameof(RawRange.ColumnCount), () => RawRange.ColumnCount));
 
         private string[,]? _rangeData;
-        public string[,] RangeData => _rangeData ?? (_rangeData = RawRange.RangeData);
+        public string[,] RangeData => _rangeData ?? (_rangeData = ExcelAccessProtection.ReadDataAndWrapException(nameof(RawRange.RangeData), () => RawRange.RangeData));
 
         public void FillRange(int colour)
         {
-            RawRange.FillRange(colour);
+            ExcelAccessProtection.RunActionAndWrapException(nameof(RawRange.FillRange), () => RawRange.FillRange(colour));
         }
     }
 }
