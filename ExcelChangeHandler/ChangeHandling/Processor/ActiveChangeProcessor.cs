@@ -14,7 +14,7 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
         where TWorksheetType : IWorksheet where TRangeType : IRange
     {
         private readonly IConfiguration _configuration;
-        private readonly ISet<IChangeHandler<TWorksheetType, TRangeType>> _handlerSet = new HashSet<IChangeHandler<TWorksheetType, TRangeType>>();
+        private readonly IList<IChangeHandler<TWorksheetType, TRangeType>> _handlerList = new List<IChangeHandler<TWorksheetType, TRangeType>>();
 
         private IChangeHandlerMemory? _memory;
         private IChangeHandlerMemory Memory => _memory ?? (_memory = NewChangeHandlerMemory());
@@ -26,17 +26,17 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
 
         public void ClearAllHandlers()
         {
-            _handlerSet.Clear();
+            _handlerList.Clear();
         }
 
         public void AddHandler(IChangeHandler<TWorksheetType, TRangeType> handler)
         {
-            _handlerSet.Add(handler);
+            _handlerList.Add(handler);
         }
 
         public void BeforeChange(TWorksheetType sheet, TRangeType range)
         {
-            if (_handlerSet.Count > 0)
+            if (_handlerList.Count > 0)
             {
                 Memory.SetMemory(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
             }
@@ -44,7 +44,7 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
 
         public void AfterChange(TWorksheetType sheet, TRangeType range)
         {
-            if (_handlerSet.Count > 0)
+            if (_handlerList.Count > 0)
             {
                 IMemoryComparison memoryComparison = Memory.Compare(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
                 if (!memoryComparison.LocationMatchesAndDataMatches)
@@ -56,7 +56,7 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
 
         private void CallAllHandlers(IMemoryComparison memoryComparison, TWorksheetType sheet, TRangeType range)
         {
-            foreach (IChangeHandler<TWorksheetType, TRangeType> handler in _handlerSet)
+            foreach (IChangeHandler<TWorksheetType, TRangeType> handler in _handlerList)
             {
                 handler.HandleChange(memoryComparison, sheet, range);
             }
