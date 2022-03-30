@@ -7,6 +7,27 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 ## [Unreleased]
 *Nothing yet*
 
+## [v0.5.0] - 2022-03-30
+### Bug Fixes
+- (69c6e09) fix: generate documentation in nupkg file ([#38](https://gitlab.com/hectorjsmith/excel-change-handler/issues/38))
+
+### Features
+- (0abe002) feat: support for change event filters ([#21](https://gitlab.com/hectorjsmith/excel-change-handler/issues/21))
+- (65bac17) feat: support system.action as change handler ([#29](https://gitlab.com/hectorjsmith/excel-change-handler/issues/29))
+- (4b2b0de) feat: wrap exceptions thrown accessing excel data ([#19](https://gitlab.com/hectorjsmith/excel-change-handler/issues/19))
+
+### Merge Requests
+- (dd03133) Merge branch 'docs/update-documentation-site-with-latest-features' into 'main'
+- (333791a) Merge branch '21-support-for-change-event-filtering' into 'main'
+- (2b12892) Merge branch '38-nuget-file-does-not-include-docs' into 'main'
+- (dbe2c93) Merge branch 'docs/add-all-missing-code-documentation' into 'main'
+- (ae022de) Merge branch '23-support-ordering-handlers' into 'main'
+- (7c47920) Merge branch '29-support-adding-system-action-objects-as-handlers' into 'main'
+- (8836e2b) Merge branch '19-protect-dangerous-methods-with-try-catch' into 'main'
+- (cdba4a2) Merge branch '31-add-gif-of-library-in-action' into 'main'
+- (daca014) Merge branch 'docs/update-nuget-badges' into 'main'
+- (f9fff87) Merge branch 'release/0.4.0' into 'main'
+
 ## [v0.4.0] - 2022-01-06
 ### Bug Fixes
 - (c91ca6c) fix: prevent int overflow when calculating range size ([#37](https://gitlab.com/hectorjsmith/excel-change-handler/issues/37))
@@ -99,7 +120,8 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [git-chglog]: https://github.com/git-chglog/git-chglog
-[Unreleased]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.4.0...main
+[Unreleased]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.5.0...main
+[v0.5.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.4.0...v0.5.0
 [v0.4.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.3.0...v0.4.0
 [v0.3.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://gitlab.com/hectorjsmith/excel-change-handler/compare/v0.1.0...v0.2.0
