@@ -1,4 +1,5 @@
-﻿using ExcelChangeHandler.ChangeHandling.Handler;
+﻿using ExcelChangeHandler.ChangeHandling.Filter;
+using ExcelChangeHandler.ChangeHandling.Handler;
 using ExcelChangeHandler.ChangeHandling.Highlighter;
 using ExcelChangeHandler.Excel;
 using System;
@@ -10,6 +11,10 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
     internal interface IChangeProcessor<TWorksheetType, TRangeType>
         where TWorksheetType : IWorksheet where TRangeType : IRange
     {
+        void ClearAllFilters();
+
+        void AddFilter(IChangeEventFilter<TWorksheetType, TRangeType> filter);
+
         void ClearAllHandlers();
 
         void AddHandler(IChangeHandler<TWorksheetType, TRangeType> highlighter);
