@@ -29,10 +29,10 @@ Each handler has access to the [memory comparison object]({{< ref "details/compa
 
 ---
 
-Here is a simple handler that just logs the location where changes were detected:
+Here is a simple handler that just prints the location where changes were detected:
 
 {{< highlight csharp "linenos=table" >}}
 api.AddCustomHandler((memory, sheet, range) => {
-    Console.Log($"Change detected on {sheet.Name} at {range.Address}");
+    Console.WriteLine($"Change detected on {sheet.Name} at {range.Address}");
 });
 {{< /highlight >}}
