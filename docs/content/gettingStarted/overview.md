@@ -3,7 +3,7 @@ title: Overview
 weight: 10
 ---
 
-![Library Overview](img/overview.png)
+![Diagram showing an overview of how the library works](img/overview.png)
 
 - (1): Each time a cell is selected in Excel, the `SheetSelectionChange` Excel event is fired. This gets forwarded to the library through the `BeforeChange` method.
 - (2): When a cell is changed, the `SheetChange` Excel event is fired. This gets forwarded to the library through the `AfterChange` method.
