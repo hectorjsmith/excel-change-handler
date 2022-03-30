@@ -72,5 +72,70 @@ namespace ExcelChangeHandlerTest.Api
             // Assert
             Assert.IsTrue(actionInvoked, "Action should have been invoked when a valid change was detected");
         }
+
+        [Test]
+        public void Given_ApiSetupWithChangeFilter_When_ValidChangeDetected_Then_ChangeFilterInvoked()
+        {
+            // Assemble
+            bool filterInvoked = false;
+            Func<IMemoryComparison, IWorksheet, IRange, bool> filter = (memory, sheet, range) => { filterInvoked = true; return true; };
+
+            SimpleMockSheet mockSheet = new SimpleMockSheet();
+            SimpleMockRange mockRange = new SimpleMockRange();
+
+            IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
+            api.AddCustomHandler((memory, sheet, range) => { });
+            api.AddChangeEventFilter(filter);
+
+            // Act
+            api.AfterChange(mockSheet, mockRange);
+
+            // Assert
+            Assert.IsTrue(filterInvoked, "Filter should have been invoked when a valid change was detected");
+        }
+
+        [Test]
+        public void Given_ApiSetupWithChangeFilterThatReturnsTrue_When_ValidChangeDetected_Then_ActionHandlerIsInvoked()
+        {
+            // Assemble
+            bool actionInvoked = false;
+            Action<IMemoryComparison, IWorksheet, IRange> action = (memory, sheet, range) => actionInvoked = true;
+
+            SimpleMockSheet mockSheet = new SimpleMockSheet();
+            SimpleMockRange mockRange = new SimpleMockRange();
+
+            IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
+            api.AddCustomHandler(action);
+            api.AddChangeEventFilter((memory, sheet, range) => true);
+
+            // Act
+            api.AfterChange(mockSheet, mockRange);
+
+            // Assert
+            Assert.IsTrue(actionInvoked, "Action should have been invoked when a valid change was detected");
+        }
+
+        [Test]
+        public void Given_ApiSetupWithOneChangeFilterThatReturnsFalse_When_ValidChangeDetected_Then_ActionHandlerIsNotInvoked()
+        {
+            // Assemble
+            bool actionInvoked = false;
+            Action<IMemoryComparison, IWorksheet, IRange> action = (memory, sheet, range) => actionInvoked = true;
+
+            SimpleMockSheet mockSheet = new SimpleMockSheet();
+            SimpleMockRange mockRange = new SimpleMockRange();
+
+            IGenericChangeHandlerApi<SimpleMockSheet, SimpleMockRange> api = ChangeHandlerApiFactory.NewGenericApiInstance<SimpleMockSheet, SimpleMockRange>();
+            api.AddCustomHandler(action);
+            api.AddChangeEventFilter((memory, sheet, range) => true);
+            api.AddChangeEventFilter((memory, sheet, range) => false);
+            api.AddChangeEventFilter((memory, sheet, range) => true);
+
+            // Act
+            api.AfterChange(mockSheet, mockRange);
+
+            // Assert
+            Assert.IsFalse(actionInvoked, "Action should not have been invoked when the change event filter blocks it");
+        }
     }
 }

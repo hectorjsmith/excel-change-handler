@@ -1,6 +1,7 @@
 ﻿using ExcelChangeHandler.Api.Config;
 using ExcelChangeHandler.Base;
 using ExcelChangeHandler.ChangeHandling.Factory;
+using ExcelChangeHandler.ChangeHandling.Filter;
 using ExcelChangeHandler.ChangeHandling.Handler;
 using ExcelChangeHandler.ChangeHandling.Memory;
 using ExcelChangeHandler.ChangeHandling.Processor;
@@ -59,6 +60,21 @@ namespace ExcelChangeHandler.Api
             ChangeProcessor.AddHandler(new ActionBasedChangeHandler<TWorksheetType, TRangeType>(handler));
         }
 
+        public void ClearAllFilters()
+        {
+            ChangeProcessor.ClearAllFilters();
+        }
+
+        public void AddChangeEventFilter(IChangeEventFilter<TWorksheetType, TRangeType> filter)
+        {
+            ChangeProcessor.AddFilter(filter);
+        }
+
+        public void AddChangeEventFilter(Func<IMemoryComparison, TWorksheetType, TRangeType, bool> filter)
+        {
+            ChangeProcessor.AddFilter(new FunctionBasedChangeEventFilter<TWorksheetType, TRangeType>(filter));
+        }
+
         public void BeforeChange(TWorksheetType sheet, TRangeType range)
         {
             if (ChangeHandlingEnabled)
@@ -84,5 +100,6 @@ namespace ExcelChangeHandler.Api
         {
             return new SimpleChangeHandlerFactory<TWorksheetType, TRangeType>(_loggingManager);
         }
+
     }
 }

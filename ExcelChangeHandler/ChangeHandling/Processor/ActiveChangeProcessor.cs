@@ -1,12 +1,13 @@
 ﻿using ExcelChangeHandler.Api.Config;
 using ExcelChangeHandler.Base;
+using ExcelChangeHandler.ChangeHandling.Filter;
 using ExcelChangeHandler.ChangeHandling.Handler;
 using ExcelChangeHandler.ChangeHandling.Memory;
 using ExcelChangeHandler.Excel;
 using ExcelChangeHandler.Excel.Cached;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ExcelChangeHandler.ChangeHandling.Processor
 {
@@ -15,6 +16,7 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
     {
         private readonly IConfiguration _configuration;
         private readonly IList<IChangeHandler<TWorksheetType, TRangeType>> _handlerList = new List<IChangeHandler<TWorksheetType, TRangeType>>();
+        private readonly IList<IChangeEventFilter<TWorksheetType, TRangeType>> _filterList = new List<IChangeEventFilter<TWorksheetType, TRangeType>>();
 
         private IChangeHandlerMemory? _memory;
         private IChangeHandlerMemory Memory => _memory ?? (_memory = NewChangeHandlerMemory());
@@ -22,6 +24,16 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
         public ActiveChangeProcessor(ILoggingManager loggingManager, IConfiguration configuration) : base(loggingManager)
         {
             _configuration = configuration;
+        }
+
+        public void ClearAllFilters()
+        {
+            _filterList.Clear();
+        }
+
+        public void AddFilter(IChangeEventFilter<TWorksheetType, TRangeType> filter)
+        {
+            _filterList.Add(filter);
         }
 
         public void ClearAllHandlers()
@@ -47,9 +59,12 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
             if (_handlerList.Count > 0)
             {
                 IMemoryComparison memoryComparison = Memory.Compare(new CachedWorksheetWrapper(sheet), new CachedRangeWrapper(range));
-                if (!memoryComparison.LocationMatchesAndDataMatches)
+                if (DoAllFiltersPass(memoryComparison, sheet, range))
                 {
-                    CallAllHandlers(memoryComparison, sheet, range);
+                    if (!memoryComparison.LocationMatchesAndDataMatches)
+                    {
+                        CallAllHandlers(memoryComparison, sheet, range);
+                    }
                 }
             }
         }
@@ -65,6 +80,15 @@ namespace ExcelChangeHandler.ChangeHandling.Processor
         private IChangeHandlerMemory NewChangeHandlerMemory()
         {
             return new ChangeHandlerMemory(LoggingManager, _configuration);
+        }
+
+        private bool DoAllFiltersPass(IMemoryComparison memoryComparison, TWorksheetType sheet, TRangeType range)
+        {
+            if (_filterList.Count == 0)
+            {
+                return true;
+            }
+            return _filterList.All(filter => filter.Apply(memoryComparison, sheet, range));
         }
     }
 }
