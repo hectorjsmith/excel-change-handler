@@ -1,5 +1,5 @@
 generateChangelog:
-	./tools/git-chglog_linux_amd64 --config tools/chglog/config.yml v0.1.0.. > CHANGELOG.md
+	./tools/git-chglog_linux_amd64 --config tools/chglog/config.yml v0.1.0.. > CHANGELOG_gen.md
 
 
 docs/downloadTheme:

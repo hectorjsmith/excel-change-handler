@@ -17,6 +17,13 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 {{ end -}}
 {{ end -}}
 
+{{- if .Unreleased.MergeCommits -}}
+### Merge Requests
+{{ range .Unreleased.MergeCommits -}}
+- ({{ .Hash.Short }}) {{ .Header }}
+{{ end }}
+{{ end -}}
+
 {{- if .Unreleased.NoteGroups -}}
 {{ range .Unreleased.NoteGroups -}}
 ### {{ .Title }}
