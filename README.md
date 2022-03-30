@@ -41,6 +41,22 @@ The example application also shows how before and after methods can be hooked in
 **NOTE**: in order to correctly detect changes, the same API instance must be used for both `BeforeChange` and `AfterChange`.
 This is because the state memory from before the change is tied to that particular API instance. If a different instance is used, there will be no memory of the data provided in the `BeforeChange` method.
 
+### Filter Changes
+
+The library supports adding custom filters to skip certain changes that should not be processed.
+
+To add a new filter:
+
+```csharp
+api.AddChangeEventFilter(...);
+```
+
+If any filter returns `false`, the entire change event is skipped and no processors will be invoked.
+
+This can be used to, for example, skip certain sheets or ranges, or skip changes that are very large.
+
+_Note that filters are **not** required. If no filters have been defined all changes are processed._
+
 ### Handle Changes
 
 The library can be setup with a number of change handlers. Each change handler must implement the `IChangeHandler` interface.

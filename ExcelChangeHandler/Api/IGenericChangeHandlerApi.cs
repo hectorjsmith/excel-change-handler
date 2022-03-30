@@ -1,5 +1,6 @@
 using ExcelChangeHandler.Api.Config;
 using ExcelChangeHandler.ChangeHandling.Factory;
+using ExcelChangeHandler.ChangeHandling.Filter;
 using ExcelChangeHandler.ChangeHandling.Handler;
 using ExcelChangeHandler.ChangeHandling.Memory;
 using ExcelChangeHandler.Excel;
@@ -63,5 +64,22 @@ namespace ExcelChangeHandler.Api
         /// Handlers are called in the order they are added.
         /// </summary>
         void AddCustomHandler(Action<IMemoryComparison, TWorksheetType, TRangeType> handler);
+
+        /// <summary>
+        /// Clear all registered change event filters. When no filters are defined all changes are processed.
+        /// </summary>
+        void ClearAllFilters();
+
+        /// <summary>
+        /// Add a change event filter. All filters will be invoked before each change is processed and all filters must return true for any change processor to be invoked.
+        /// Filters are executed in the order they are added.
+        /// </summary>
+        void AddChangeEventFilter(IChangeEventFilter<TWorksheetType, TRangeType> filter);
+
+        /// <summary>
+        /// Add a change event filter function. All filters will be invoked before each change is processed and all filters must return true for any change processor to be invoked.
+        /// Filters are executed in the order they are added.
+        /// </summary>
+        void AddChangeEventFilter(Func<IMemoryComparison, TWorksheetType, TRangeType, bool> filter);
     }
 }
